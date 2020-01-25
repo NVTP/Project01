@@ -1,4 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class CreateEvent extends StatefulWidget {
   @override
@@ -6,6 +9,66 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
+  Future<File> imageFile;
+
+  pickImageFromGallery(ImageSource source){
+    setState(() {
+      imageFile = ImagePicker.pickImage(source: source);
+    });
+  }
+
+  Widget showImage(){
+    return FutureBuilder<File>(
+      future: imageFile,
+      builder: (BuildContext context, AsyncSnapshot<File> snapshot){
+        if(snapshot.connectionState == ConnectionState.done && snapshot.data != null){
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: 300,
+            child: Image.file(
+              snapshot.data,
+              fit: BoxFit.cover,
+            ),
+          );
+        }else if(snapshot.error != null){
+          return const Text(
+            'Error Picking Image',
+            textAlign: TextAlign.center,
+          );
+        }else{
+          return  Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.picture_in_picture,
+                  size: 50,
+                  color: Colors.grey,
+                ),
+                Icon(
+                  Icons.add,
+                  size: 30,
+                  color: Colors.grey,
+                ),
+                Text(
+                  'Add Picture',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
+          );
+        }
+      }
+    );
+  }
+
   final _formKey = GlobalKey<FormState>();
   List catData; //collect data for dropdown
   List<DropdownMenuItem<String>> catToDo = []; //bring data to dropdown
@@ -69,38 +132,17 @@ class _CreateEventState extends State<CreateEvent> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.picture_in_picture,
-                            size: 50,
-                            color: Colors.grey,
-                          ),
-                          Icon(
-                            Icons.add,
-                            size: 30,
-                            color: Colors.grey,
-                          ),
-                          Text(
-                            'Add Picture',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ), //ADD PICTURE
+                  showImage(),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  RaisedButton(
+                    color: Colors.blueGrey[300],
+                    child: Text('Add Picture',style: TextStyle(color: Colors.white),),
+                    onPressed: (){
+                      pickImageFromGallery(ImageSource.gallery);
+                    },
+                  ),
                   SizedBox(
                     height: 10.0,
                   ),
@@ -202,7 +244,99 @@ class _CreateEventState extends State<CreateEvent> {
                         SizedBox(
                           height: 10,
                         ),
-
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: RaisedButton(
+                            color: Colors.white,
+                            onPressed: ()=>showSlideUpView(),
+                            elevation: 1.1,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Select variations ',
+                                  style: TextStyle(color: Colors.black),
+                                  children: <TextSpan>[
+                                    TextSpan(text: '(e.g. color ,size)',style: TextStyle(color: Colors.grey[300])),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),//SELECT VARIATIONS
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text('Medium Price ',style: TextStyle(color: Colors.blueGrey[300]),),
+                            Flexible(
+                              child: Container(
+                                width: 100.0,
+                                child: TextFormField(
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                  controller: _productMediumPrice,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    hintText: '0.00',
+                                    hintStyle: TextStyle(color: Colors.blueGrey[300])
+                                  ),
+                                  validator: (data){
+                                    if(data.isEmpty){
+                                      return 'Fill price';
+                                    }else{
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                            Text('Bath',style: TextStyle(color: Colors.blueGrey[300]),)
+                          ],
+                        ),//MEDIUM PRICE
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text('Amount Need ',style: TextStyle(color: Colors.blueGrey[300]),),
+                            Flexible(
+                              child: Container(
+                                width: 100.0,
+                                child: TextFormField(
+                                  maxLines: 1,
+                                  maxLength: 5,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                                  controller: _productNeed,
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      hintText: '0',
+                                      hintStyle: TextStyle(color: Colors.blueGrey[300])
+                                  ),
+                                  validator: (data){
+                                    if(data.isEmpty){
+                                      return 'Plese fill Amount need';
+                                    }else{
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                            Text('Piece',style: TextStyle(color: Colors.blueGrey[300]),)
+                          ],
+                        ),//AMOUNT NEED
                         SizedBox(
                           height: 10,
                         ),
@@ -224,6 +358,35 @@ class _CreateEventState extends State<CreateEvent> {
           ),
         ),
       ),
+    );
+  }
+
+  void showSlideUpView(){
+    showModalBottomSheet(
+        context: context,
+        builder: (context){
+          return Column(
+            children: <Widget>[
+              SizedBox(
+                height: 10.0,
+              ),
+              Text('Ok'),
+              Text('Ok'),
+              Text('Ok'),
+              Text('Ok'),
+              Text('Ok'),
+              Text('Ok'),
+              Text('Ok'),
+              Text('Ok'),
+              RaisedButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        }
     );
   }
 }
