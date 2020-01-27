@@ -50,139 +50,130 @@ class _ClothingState extends State<Clothing> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 20.0,
+        child: GridView.count(
+          crossAxisCount: 2,
+          childAspectRatio: 1.0,
+          padding: EdgeInsets.all(5.0),
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+          children: <Widget>[
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.lightGreen,
+              child: InkWell(
+                onTap: () {},
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Image.asset(
+                      'assets/prototype/timbuk.jpg',
+                      fit: BoxFit.fill,
+                    ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        color: Colors.grey[200],
+                        child: Text(
+                          'Timbuk 2',
+                          style: TextStyle(
+                              color: Colors.black, fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Wrap(
-                    alignment: WrapAlignment.start,
-                    verticalDirection: VerticalDirection.up,
-                    spacing: 10.0,
-                    runSpacing: 10.0,
-                    children: <Widget>[
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.black,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.red,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.amber,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.blue,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.green,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.red,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.indigo,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.brown,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.blueGrey,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.deepOrange,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.pink,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.orange,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.lightGreen,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/prototype/timbuk.jpg',
-                                fit: BoxFit.fill,
-                              ),
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  color: Colors.grey[200],
-                                  child: Text(
-                                    'Timbuk 2',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 200,
-                        height: 250,
-                        color: Colors.lightGreen,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/prototype/levis.jpg',
-                                fit: BoxFit.fill,
-                              ),
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  color: Colors.grey[200],
-                                  child: Text(
-                                    'Levi\'s Shirt',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ]),
-              ],
+              ),
             ),
-          ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.lightGreen,
+              child: InkWell(
+                onTap: () {},
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Image.asset(
+                      'assets/prototype/levis.jpg',
+                      fit: BoxFit.fill,
+                    ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        color: Colors.grey[200],
+                        child: Text(
+                          'Levi\'s Shirt',
+                          style: TextStyle(
+                              color: Colors.black, fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.black,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.red,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.amber,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.blue,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.green,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.red,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.indigo,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.brown,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.blueGrey,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.deepOrange,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.pink,
+            ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.orange,
+            ),
+          ],
         ),
       ),
     );

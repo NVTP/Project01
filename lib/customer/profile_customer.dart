@@ -1,3 +1,4 @@
+import 'package:assem_deal/choice/update_profile_customer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -49,25 +50,11 @@ class _ProfileCustomerState extends State<ProfileCustomer> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        onTap: (){},
-                        leading: Icon(
-                          Icons.history,
-                        ),
-                        title: Text(
-                          'History',
-                          style: TextStyle(
-                              color: Colors.grey
-                          ),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios
-                        ),
-                      ),
-                      Divider(
-                        height: 2.0,
-                      ),
-                      ListTile(
-                        onTap: (){},
+                        onTap: (){
+                          Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>UpdateProfile())
+                          );
+                        },
                         leading: Icon(
                           Icons.settings,
                         ),

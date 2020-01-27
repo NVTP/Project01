@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/checkouts.dart';
 import 'package:flutter/material.dart';
 
 class EventCusShop extends StatefulWidget {
@@ -16,10 +17,14 @@ class _EventCusShopState extends State<EventCusShop> {
               height: 10.0,
             ),
            ListTile(
-             onTap: (){},
+             onTap: (){
+               Navigator.push(context,
+               MaterialPageRoute(builder: (context)=>Checkouts())
+               );
+             },
              leading: CircleAvatar(
                maxRadius: 35.0,
-               backgroundImage: AssetImage('assets/prototype/virgil.jpg'),
+               backgroundImage: AssetImage('assets/prototype/sony.jpg'),
              ),
              trailing: RaisedButton(
                onPressed: (){},
@@ -37,7 +42,7 @@ class _EventCusShopState extends State<EventCusShop> {
                  ),
                ],
              ),
-             subtitle: Text('Shop : AAAA'),
+             subtitle: Text('Shop : Sony Thailand'),
            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -51,7 +56,7 @@ class _EventCusShopState extends State<EventCusShop> {
               leading: CircleAvatar(
                 maxRadius: 35.0,
                 backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage('assets/images/xiaomi.png'),
+                backgroundImage: AssetImage('assets/prototype/virgil.jpg'),
               ),
               trailing: RaisedButton(
                 onPressed: (){},

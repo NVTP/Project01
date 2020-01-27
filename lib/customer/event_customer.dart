@@ -1,3 +1,4 @@
+import 'package:assem_deal/choice/select_variations.dart';
 import 'package:flutter/material.dart';
 
 class EventCustomer extends StatefulWidget {
@@ -60,30 +61,7 @@ class _EventCustomerState extends State<EventCustomer> {
                 SizedBox(
                   height: 10.0,
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  width: MediaQuery.of(context).size.width,
-                  child: RaisedButton(
-                    color: Colors.white,
-                    onPressed: ()=>showSlideUpView(),
-                    elevation: 1.1,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Select variations ',
-                            style: TextStyle(color: Colors.black),
-                            children: <TextSpan>[
-                              TextSpan(text: '(e.g. color ,size)',style: TextStyle(color: Colors.grey[300])),
-                            ],
-                          ),
-                        ),
-                    ),
-                  ),
-                ),//SELECT VARIATIONS
+                SelectVariations(),//SELECT VARIATIONS
                 SizedBox(
                   height: 10.0,
                 ),
@@ -156,34 +134,4 @@ class _EventCustomerState extends State<EventCustomer> {
       ),
     );
   }
-
-  void showSlideUpView(){
-    showModalBottomSheet(
-        context: context,
-        builder: (context){
-          return Column(
-            children: <Widget>[
-              SizedBox(
-                height: 10.0,
-              ),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              RaisedButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        }
-    );
-  }
-
 }

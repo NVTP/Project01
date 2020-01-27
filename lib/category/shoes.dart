@@ -48,56 +48,46 @@ class _ShoesState extends State<Shoes> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
-                Wrap(
-                  runSpacing: 10.0,
-                  spacing: 10.0,
-                  verticalDirection: VerticalDirection.up,
-                  alignment: WrapAlignment.start,
+        child: GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 4.0,
+          padding: EdgeInsets.all(5.0),
+          childAspectRatio: 1.0,
+          mainAxisSpacing: 4.0,
+          children: <Widget>[
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.lightGreen,
+              child: InkWell(
+                onTap: () {},
+                child: Stack(
+                  fit: StackFit.expand,
                   children: <Widget>[
-                    Container(
-                      width: 200,
-                      height: 250,
-                      color: Colors.blue,
+                    Image.asset(
+                      'assets/prototype/stan.jpg',
+                      fit: BoxFit.fill,
                     ),
                     Container(
-                      width: 200,
-                      height: 250,
-                      color: Colors.lightGreen,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/prototype/stan.jpg',
-                              fit: BoxFit.fill,
-                            ),
-                            Container(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                  color: Colors.grey[200],
-                                  child: Text(
-                                    'Adidas Stan Smith',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  )),
-                            ),
-                          ],
-                        ),
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                          color: Colors.grey[200],
+                          child: Text(
+                            'Adidas Stan Smith',
+                            style: TextStyle(color: Colors.black, fontSize: 18),
+                          ),
                       ),
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+            Container(
+              width: 200,
+              height: 250,
+              color: Colors.blue,
+            ),
+          ],
         ),
       ),
     );

@@ -79,6 +79,24 @@ class _HomeCustomerState extends State<HomeCustomer> {
                                       RawMaterialButton(
                                         onPressed: (){
                                           Navigator.push(context,
+                                              MaterialPageRoute(builder: (context)=>Gadget())
+                                          );
+                                        },
+                                        child: Image.asset(
+                                          'assets/images/Computer.png',
+                                          color: Colors.blueGrey,
+                                          alignment: Alignment.center,
+                                          fit: BoxFit.cover,
+                                          height: 50.0,
+                                        ),
+                                        elevation: 1.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      RawMaterialButton(
+                                        onPressed: (){
+                                          Navigator.push(context,
                                           MaterialPageRoute(
                                             builder: (context)=>Clothing(),
                                           )
@@ -106,24 +124,6 @@ class _HomeCustomerState extends State<HomeCustomer> {
                                         },
                                         child: Image.asset(
                                           'assets/images/shoes.png',
-                                          color: Colors.blueGrey,
-                                          alignment: Alignment.center,
-                                          fit: BoxFit.cover,
-                                          height: 50.0,
-                                        ),
-                                        elevation: 1.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                      ),
-                                      RawMaterialButton(
-                                        onPressed: (){
-                                          Navigator.push(context,
-                                          MaterialPageRoute(builder: (context)=>Gadget())
-                                          );
-                                        },
-                                        child: Image.asset(
-                                          'assets/images/Computer.png',
                                           color: Colors.blueGrey,
                                           alignment: Alignment.center,
                                           fit: BoxFit.cover,

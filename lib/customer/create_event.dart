@@ -1,3 +1,4 @@
+import 'package:assem_deal/choice/select_variations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -217,6 +218,9 @@ class _CreateEventState extends State<CreateEvent> {
                             ),
                           ),
                         ), //CATEGORY
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           reverse: true,
@@ -244,29 +248,7 @@ class _CreateEventState extends State<CreateEvent> {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: RaisedButton(
-                            color: Colors.white,
-                            onPressed: ()=>showSlideUpView(),
-                            elevation: 1.1,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              child: RichText(
-                                text: TextSpan(
-                                  text: 'Select variations ',
-                                  style: TextStyle(color: Colors.black),
-                                  children: <TextSpan>[
-                                    TextSpan(text: '(e.g. color ,size)',style: TextStyle(color: Colors.grey[300])),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),//SELECT VARIATIONS
+                        SelectVariations(),//SELECT VARIATIONS
                         SizedBox(
                           height: 10.0,
                         ),
@@ -358,35 +340,6 @@ class _CreateEventState extends State<CreateEvent> {
           ),
         ),
       ),
-    );
-  }
-
-  void showSlideUpView(){
-    showModalBottomSheet(
-        context: context,
-        builder: (context){
-          return Column(
-            children: <Widget>[
-              SizedBox(
-                height: 10.0,
-              ),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              RaisedButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        }
     );
   }
 }

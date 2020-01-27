@@ -1,3 +1,5 @@
+import 'package:assem_deal/customer/checkouts.dart';
+import 'package:assem_deal/customer/controlPageCustomer/main_event.dart';
 import 'package:flutter/material.dart';
 
 class NotificationCustomer extends StatefulWidget {
@@ -20,7 +22,11 @@ class _NotificationCustomerState extends State<NotificationCustomer> {
                 height: 10.0,
               ),
               ListTile(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>MainEvent())
+                  );
+                },
                 leading: CircleAvatar(
                   backgroundImage: AssetImage('assets/prototype/sony.jpg'),
                   backgroundColor: Colors.transparent,
@@ -48,7 +54,11 @@ class _NotificationCustomerState extends State<NotificationCustomer> {
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         child: RaisedButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.push(context,
+                            MaterialPageRoute(builder: (context)=>Checkouts())
+                            );
+                          },
                           elevation: 1.1,
                           child: Text('OK',style: TextStyle(color: Colors.white),),
                           color: Colors.blueGrey,
