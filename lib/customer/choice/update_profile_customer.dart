@@ -138,6 +138,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       ),
                       TextFormField(
                         controller: _cusPhone,
+                        maxLength: 10,
                         maxLines: 1,
                         keyboardType: TextInputType.number,
                         inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],

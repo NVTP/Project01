@@ -1,4 +1,4 @@
-import 'package:assem_deal/choice/select_variations.dart';
+import 'package:assem_deal/customer/choice/select_variations.dart';
 import 'package:flutter/material.dart';
 
 class EventCustomer extends StatefulWidget {
@@ -65,9 +65,15 @@ class _EventCustomerState extends State<EventCustomer> {
                 SizedBox(
                   height: 10.0,
                 ),
-                Text('Resposible by Shop : AAAA'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text('Resposible by Shop : AAAA'),
+                    Text('Price per piece : 1500.00'),
+                  ],
+                ),
                 SizedBox(
-                  height: 10.0,
+                  height: 20.0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -126,6 +132,44 @@ class _EventCustomerState extends State<EventCustomer> {
                 ),//Button JOIN
                 SizedBox(
                   height: 20.0,
+                ),
+                Divider(
+                  height: 5.0,
+                  color: Colors.grey,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey[300],
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                      child: Text(' Your ',style: TextStyle(color: Colors.white,fontSize: 20),)
+                  ),
+                ),
+                ListTile(
+                  leading: CircleAvatar(
+                    maxRadius: 35.0,
+                    backgroundImage: AssetImage('assets/prototype/virgil.jpg'),
+                  ),
+                  title: Text('Virgil van Dijk'),
+                  subtitle: Text('Your Quantity : 2'),
+                  trailing: IconButton(
+                    onPressed: (){},
+                    icon: Icon(
+                      Icons.settings,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Divider(
+                  color: Colors.grey,
+                  height: 5.0,
                 ),
               ],
             ),

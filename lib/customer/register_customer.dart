@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/choice/upload_image_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -326,6 +327,10 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                             ),
                           ),
                         ),//PHONE
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        UploadImage(),
                         SizedBox(
                           height: 30.0,
                         ),

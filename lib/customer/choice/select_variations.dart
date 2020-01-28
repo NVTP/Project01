@@ -42,28 +42,36 @@ class _SelectVariations extends State<SelectVariations> {
     // TODO: implement build
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        child: RaisedButton(
-          color: Colors.white,
-          onPressed: ()=>showSlideUpView(context),
-          elevation: 1.1,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10)
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Not Necessary'
           ),
-          child: Container(
-            alignment: Alignment.centerLeft,
-            child: RichText(
-              text: TextSpan(
-                text: 'Select variations ',
-                style: TextStyle(color: Colors.black),
-                children: <TextSpan>[
-                  TextSpan(text: '(e.g. color ,size)',style: TextStyle(color: Colors.grey[300])),
-                ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: RaisedButton(
+              color: Colors.white,
+              onPressed: ()=>showSlideUpView(context),
+              elevation: 1.1,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Select variations ',
+                    style: TextStyle(color: Colors.black),
+                    children: <TextSpan>[
+                      TextSpan(text: '(e.g. color ,size)',style: TextStyle(color: Colors.grey[300])),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );//SELECT VARIATIONS
   }

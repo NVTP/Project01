@@ -1,8 +1,7 @@
-import 'package:assem_deal/choice/select_variations.dart';
+import 'package:assem_deal/customer/choice/select_variations.dart';
+import 'package:assem_deal/customer/choice/upload_image_profile.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 class CreateEvent extends StatefulWidget {
   @override
@@ -10,65 +9,6 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  Future<File> imageFile;
-
-  pickImageFromGallery(ImageSource source){
-    setState(() {
-      imageFile = ImagePicker.pickImage(source: source);
-    });
-  }
-
-  Widget showImage(){
-    return FutureBuilder<File>(
-      future: imageFile,
-      builder: (BuildContext context, AsyncSnapshot<File> snapshot){
-        if(snapshot.connectionState == ConnectionState.done && snapshot.data != null){
-          return Container(
-            width: MediaQuery.of(context).size.width,
-            height: 300,
-            child: Image.file(
-              snapshot.data,
-              fit: BoxFit.cover,
-            ),
-          );
-        }else if(snapshot.error != null){
-          return const Text(
-            'Error Picking Image',
-            textAlign: TextAlign.center,
-          );
-        }else{
-          return  Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.picture_in_picture,
-                  size: 50,
-                  color: Colors.grey,
-                ),
-                Icon(
-                  Icons.add,
-                  size: 30,
-                  color: Colors.grey,
-                ),
-                Text(
-                  'Add Picture',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
-            ),
-          );
-        }
-      }
-    );
-  }
 
   final _formKey = GlobalKey<FormState>();
   List catData; //collect data for dropdown
@@ -80,8 +20,6 @@ class _CreateEventState extends State<CreateEvent> {
   TextEditingController _productDetail;
   TextEditingController _productNeed;
   TextEditingController _productMediumPrice;
-  TextEditingController _productOfferPrice;
-  TextEditingController _productOfferNeed;
 
   @override
   void initState() {
@@ -91,8 +29,6 @@ class _CreateEventState extends State<CreateEvent> {
     _productDetail = TextEditingController();
     _productNeed = TextEditingController();
     _productMediumPrice = TextEditingController();
-    _productOfferPrice = TextEditingController();
-    _productOfferNeed = TextEditingController();
 
     super.initState();
 
@@ -133,17 +69,10 @@ class _CreateEventState extends State<CreateEvent> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  showImage(),
                   SizedBox(
                     height: 10.0,
                   ),
-                  RaisedButton(
-                    color: Colors.blueGrey[300],
-                    child: Text('Add Picture',style: TextStyle(color: Colors.white),),
-                    onPressed: (){
-                      pickImageFromGallery(ImageSource.gallery);
-                    },
-                  ),
+                  UploadImage(),
                   SizedBox(
                     height: 10.0,
                   ),

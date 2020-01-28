@@ -27,7 +27,11 @@ class _EventCusShopState extends State<EventCusShop> {
                backgroundImage: AssetImage('assets/prototype/sony.jpg'),
              ),
              trailing: RaisedButton(
-               onPressed: (){},
+               onPressed: (){
+                 Navigator.push(context,
+                 MaterialPageRoute(builder: (context)=>Checkouts())
+                 );
+               },
                elevation: 1.1,
                color: Colors.blueGrey[400],
                child: Text('Deal',style: TextStyle(color: Colors.white),),
@@ -56,7 +60,7 @@ class _EventCusShopState extends State<EventCusShop> {
               leading: CircleAvatar(
                 maxRadius: 35.0,
                 backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage('assets/prototype/virgil.jpg'),
+                backgroundImage: AssetImage('assets/prototype/razer.jpg'),
               ),
               trailing: RaisedButton(
                 onPressed: (){},

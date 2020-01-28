@@ -1,4 +1,4 @@
-import 'package:assem_deal/choice/update_profile_customer.dart';
+import 'package:assem_deal/customer/choice/update_profile_customer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
