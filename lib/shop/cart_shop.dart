@@ -10,7 +10,9 @@ class _CartShopState extends State<CartShop> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal,
-      body: Text('Cart Shop',style: TextStyle(color: Colors.white,fontSize: 50,fontWeight: FontWeight.bold),),
+      body: SafeArea(
+        child: Text('Cart Shop',style: TextStyle(color: Colors.white,fontSize: 50,fontWeight: FontWeight.bold),),
+      ),
     );
   }
 }

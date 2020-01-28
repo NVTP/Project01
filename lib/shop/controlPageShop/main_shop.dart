@@ -41,7 +41,7 @@ class _MainShopState extends State<MainShop> {
           },
           currentIndex: c_index,
           type: BottomNavigationBarType.fixed,
-          fixedColor: Colors.red[200],
+          fixedColor: Colors.red[600],
           items: [
             BottomNavigationBarItem(
               activeIcon: Icon(

@@ -1,6 +1,6 @@
 import 'package:assem_deal/customer/controlPageCustomer/main_customer.dart';
 import 'package:assem_deal/customer/register_customer.dart';
-import 'package:assem_deal/shop/main_shop.dart';
+import 'package:assem_deal/shop/controlPageShop/main_shop.dart';
 import 'package:assem_deal/shop/register_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

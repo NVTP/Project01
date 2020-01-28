@@ -10,7 +10,9 @@ class _ProfileShopState extends State<ProfileShop> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
-      body: Text('Profile Shop',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 50),),
+      body: SafeArea(
+        child: Text('Profile Shop',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 50),),
+      ),
     );
   }
 }

@@ -10,7 +10,9 @@ class _NotificationShopState extends State<NotificationShop> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      body: Text('Notification Shop',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 50),),
+      body: SafeArea(
+        child: Text('Notification Shop',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 50),),
+      ),
     );
   }
 }
