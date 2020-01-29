@@ -1,7 +1,7 @@
-import 'package:assem_deal/category/clothing.dart';
-import 'package:assem_deal/category/gadget.dart';
-import 'package:assem_deal/category/shoes.dart';
 import 'package:assem_deal/search.dart';
+import 'package:assem_deal/shop/categoryShop/clothing_shop.dart';
+import 'package:assem_deal/shop/categoryShop/gadget_shop.dart';
+import 'package:assem_deal/shop/categoryShop/shoes_shop.dart';
 import 'package:flutter/material.dart';
 
 class HomeShop extends StatefulWidget {
@@ -74,7 +74,7 @@ class _HomeShopState extends State<HomeShop> {
                                     RawMaterialButton(
                                       onPressed: (){
                                         Navigator.push(context,
-                                        MaterialPageRoute(builder: (context)=>Gadget())
+                                        MaterialPageRoute(builder: (context)=>GadgetShop())
                                         );
                                       },
                                       child: Image.asset(
@@ -98,7 +98,7 @@ class _HomeShopState extends State<HomeShop> {
                                     RawMaterialButton(
                                       onPressed: (){
                                         Navigator.push(context,
-                                            MaterialPageRoute(builder: (context)=>Clothing())
+                                            MaterialPageRoute(builder: (context)=>ClothingShop())
                                         );
                                       },
                                       child: Image.asset(
@@ -122,7 +122,7 @@ class _HomeShopState extends State<HomeShop> {
                                     RawMaterialButton(
                                       onPressed: (){
                                         Navigator.push(context,
-                                            MaterialPageRoute(builder: (context)=>Shoes())
+                                            MaterialPageRoute(builder: (context)=>ShoesShop())
                                         );
                                       },
                                       child: Image.asset(
