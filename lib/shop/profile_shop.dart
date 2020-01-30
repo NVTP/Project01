@@ -51,6 +51,24 @@ class _ProfileShopState extends State<ProfileShop> {
                   ListTile(
                     onTap: (){},
                     leading: Icon(
+                      Icons.person,
+                    ),
+                    title: Text(
+                      'Profile',
+                      style: TextStyle(
+                          color: Colors.grey
+                      ),
+                    ),
+                    trailing: Icon(
+                        Icons.arrow_forward_ios
+                    ),
+                  ),
+                  Divider(
+                    height: 2.0,
+                  ),
+                  ListTile(
+                    onTap: (){},
+                    leading: Icon(
                       Icons.settings,
                     ),
                     title: Text(

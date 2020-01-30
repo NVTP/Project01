@@ -1,3 +1,4 @@
+import 'package:assem_deal/shop/controlPageShop/main_event_shop.dart';
 import 'package:flutter/material.dart';
 
 class CartShop extends StatefulWidget {
@@ -21,7 +22,11 @@ class _CartShopState extends State<CartShop> {
                 height: 5.0,
               ),
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>MainEventShop())
+                  );
+                },
                 child: Card(
                   elevation: 1.1,
                   child: Container(

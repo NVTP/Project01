@@ -1,3 +1,4 @@
+import 'package:assem_deal/shop/detail_event_shop.dart';
 import 'package:flutter/material.dart';
 
 class NotificationShop extends StatefulWidget {
@@ -25,7 +26,11 @@ class _NotificationShopState extends State<NotificationShop> {
                 height: 5.0,
               ),
              ListTile(
-               onTap: (){},
+               onTap: (){
+                 Navigator.push(context,
+                 MaterialPageRoute(builder: (context)=>DetailEventShop())
+                 );
+               },
                leading: CircleAvatar(
                  backgroundImage: AssetImage(
                    'assets/prototype/sony.jpg',
