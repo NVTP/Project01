@@ -1,4 +1,4 @@
-import 'package:assem_deal/shop/detail_customer.dart';
+import 'package:assem_deal/shop/notificationsEventShop/detail_customer.dart';
 import 'package:flutter/material.dart';
 
 class DetailEventShop extends StatefulWidget {
@@ -56,10 +56,10 @@ class _DetailEventShopState extends State<DetailEventShop> {
                       leading: CircleAvatar(
                         backgroundColor: Colors.transparent,
                         backgroundImage: AssetImage(
-                            'assets/prototype/virgil.jpg'
+                            'assets/prototype/razer.jpg'
                         ),
                       ),
-                      title: Text('Virgil van Dijk'),
+                      title: Text('AAAA'),
                       subtitle: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[

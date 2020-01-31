@@ -16,10 +16,25 @@ class _DetailCustomerState extends State<DetailCustomer> {
             centerTitle: true,
             floating: true,
           ),
-          SliverList(
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1.0,
+              crossAxisSpacing: 4.0,
+              mainAxisSpacing: 4.0,
+            ),
             delegate: SliverChildListDelegate([
-
-            ]),
+              Container(
+                color: Colors.black,
+                height: 250,
+                width: 250,
+              ),
+              Container(
+                width: 250,
+                height: 250,
+                color: Colors.amber,
+              ),
+            ])
           ),
         ],
       ),

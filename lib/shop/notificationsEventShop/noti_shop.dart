@@ -1,4 +1,4 @@
-import 'package:assem_deal/shop/detail_event_shop.dart';
+import 'package:assem_deal/shop/notificationsEventShop/detail_event_shop.dart';
 import 'package:flutter/material.dart';
 
 class NotificationShop extends StatefulWidget {

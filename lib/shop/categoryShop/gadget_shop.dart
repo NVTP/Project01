@@ -1,4 +1,5 @@
 import 'package:assem_deal/search.dart';
+import 'package:assem_deal/shop/controlPageShop/main_event_shop.dart';
 import 'package:flutter/material.dart';
 
 class GadgetShop extends StatefulWidget {
@@ -60,7 +61,11 @@ class _GadgetShopState extends State<GadgetShop> {
               width: 200,
               height: 250,
               child: InkWell(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>MainEventShop())
+                  );
+                },
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[

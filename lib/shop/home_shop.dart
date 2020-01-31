@@ -1,7 +1,9 @@
 import 'package:assem_deal/search.dart';
 import 'package:assem_deal/shop/categoryShop/clothing_shop.dart';
 import 'package:assem_deal/shop/categoryShop/gadget_shop.dart';
+import 'package:assem_deal/shop/categoryShop/new_shop.dart';
 import 'package:assem_deal/shop/categoryShop/shoes_shop.dart';
+import 'package:assem_deal/shop/categoryShop/warring_time_shop.dart';
 import 'package:assem_deal/shop/controlPageShop/main_event_shop.dart';
 import 'package:flutter/material.dart';
 
@@ -204,7 +206,18 @@ class _HomeShopState extends State<HomeShop> {
                                       SizedBox(
                                         width: 10.0,
                                       ),
-                                      Text('New !',style: TextStyle(color: Colors.blueGrey,fontSize: 20,fontWeight: FontWeight.bold),)
+                                      Text('New !',style: TextStyle(color: Colors.blueGrey,fontSize: 20,fontWeight: FontWeight.bold),),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      InkWell(
+                                        onTap: (){
+                                          Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)=>NewShop()),
+                                          );
+                                        },
+                                        child: Text('See all',style: TextStyle(fontSize: 20,color: Colors.blueGrey,decoration: TextDecoration.underline),),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -364,7 +377,18 @@ class _HomeShopState extends State<HomeShop> {
                                 SizedBox(
                                   width: 10.0,
                                 ),
-                                Text('Warring Time',style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 20.0),)
+                                Text('Warring Time',style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 20.0),),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    Navigator.push(context,
+                                    MaterialPageRoute(builder: (context)=>WarringTimeShop())
+                                    );
+                                  },
+                                  child: Text('See all',style: TextStyle(color: Colors.blueGrey,fontSize: 20,decoration: TextDecoration.underline),),
+                                ),
                               ],
                             ),
                           ),

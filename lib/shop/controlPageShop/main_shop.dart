@@ -1,7 +1,7 @@
 import 'package:assem_deal/shop/cart_shop.dart';
 import 'package:assem_deal/shop/home_shop.dart';
-import 'package:assem_deal/shop/noti_shop.dart';
-import 'package:assem_deal/shop/profile_shop.dart';
+import 'package:assem_deal/shop/notificationsEventShop/noti_shop.dart';
+import 'package:assem_deal/shop/profileShop/profile_shop.dart';
 import 'package:flutter/material.dart';
 
 class MainShop extends StatefulWidget {
