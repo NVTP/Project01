@@ -45,9 +45,6 @@ class _SelectVariations extends State<SelectVariations> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'Not Necessary'
-          ),
           Container(
             width: MediaQuery.of(context).size.width,
             child: RaisedButton(

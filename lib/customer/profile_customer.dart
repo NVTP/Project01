@@ -1,4 +1,5 @@
 import 'package:assem_deal/customer/choice/update_profile_customer.dart';
+import 'package:assem_deal/customer/choice/upload_image_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -49,6 +50,24 @@ class _ProfileCustomerState extends State<ProfileCustomer> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     children: <Widget>[
+                      ListTile(
+                        onTap: (){},
+                        leading: Icon(
+                          Icons.person,
+                        ),
+                        title: Text(
+                          'Profile',
+                          style: TextStyle(
+                              color: Colors.grey
+                          ),
+                        ),
+                        trailing: Icon(
+                            Icons.arrow_forward_ios
+                        ),
+                      ),
+                      Divider(
+                        height: 2.0,
+                      ),
                       ListTile(
                         onTap: (){
                           Navigator.push(context,

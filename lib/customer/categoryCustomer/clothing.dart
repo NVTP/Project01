@@ -1,7 +1,7 @@
 import 'package:assem_deal/customer/event_customer.dart';
+import 'package:assem_deal/search.dart';
 import 'package:flutter/material.dart';
 
-import '../search.dart';
 
 class Clothing extends StatefulWidget {
   @override

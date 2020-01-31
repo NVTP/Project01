@@ -17,11 +17,6 @@ class _EventCusShopState extends State<EventCusShop> {
               height: 10.0,
             ),
            ListTile(
-             onTap: (){
-               Navigator.push(context,
-               MaterialPageRoute(builder: (context)=>Checkouts())
-               );
-             },
              leading: CircleAvatar(
                maxRadius: 35.0,
                backgroundImage: AssetImage('assets/prototype/sony.jpg'),
@@ -56,7 +51,6 @@ class _EventCusShopState extends State<EventCusShop> {
               ),
             ),
             ListTile(
-              onTap: (){},
               leading: CircleAvatar(
                 maxRadius: 35.0,
                 backgroundColor: Colors.transparent,

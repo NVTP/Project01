@@ -1,6 +1,8 @@
-import 'package:assem_deal/category/clothing.dart';
-import 'package:assem_deal/category/gadget.dart';
-import 'package:assem_deal/category/shoes.dart';
+import 'package:assem_deal/customer/categoryCustomer/clothing.dart';
+import 'package:assem_deal/customer/categoryCustomer/gadget.dart';
+import 'package:assem_deal/customer/categoryCustomer/new_customer.dart';
+import 'package:assem_deal/customer/categoryCustomer/shoes.dart';
+import 'package:assem_deal/customer/categoryCustomer/warning_time.dart';
 import 'package:assem_deal/customer/controlPageCustomer/main_event.dart';
 import 'package:flutter/material.dart';
 import '../search.dart';
@@ -59,7 +61,7 @@ class _HomeCustomerState extends State<HomeCustomer> {
                   child: Container(
                       alignment: Alignment.topCenter,
                       child: SingleChildScrollView(
-                      child: Column(
+                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
@@ -201,7 +203,18 @@ class _HomeCustomerState extends State<HomeCustomer> {
                                       SizedBox(
                                         width: 10.0,
                                       ),
-                                      Text('New !',style: TextStyle(color: Colors.blueGrey,fontSize: 20.0,fontWeight: FontWeight.bold),)
+                                      Text('New !',style: TextStyle(color: Colors.blueGrey,fontSize: 20.0,fontWeight: FontWeight.bold),),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      InkWell(
+                                        onTap: (){
+                                          Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)=>NewCustomer())
+                                          );
+                                        },
+                                        child: Text('See all',style: TextStyle(color: Colors.blueGrey,fontSize: 20,decoration: TextDecoration.underline),),
+                                      ),
                                     ],
                                   ),
                                 ),//NEW
@@ -359,6 +372,17 @@ class _HomeCustomerState extends State<HomeCustomer> {
                                       ),
                                       Text('Warning Time !',
                                         style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 20.0),
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      InkWell(
+                                        onTap: (){
+                                          Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)=>WarningTime())
+                                          );
+                                        },
+                                        child: Text('See all',style: TextStyle(color: Colors.blueGrey,fontSize: 20,decoration: TextDecoration.underline),),
                                       ),
                                     ],
                                   ),

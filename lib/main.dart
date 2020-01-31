@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 main() => runApp(
   MaterialApp(
-    home: MainShop(),
+    home: MainCustomer(),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       brightness: Brightness.light,

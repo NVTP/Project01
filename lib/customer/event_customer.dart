@@ -65,10 +65,12 @@ class _EventCustomerState extends State<EventCustomer> {
                 SizedBox(
                   height: 10.0,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
                   children: <Widget>[
-                    Text('Resposible by Shop : AAAA'),
+                    Text('Resposible by Shop : Sony Thailand'),
+                    SizedBox(
+                      height: 5.0,
+                    ),
                     Text('Price per piece : 1500.00'),
                   ],
                 ),
@@ -156,12 +158,9 @@ class _EventCustomerState extends State<EventCustomer> {
                   ),
                   title: Text('Virgil van Dijk'),
                   subtitle: Text('Your Quantity : 2'),
-                  trailing: IconButton(
-                    onPressed: (){},
-                    icon: Icon(
-                      Icons.settings,
-                      color: Colors.grey[400],
-                    ),
+                  trailing: InkWell(
+                    onTap: (){},
+                    child: Text('Cancel',style: TextStyle(color: Colors.red),),
                   ),
                 ),
                 SizedBox(
@@ -170,6 +169,27 @@ class _EventCustomerState extends State<EventCustomer> {
                 Divider(
                   color: Colors.grey,
                   height: 5.0,
+                ),
+                Center(
+                  child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.blueGrey[300],
+                          borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Text(' Shop ',style: TextStyle(color: Colors.white,fontSize: 20),)
+                  ),
+                ),
+                ListTile(
+                  leading: CircleAvatar(
+                    maxRadius: 35.0,
+                    backgroundImage: AssetImage('assets/images/sony.jpeg'),
+                  ),
+                  title: Text('Sony Thailand'),
+                  subtitle: Text('Quantity : 120'),
+                  trailing: InkWell(
+                    onTap: (){},
+                    child: Text('Cancel',style: TextStyle(color: Colors.red),),
+                  ),
                 ),
               ],
             ),
