@@ -1,4 +1,9 @@
-import 'package:assem_deal/customer/choice/select_variations.dart';
+import 'package:assem_deal/customer/choice/clothing_select.dart';
+import 'package:assem_deal/customer/choice/cream_select.dart';
+import 'package:assem_deal/customer/choice/electronic_select.dart';
+import 'package:assem_deal/customer/choice/gadget_select.dart';
+import 'package:assem_deal/customer/choice/shoes_select.dart';
+import 'package:assem_deal/customer/choice/sport_select.dart';
 import 'package:assem_deal/customer/choice/upload_image_profile.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -148,6 +153,58 @@ class _CreateEventState extends State<CreateEvent> {
                           ),
                         ), //CATEGORY
                         SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: RaisedButton(
+                            color: Colors.white,
+                            onPressed: (){
+                              if(catDataSelected == 'Clothing'){
+                                Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>ClothingSelect())
+                                );
+                              }else if(catDataSelected == 'Shoes'){
+                                Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>ShoesSelect())
+                                );
+                              }else if(catDataSelected == 'Gadget'){
+                                Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>GadgetSelect())
+                                );
+                              }else if(catDataSelected == 'Beauty'){
+                                Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>CreamSelect())
+                                );
+                              }else if(catDataSelected == 'Sport'){
+                                Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>SportSelect())
+                                );
+                              }else{
+                                Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>ElectronicSelect())
+                                );
+                              }
+                            },
+                            elevation: 1.1,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Select variations ',
+                                  style: TextStyle(color: Colors.black),
+                                  children: <TextSpan>[
+                                    TextSpan(text: '(e.g. color ,size)',style: TextStyle(color: Colors.grey[300])),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
                           height: 10.0,
                         ),
                         SingleChildScrollView(
@@ -174,10 +231,6 @@ class _CreateEventState extends State<CreateEvent> {
                               },
                           ),
                         ),//PRODUCT DETAIL SCROLL VERTICAL
-                        SizedBox(
-                          height: 10,
-                        ),
-                        SelectVariations(),//SELECT VARIATIONS
                         SizedBox(
                           height: 10.0,
                         ),
@@ -237,7 +290,7 @@ class _CreateEventState extends State<CreateEvent> {
                                   ),
                                   validator: (data){
                                     if(data.isEmpty){
-                                      return 'Plese fill Amount need';
+                                      return 'Amount need';
                                     }else{
                                       return null;
                                     }

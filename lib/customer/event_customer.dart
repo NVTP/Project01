@@ -7,6 +7,27 @@ class EventCustomer extends StatefulWidget {
 }
 
 class _EventCustomerState extends State<EventCustomer> {
+  int _count;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _count = 1;
+  }
+
+  void add(){
+    setState(() {
+      _count++;
+    });
+  }
+  void minus(){
+    setState(() {
+      if(_count != 1){
+        _count--;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +82,6 @@ class _EventCustomerState extends State<EventCustomer> {
                 SizedBox(
                   height: 10.0,
                 ),
-                SelectVariations(),//SELECT VARIATIONS
                 SizedBox(
                   height: 10.0,
                 ),
@@ -69,10 +89,47 @@ class _EventCustomerState extends State<EventCustomer> {
                   children: <Widget>[
                     Text('Resposible by Shop : Sony Thailand'),
                     SizedBox(
-                      height: 5.0,
+                      height: 10.0,
                     ),
                     Text('Price per piece : 1500.00'),
                   ],
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.grey[200]
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        RawMaterialButton(
+                          onPressed: minus,
+                          child: Icon(
+                            Icons.remove,
+                            color: Colors.blueGrey[300],
+                          ),
+                        ),
+                        Text(
+                          '$_count',
+                          style: TextStyle(color: Colors.blueGrey[300],fontSize: 18),
+                        ),
+                        RawMaterialButton(
+                          onPressed: add,
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.blueGrey[300],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 20.0,
@@ -157,7 +214,13 @@ class _EventCustomerState extends State<EventCustomer> {
                     backgroundImage: AssetImage('assets/prototype/virgil.jpg'),
                   ),
                   title: Text('Virgil van Dijk'),
-                  subtitle: Text('Your Quantity : 2'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Your Quantity : 2'),
+                      Text('Color : Black')
+                    ],
+                  ),
                   trailing: InkWell(
                     onTap: (){},
                     child: Text('Cancel',style: TextStyle(color: Colors.red),),
