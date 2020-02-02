@@ -1,5 +1,5 @@
 import 'package:assem_deal/customer/controlPageCustomer/cart_event.dart';
-import 'package:assem_deal/customer/create_event.dart';
+import 'package:assem_deal/customer/createEvent/create_event.dart';
 import 'package:assem_deal/customer/home_customer.dart';
 import 'package:assem_deal/customer/noti_customer.dart';
 import 'package:assem_deal/customer/profile_customer.dart';

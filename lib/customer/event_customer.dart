@@ -1,4 +1,3 @@
-import 'package:assem_deal/customer/choice/select_variations.dart';
 import 'package:flutter/material.dart';
 
 class EventCustomer extends StatefulWidget {
