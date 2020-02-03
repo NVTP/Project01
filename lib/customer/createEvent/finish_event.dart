@@ -214,21 +214,33 @@ class _FinishEventState extends State<FinishEvent> {
                       SizedBox(
                         height: 20,
                       ),
-                      ListView(
-                        shrinkWrap: true,
-                        children: values.keys.map((String key){
-                          return CheckboxListTile(
-                            title: Text(key),
-                            value: values[key],
-                            activeColor: Colors.red,
-                            checkColor: Colors.white,
-                            onChanged: (bool value){
-                              setState(() {
-                                values[key] = value;
-                              });
-                            },
-                          );
-                        }).toList(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey
+                            ),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: values.keys.map((String key){
+                              return CheckboxListTile(
+                                title: Text(key),
+                                value: values[key],
+                                activeColor: Colors.red,
+                                checkColor: Colors.white,
+                                onChanged: (bool value){
+                                  setState(() {
+                                    values[key] = value;
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 20,

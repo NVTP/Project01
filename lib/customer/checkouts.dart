@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/choice/credit_card.dart';
 import 'package:flutter/material.dart';
 
 class Checkouts extends StatefulWidget {
@@ -8,11 +9,13 @@ class Checkouts extends StatefulWidget {
 class _CheckoutsState extends State<Checkouts> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _address;
+  bool _checkOuts;
 
   @override
   void initState() {
     // TODO: implement initState
     _address = TextEditingController();
+    _checkOuts = false;
     super.initState();
   }
 
@@ -128,6 +131,7 @@ class _CheckoutsState extends State<Checkouts> {
                       child: TextFormField(
                         controller: _address,
                         keyboardType: TextInputType.multiline,
+                        textAlign: TextAlign.justify,
                         maxLines: null,
                         decoration: InputDecoration(
                           hintText: 'Address',
@@ -149,33 +153,38 @@ class _CheckoutsState extends State<Checkouts> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    child: RaisedButton(
-                      color: Colors.white,
-                      onPressed: ()=>showSlideUpView(),
-                      elevation: 1.1,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Select Payments'
+                  Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Checkbox(
+                            value: _checkOuts,
+                            onChanged: (data){
+                              setState(() {
+                                _checkOuts = data;
+                              });
+                            },
+                          ),
+                          Text('Payment destination'),
+                          Text('< OR >',style: TextStyle(color: Colors.red),),
+                          RaisedButton(
+                            onPressed: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>CreditCard())
+                              );
+                            },
+                            elevation: 1.1,
+                            color: Colors.blueGrey[300],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.blueGrey[300],
-                            ),
-                          ],
-                        ),
+                            child: Text('Credit Card',style: TextStyle(color: Colors.white,),),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),//PAYMENTS
+                    ],
+                  ),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -195,41 +204,15 @@ class _CheckoutsState extends State<Checkouts> {
                       ),
                     ),
                   ),//CHECKOUTS
+                  SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  void showSlideUpView(){
-    showModalBottomSheet(
-        context: context,
-        builder: (context){
-          return Column(
-            children: <Widget>[
-              SizedBox(
-                height: 10.0,
-              ),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              Text('Ok'),
-              RaisedButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        }
     );
   }
 }

@@ -89,15 +89,24 @@ class _CreateEventState extends State<CreateEvent> {
                               child: ListView(
                                 children: <Widget>[
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       SizedBox(
                                         height: 10.0,
                                       ),
-                                      Text('This is Permission before create event'),
+                                      Text('This is Step for create event'),
                                       SizedBox(
                                         height: 5.0,
                                       ),
-                                      Text('ok'),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text('Event Name is Name of Event'),
+                                          Text('Step : 1 Chose Category of product'),
+                                          Text('Step : 2 Chose Type of product'),
+                                          Text('Step : 3 Chose Color or Size of product'),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ],

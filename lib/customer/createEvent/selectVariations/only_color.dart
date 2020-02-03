@@ -80,6 +80,19 @@ class _OnlyColorState extends State<OnlyColor> {
                           Text('Black'),
                         ],
                       ),
+                      Row(
+                        children: <Widget>[
+                          Checkbox(
+                            value: cbColor,
+                            onChanged: (data){
+                              setState(() {
+                                cbColor = data;
+                              });
+                            },
+                          ),
+                          Text('White'),
+                        ],
+                      ),
                     ],
                   ),
                   showDialog == true ?
