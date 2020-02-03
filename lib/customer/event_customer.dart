@@ -6,6 +6,22 @@ class EventCustomer extends StatefulWidget {
 }
 
 class _EventCustomerState extends State<EventCustomer> {
+  Map<String, bool>values ={
+    'Black': false,
+    'White': false,
+  };
+
+  var tmpArray=[];
+
+  getCheckboxItems(){
+    values.forEach((key, value){
+      if(value == true){
+        tmpArray.add(key);
+      }
+    });
+
+    tmpArray.clear();
+  }
   int _count;
 
   @override
@@ -95,6 +111,37 @@ class _EventCustomerState extends State<EventCustomer> {
                 ),
                 SizedBox(
                   height: 20.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1.0
+                      )
+                    ),
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: values.keys.map((String key){
+                        return CheckboxListTile(
+                          title: Text(key),
+                          value: values[key],
+                          activeColor: Colors.red,
+                          checkColor: Colors.white,
+                          onChanged: (bool value){
+                            setState(() {
+                              values[key]= value;
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),

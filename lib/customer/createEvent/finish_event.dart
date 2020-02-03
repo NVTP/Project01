@@ -4,12 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FinishEvent extends StatefulWidget {
-
   @override
   _FinishEventState createState() => _FinishEventState();
 }
 
 class _FinishEventState extends State<FinishEvent> {
+  Map<String, bool>values={
+    'Black':true,
+    'White':true,
+  };
+
+  var tmpArray=[];
+
+  getCheckboxItems(){
+    values.forEach((key, value){
+      if(value == true){
+        tmpArray.add(key);
+      }
+    });
+    tmpArray.clear();
+  }
   final _formKey = GlobalKey<FormState>();
   int _count;
   TextEditingController _productDetail;
@@ -137,7 +151,7 @@ class _FinishEventState extends State<FinishEvent> {
                                   hintText: '0 Bath',
                                   hintStyle: TextStyle(fontSize: 18),
                                   border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)
+                                      borderRadius: BorderRadius.circular(10)
                                   ),
                                 ),
                                 validator: (data){
@@ -159,7 +173,7 @@ class _FinishEventState extends State<FinishEvent> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: <Widget>[
-                            Checkbox(),
+
                           ],
                         ),
                       ),
@@ -200,6 +214,25 @@ class _FinishEventState extends State<FinishEvent> {
                       SizedBox(
                         height: 20,
                       ),
+                      ListView(
+                        shrinkWrap: true,
+                        children: values.keys.map((String key){
+                          return CheckboxListTile(
+                            title: Text(key),
+                            value: values[key],
+                            activeColor: Colors.red,
+                            checkColor: Colors.white,
+                            onChanged: (bool value){
+                              setState(() {
+                                values[key] = value;
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -218,7 +251,7 @@ class _FinishEventState extends State<FinishEvent> {
                             ),
                           ),
                           SizedBox(
-                            width: 5.0
+                              width: 5.0
                           ),
                           Expanded(
                             flex: 1,
@@ -227,7 +260,7 @@ class _FinishEventState extends State<FinishEvent> {
                               child: RaisedButton(
                                 onPressed: (){
                                   Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>MainEvent())
+                                      MaterialPageRoute(builder: (context)=>MainEvent())
                                   );
                                 },
                                 elevation: 1.1,
