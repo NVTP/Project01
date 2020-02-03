@@ -1,6 +1,7 @@
 import 'package:assem_deal/customer/createEvent/clothing_select.dart';
 import 'package:assem_deal/customer/createEvent/cream_select.dart';
 import 'package:assem_deal/customer/createEvent/electronic_select.dart';
+import 'package:assem_deal/customer/createEvent/finish_event.dart';
 import 'package:assem_deal/customer/createEvent/gadget_select.dart';
 import 'package:assem_deal/customer/createEvent/shoes_select.dart';
 import 'package:assem_deal/customer/createEvent/sport_select.dart';
@@ -19,21 +20,13 @@ class _CreateEventState extends State<CreateEvent> {
   List<DropdownMenuItem<String>> catToDo = []; //bring data to dropdown
   String catDataSelected; // keep data for dropdown select
 
-  TextEditingController _productType;
   TextEditingController _productName;
-  TextEditingController _productDetail;
-  TextEditingController _productNeed;
-  TextEditingController _productMediumPrice;
   TextEditingController _eventName;
 
   @override
   void initState() {
     // TODO: implement initState
-    _productType = TextEditingController();
     _productName = TextEditingController();
-    _productDetail = TextEditingController();
-    _productNeed = TextEditingController();
-    _productMediumPrice = TextEditingController();
     _eventName = TextEditingController();
 
     super.initState();
@@ -138,33 +131,6 @@ class _CreateEventState extends State<CreateEvent> {
                               }
                             },
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            controller: _productName,
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.event,
-                                color: Colors.blueGrey[300],
-                              ),
-                              hintText: 'Product Name',
-                              hintStyle: TextStyle(color: Colors.blueGrey[300]),
-                              labelText: 'Product Name',
-                              labelStyle: TextStyle(color: Colors.blueGrey[300]),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Plese Fill Product Name';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ), //PRODUCT NAME
                           SizedBox(
                             height: 20.0,
                           ),

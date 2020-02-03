@@ -204,7 +204,7 @@ class _EventCustomerState extends State<EventCustomer> {
                       color: Colors.blueGrey[300],
                       borderRadius: BorderRadius.circular(5)
                     ),
-                      child: Text(' Your ',style: TextStyle(color: Colors.white,fontSize: 20),)
+                      child: Text(' The Creator ',style: TextStyle(color: Colors.white,fontSize: 20),)
                   ),
                 ),
                 ListTile(
