@@ -1,3 +1,5 @@
+import 'package:assem_deal/shop/profileShop/information_shop.dart';
+import 'package:assem_deal/shop/profileShop/update_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -49,7 +51,11 @@ class _ProfileShopState extends State<ProfileShop> {
               child: Column(
                 children: <Widget>[
                   ListTile(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>InformationShop())
+                      );
+                    },
                     leading: Icon(
                       Icons.person,
                     ),
@@ -67,7 +73,11 @@ class _ProfileShopState extends State<ProfileShop> {
                     height: 2.0,
                   ),
                   ListTile(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>UpdateShop())
+                      );
+                    },
                     leading: Icon(
                       Icons.settings,
                     ),

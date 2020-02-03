@@ -177,6 +177,9 @@ class _ShopEventState extends State<ShopEvent> {
                     ),
                     child: Text('Offer', style: TextStyle(color: Colors.white,fontSize: 20),),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Divider(
                     height: 5.0,
                     color: Colors.grey,

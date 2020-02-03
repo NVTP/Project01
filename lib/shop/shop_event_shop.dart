@@ -17,7 +17,6 @@ class _ShopEventShopState extends State<ShopEventShop> {
                 height: 5.0,
               ),
               ListTile(
-                onTap: (){},
                 leading: CircleAvatar(
                   backgroundColor: Colors.transparent,
                   backgroundImage: AssetImage(
