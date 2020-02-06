@@ -1,7 +1,5 @@
 import 'package:assem_deal/customer/createEvent/clothing_select.dart';
-import 'package:assem_deal/customer/createEvent/cream_select.dart';
 import 'package:assem_deal/customer/createEvent/electronic_select.dart';
-import 'package:assem_deal/customer/createEvent/finish_event.dart';
 import 'package:assem_deal/customer/createEvent/gadget_select.dart';
 import 'package:assem_deal/customer/createEvent/shoes_select.dart';
 import 'package:assem_deal/customer/createEvent/sport_select.dart';
@@ -20,13 +18,11 @@ class _CreateEventState extends State<CreateEvent> {
   List<DropdownMenuItem<String>> catToDo = []; //bring data to dropdown
   String catDataSelected; // keep data for dropdown select
 
-  TextEditingController _productName;
   TextEditingController _eventName;
 
   @override
   void initState() {
     // TODO: implement initState
-    _productName = TextEditingController();
     _eventName = TextEditingController();
 
     super.initState();
@@ -35,7 +31,6 @@ class _CreateEventState extends State<CreateEvent> {
       'Gadget',
       'Clothing',
       'Shoes',
-      'Beauty',
       'Sport',
       'Electric',
     ];
@@ -183,10 +178,6 @@ class _CreateEventState extends State<CreateEvent> {
                               }else if(catDataSelected == 'Gadget'){
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context)=>GadgetSelect())
-                                );
-                              }else if(catDataSelected == 'Beauty'){
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context)=>CreamSelect())
                                 );
                               }else if(catDataSelected == 'Sport'){
                                 Navigator.push(context,

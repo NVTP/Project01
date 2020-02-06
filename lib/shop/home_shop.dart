@@ -150,26 +150,6 @@ class _HomeShopState extends State<HomeShop> {
                                       RawMaterialButton(
                                         onPressed: (){},
                                         child: Image.asset(
-                                          'assets/images/cream.png',
-                                          fit: BoxFit.cover,
-                                          height: 50,
-                                          alignment: Alignment.center,
-                                          color: Colors.blueGrey,
-                                        ),
-                                        elevation: 1.1,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(20)
-                                        ),
-                                      ),
-                                    ],
-                                  ),//CREAM
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      RawMaterialButton(
-                                        onPressed: (){},
-                                        child: Image.asset(
                                           'assets/images/eletronic.png',
                                           fit: BoxFit.cover,
                                           height: 50,

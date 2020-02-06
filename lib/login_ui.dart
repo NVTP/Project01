@@ -3,6 +3,7 @@ import 'package:assem_deal/customer/register_customer.dart';
 import 'package:assem_deal/shop/controlPageShop/main_shop.dart';
 import 'package:assem_deal/shop/register_shop.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginUI extends StatefulWidget {
@@ -14,7 +15,7 @@ class _LoginUIState extends State<LoginUI> {
 
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _username = new TextEditingController();
+  TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
 
   bool showPW = true;
@@ -71,12 +72,11 @@ class _LoginUIState extends State<LoginUI> {
                                      padding: const EdgeInsets.symmetric(horizontal: 10),
                                      child: TextFormField(
                                        maxLines: 1,
-                                       controller: _username,
+                                       controller: _email,
+                                       keyboardType: TextInputType.emailAddress,
                                        validator: (value){
                                          if(value.isEmpty){
-                                           return 'username not empty';
-                                         }else if(value.length <= 5 ){
-                                            return 'username less than 5 charecters';
+                                           return 'email not empty';
                                          }else{
                                            return null;
                                          }
@@ -86,8 +86,8 @@ class _LoginUIState extends State<LoginUI> {
                                            Icons.person,
                                            color: Colors.blueGrey[200],
                                          ),
-                                         hintText: 'Username',hintStyle: TextStyle(color: Colors.blueGrey[200]),
-                                         labelText: 'Username',labelStyle: TextStyle(color: Colors.blueGrey[200]),
+                                         hintText: 'Email',hintStyle: TextStyle(color: Colors.blueGrey[200]),
+                                         labelText: 'Email',labelStyle: TextStyle(color: Colors.blueGrey[200]),
                                          border: OutlineInputBorder(
                                            borderRadius: BorderRadius.circular(20),
                                          ),
@@ -104,6 +104,7 @@ class _LoginUIState extends State<LoginUI> {
                                        controller: _password,
                                        obscureText: showPW,
                                        keyboardType: TextInputType.visiblePassword,
+                                       inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                                        validator: (value){
                                          if(value.isEmpty){
                                            return 'password not empty';
@@ -150,11 +151,11 @@ class _LoginUIState extends State<LoginUI> {
                                        child: RaisedButton(
                                          onPressed: (){
                                              if(_formKey.currentState.validate()){
-                                               if(_username.text.trim() == 'customer' && _password.text.trim() == '123456'){
+                                               if(_email.text.trim() == 'customer' && _password.text.trim() == '123456'){
                                                  Navigator.push(context,
                                                    MaterialPageRoute(builder: (context)=> MainCustomer()),
                                                  );
-                                               }else if(_username.text.trim() == 'username' && _password.text.trim() == '123456'){
+                                               }else if(_email.text.trim() == 'username' && _password.text.trim() == '123456'){
                                                  Navigator.push(context,
                                                    MaterialPageRoute(builder: (context)=> MainShop()),
                                                  );

@@ -16,7 +16,6 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _cusFName ;
   TextEditingController _cusLName;
-  TextEditingController _cusUsername ;
   TextEditingController _cusPassword ;
   TextEditingController _cusEmail ;
   TextEditingController _cusPhone ;
@@ -33,7 +32,6 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
     gender = 'Man';
     _cusFName = TextEditingController();
     _cusLName = TextEditingController();
-    _cusUsername = TextEditingController();
     _cusPassword = TextEditingController();
     _cusEmail = TextEditingController();
     _cusPhone = TextEditingController();
@@ -196,33 +194,6 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                             ),
                           ),
                         ),//BIRTH DAY
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        TextFormField(
-                          maxLines: 1,
-                          controller: _cusUsername,
-                          validator: (value){
-                            if(value.isEmpty){
-                              return 'username not empty';
-                            }else if(value.length <= 5 ){
-                              return 'username less than 5 charecters';
-                            }else{
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.person,
-                              color: Colors.blueGrey[200],
-                            ),
-                            hintText: 'Username',hintStyle: TextStyle(color: Colors.blueGrey[200]),
-                            labelText: 'Username',labelStyle: TextStyle(color: Colors.blueGrey[200]),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                        ),//Username
                         SizedBox(
                           height: 10.0,
                         ),

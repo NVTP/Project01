@@ -139,20 +139,6 @@ class _HomeCustomerState extends State<HomeCustomer> {
                                       RawMaterialButton(
                                         onPressed: (){},
                                         child: Image.asset(
-                                          'assets/images/cream.png',
-                                          color: Colors.blueGrey,
-                                          alignment: Alignment.center,
-                                          fit: BoxFit.cover,
-                                          height: 50.0,
-                                        ),
-                                        elevation: 1.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                      ),
-                                      RawMaterialButton(
-                                        onPressed: (){},
-                                        child: Image.asset(
                                           'assets/images/sport.png',
                                           color: Colors.blueGrey,
                                           alignment: Alignment.center,

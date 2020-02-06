@@ -10,7 +10,6 @@ class _RegisterShopState extends State<RegisterShop> {
   bool showPW = true;
   String typeShop;
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _shopUsername ;
   TextEditingController _shopPassword;
   TextEditingController _shopTax ;
   TextEditingController _shopAddress ;
@@ -28,7 +27,6 @@ class _RegisterShopState extends State<RegisterShop> {
   void initState() {
     // TODO: implement initState
     typeShop = 'Individual';
-    _shopUsername = TextEditingController();
     _shopPassword = TextEditingController();
     _shopTax = TextEditingController();
     _shopAddress = TextEditingController();
@@ -125,74 +123,6 @@ class _RegisterShopState extends State<RegisterShop> {
                             height: 10.0,
                           ),
                           TextFormField(
-                            maxLines: 1,
-                            controller: _shopUsername,
-                            validator: (data){
-                              if(data.isEmpty){
-                                return 'Please check Username';
-                              }else{
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.person,
-                                color: Colors.blueGrey[200],
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              hintText: 'Username',
-                              hintStyle: TextStyle(color: Colors.blueGrey[200]),
-                              labelText: 'Username',
-                              labelStyle: TextStyle(color: Colors.blueGrey[200]),
-                            ),
-                          ),//USERNAME
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          TextFormField(
-                            maxLines: 1,
-                            controller: _shopPassword,
-                            validator: (data){
-                              if(data.isEmpty){
-                                return 'Please check Password';
-                              }else{
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.vpn_key,
-                                color: Colors.blueGrey[200],
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              hintText: 'Username',
-                              hintStyle: TextStyle(color: Colors.blueGrey[200]),
-                              labelText: 'Username',
-                              labelStyle: TextStyle(color: Colors.blueGrey[200]),
-                              suffixIcon: IconButton(
-                                onPressed: (){
-                                  setState(() {
-                                    if(showPW == true){
-                                      showPW = false;
-                                    }else{
-                                      showPW = true;
-                                    }
-                                  });
-                                },
-                                icon: Icon(
-                                  showPW ? Icons.visibility_off : Icons.visibility,
-                                ),
-                              ),
-                            ),
-                          ),//PASSWORD
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             maxLines: 1,
                             controller: _shopEmail,
@@ -217,6 +147,47 @@ class _RegisterShopState extends State<RegisterShop> {
                               labelStyle: TextStyle(color: Colors.blueGrey[200]),
                             ),
                           ),//EMAIL
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          TextFormField(
+                            maxLines: 1,
+                            controller: _shopPassword,
+                            validator: (data){
+                              if(data.isEmpty){
+                                return 'Please check Password';
+                              }else{
+                                return null;
+                              }
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.vpn_key,
+                                color: Colors.blueGrey[200],
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              hintText: 'Password',
+                              hintStyle: TextStyle(color: Colors.blueGrey[200]),
+                              labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.blueGrey[200]),
+                              suffixIcon: IconButton(
+                                onPressed: (){
+                                  setState(() {
+                                    if(showPW == true){
+                                      showPW = false;
+                                    }else{
+                                      showPW = true;
+                                    }
+                                  });
+                                },
+                                icon: Icon(
+                                  showPW ? Icons.visibility_off : Icons.visibility,
+                                ),
+                              ),
+                            ),
+                          ),//PASSWORD
                           SizedBox(
                             height: 10.0,
                           ),
