@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'dart:async';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterShop extends StatefulWidget {
   @override
@@ -16,6 +19,7 @@ class _RegisterShopState extends State<RegisterShop> {
   TextEditingController _shopEmail ;
   TextEditingController _shopPhone ;
   TextEditingController _shopName ;
+  File imageProfile;
 
   _handleRadioValueChange(String value){
     setState(() {
@@ -36,6 +40,60 @@ class _RegisterShopState extends State<RegisterShop> {
 
     super.initState();
   }
+
+  Future getImageCamera() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      imageProfile = image;
+    });
+  }
+  Future getImageGallery() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      imageProfile = image;
+    });
+  }
+
+  Widget showImage(){
+    return Center(
+      child: imageProfile == null
+          ? Container(
+        height: 200,
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+                color: Colors.grey,
+                width: 1.0
+            )
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.image,
+              size: 80,
+              color: Colors.grey,
+            ),
+            Text(
+              'Add Image',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      )
+          : CircleAvatar(
+        backgroundColor: Colors.transparent,
+        backgroundImage: FileImage(imageProfile),
+        radius: 120,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +105,7 @@ class _RegisterShopState extends State<RegisterShop> {
       body: SafeArea(
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 9.8,
           child: SingleChildScrollView(
@@ -58,39 +116,71 @@ class _RegisterShopState extends State<RegisterShop> {
                   SizedBox(
                     height: 15.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      child: Text('Type Shop',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.blueGrey),),
-                    ),
-                  ),//TYPE
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Radio(
-                        value: 'Individual',
-                        groupValue: typeShop,
-                        onChanged: _handleRadioValueChange,
-                      ),
-                      Text('Personal',style: TextStyle(color: Colors.blueGrey, fontSize: 18.0, fontWeight: FontWeight.bold),),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Radio(
-                          value: 'Company',
-                          groupValue: typeShop,
-                          onChanged: _handleRadioValueChange,
-                        ),
-                      ),
-                      Text('Company',style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 18.0),),
-                    ],
-                  ),
                   Form(
                     key: _formKey,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Column(
                         children: <Widget>[
+                          SizedBox(
+                            height: 10,
+                          ),
+                          showImage(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              RaisedButton(
+                                color: Colors.blueGrey[300],
+                                child: Text('Take Photo',style: TextStyle(color: Colors.white),),
+                                onPressed: (){
+                                  getImageCamera();
+                                },
+                              ),
+                              RaisedButton(
+                                color: Colors.blueGrey[300],
+                                child: Text('Add Picture',style: TextStyle(color: Colors.white),),
+                                onPressed: (){
+                                  getImageGallery();
+                                },
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0,top: 15),
+                            child: Container(
+                              alignment: Alignment.topLeft,
+                              child: Text('Type Shop',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.blueGrey),),
+                            ),
+                          ),//TYPE
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Radio(
+                                value: 'Individual',
+                                groupValue: typeShop,
+                                onChanged: _handleRadioValueChange,
+                              ),
+                              Text('Personal',style: TextStyle(color: Colors.blueGrey, fontSize: 18.0, fontWeight: FontWeight.bold),),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Radio(
+                                  value: 'Company',
+                                  groupValue: typeShop,
+                                  onChanged: _handleRadioValueChange,
+                                ),
+                              ),
+                              Text('Company',style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 18.0),),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           TextFormField(
                             maxLength: 13,
                             maxLines: 1,

@@ -6,6 +6,15 @@ class DetailCustomer extends StatefulWidget {
 }
 
 class _DetailCustomerState extends State<DetailCustomer> {
+  bool cbSend;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cbSend = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,9 +68,42 @@ class _DetailCustomerState extends State<DetailCustomer> {
                           margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                             child: Column(
                               children: <Widget>[
-                                Text('167/1 ถ.เจษฎาวิถี ต.มหาชัย อ.เมือง จ.สมุทรสาคร'),
                                 Text('Color : Black'),
-                                Text('Quantity : 2'),
+                                Text('Quantlity : 2'),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Colors.red[700],
+                                      width: 1.0
+                                    )
+                                  ),
+                                    child: Text('167/1 ถ.เจษฎาวิถี ต.มหาชัย อ.เมือง จ.สมุทรสาคร')
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Checkbox(
+                                      value: cbSend,
+                                      onChanged: (data){
+                                        setState(() {
+                                          cbSend = data;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text('Finished'),
+                                  ],
+                                ),
                               ],
                             ),
                         ),

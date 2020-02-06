@@ -95,24 +95,6 @@ class _ProfileShopState extends State<ProfileShop> {
                     height: 2.0,
                   ),
                   ListTile(
-                    onTap: (){},
-                    leading: Icon(
-                      Icons.help,
-                    ),
-                    title: Text(
-                      'Help & Report',
-                      style: TextStyle(
-                          color: Colors.grey
-                      ),
-                    ),
-                    trailing: Icon(
-                        Icons.arrow_forward_ios
-                    ),
-                  ),
-                  Divider(
-                    height: 2.0,
-                  ),
-                  ListTile(
                     onTap: (){
                       SystemNavigator.pop();
                     },

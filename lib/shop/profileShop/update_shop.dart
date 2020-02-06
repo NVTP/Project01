@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'dart:io';
 
 class UpdateShop extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class _UpdateShopState extends State<UpdateShop> {
   TextEditingController _shopEmail ;
   TextEditingController _shopPhone ;
   TextEditingController _shopName ;
+  File imageProfile;
 
   @override
   void initState() {
@@ -21,6 +25,59 @@ class _UpdateShopState extends State<UpdateShop> {
     _shopEmail = TextEditingController();
     _shopPhone = TextEditingController();
     _shopName = TextEditingController();
+  }
+
+  Future getImageCamera() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      imageProfile = image;
+    });
+  }
+  Future getImageGallery() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      imageProfile = image;
+    });
+  }
+
+  Widget showImage(){
+    return Center(
+      child: imageProfile == null
+          ? Container(
+        height: 200,
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+                color: Colors.grey,
+                width: 1.0
+            )
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.image,
+              size: 80,
+              color: Colors.grey,
+            ),
+            Text(
+              'Add Image',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      )
+          : CircleAvatar(
+        backgroundColor: Colors.transparent,
+        backgroundImage: FileImage(imageProfile),
+        radius: 120,
+      ),
+    );
   }
 
   @override
@@ -44,6 +101,38 @@ class _UpdateShopState extends State<UpdateShop> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      SizedBox(
+                        height: 10,
+                      ),
+                      showImage(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          RaisedButton(
+                            color: Colors.blueGrey[300],
+                            child: Text('Take Photo',style: TextStyle(color: Colors.white),),
+                            onPressed: (){
+                              getImageCamera();
+                            },
+                          ),
+                          RaisedButton(
+                            color: Colors.blueGrey[300],
+                            child: Text('Add Picture',style: TextStyle(color: Colors.white),),
+                            onPressed: (){
+                              getImageGallery();
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         controller: _shopName,
                         maxLines: 1,
@@ -147,6 +236,9 @@ class _UpdateShopState extends State<UpdateShop> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)
                         ),
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                     ],
                   ),
