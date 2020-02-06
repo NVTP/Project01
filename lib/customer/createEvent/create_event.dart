@@ -32,7 +32,7 @@ class _CreateEventState extends State<CreateEvent> {
       'Clothing',
       'Shoes',
       'Sport',
-      'Electric',
+      'Electronic',
     ];
     for (int i = 0; i < catData.length; i++) {
       catToDo.add(

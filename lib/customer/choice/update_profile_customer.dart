@@ -85,194 +85,200 @@ class _UpdateProfileState extends State<UpdateProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Update Profile',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Form(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 10,
-                          ),
-                          showImage(),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: CustomScrollView(
+        shrinkWrap: true,
+        slivers: <Widget>[
+          SliverAppBar(
+            title: Text('Update Profile',style: TextStyle(color: Colors.white),),
+            centerTitle: true,
+            floating: true,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Center(
+                child: Form(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
                             children: <Widget>[
+                              SizedBox(
+                                height: 10,
+                              ),
+                              showImage(),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  RaisedButton(
+                                    color: Colors.blueGrey[300],
+                                    child: Text('Take Photo',style: TextStyle(color: Colors.white),),
+                                    onPressed: (){
+                                      getImageCamera();
+                                    },
+                                  ),
+                                  RaisedButton(
+                                    color: Colors.blueGrey[300],
+                                    child: Text('Add Picture',style: TextStyle(color: Colors.white),),
+                                    onPressed: (){
+                                      getImageGallery();
+                                    },
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                controller: _cusFName,
+                                maxLines: 1,
+                                keyboardType: TextInputType.text,
+                                validator: (data){
+                                  if(data.isEmpty){
+                                    return 'Plese check First Name';
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                    labelText: 'First Name',
+                                    labelStyle: TextStyle(color: Colors.blueGrey[300]),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10)
+                                    )
+                                ),
+                              ),//FIRST NAME
                               SizedBox(
                                 height: 10.0,
                               ),
-                              RaisedButton(
-                                color: Colors.blueGrey[300],
-                                child: Text('Take Photo',style: TextStyle(color: Colors.white),),
-                                onPressed: (){
-                                  getImageCamera();
+                              TextFormField(
+                                controller: _cusLName,
+                                maxLines: 1,
+                                keyboardType: TextInputType.text,
+                                validator: (data){
+                                  if(data.isEmpty){
+                                    return 'Plese check Last Name';
+                                  }else{
+                                    return null;
+                                  }
                                 },
+                                decoration: InputDecoration(
+                                    labelText: 'Last Name',
+                                    labelStyle: TextStyle(color: Colors.blueGrey[300]),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10)
+                                    )
+                                ),
+                              ),//LAST NAME
+                              SizedBox(
+                                height: 10.0,
                               ),
-                              RaisedButton(
-                                color: Colors.blueGrey[300],
-                                child: Text('Add Picture',style: TextStyle(color: Colors.white),),
-                                onPressed: (){
-                                  getImageGallery();
+                              TextFormField(
+                                controller: _cusPassword,
+                                maxLines: 1,
+                                keyboardType: TextInputType.text,
+                                validator: (data){
+                                  if(data.isEmpty){
+                                    return 'Plese check Password';
+                                  }else{
+                                    return null;
+                                  }
                                 },
+                                decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    labelStyle: TextStyle(color: Colors.blueGrey[300]),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10)
+                                    )
+                                ),
+                              ),//PASSWORD
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                controller: _cusEmail,
+                                maxLines: 1,
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (data){
+                                  if(data.isEmpty){
+                                    return 'Plese check Email';
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                    labelText: 'Email',
+                                    labelStyle: TextStyle(color: Colors.blueGrey[300]),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10)
+                                    )
+                                ),
+                              ),//Email
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                controller: _cusPhone,
+                                maxLength: 10,
+                                maxLines: 1,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                                validator: (data){
+                                  if(data.isEmpty){
+                                    return 'Plese check Phone Number';
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                    labelText: 'Phone Number',
+                                    labelStyle: TextStyle(color: Colors.blueGrey[300]),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10)
+                                    )
+                                ),
+                              ),//PHONE
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 40,
+                                child: RaisedButton(
+                                  onPressed: (){},
+                                  child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                  color: Colors.blueGrey[300],
+                                  elevation: 1.1,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            controller: _cusFName,
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            validator: (data){
-                              if(data.isEmpty){
-                                return 'Plese check First Name';
-                              }else{
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'First Name',
-                              labelStyle: TextStyle(color: Colors.blueGrey[300]),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)
-                              )
-                            ),
-                          ),//FIRST NAME
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          TextFormField(
-                            controller: _cusLName,
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            validator: (data){
-                              if(data.isEmpty){
-                                return 'Plese check Last Name';
-                              }else{
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                                labelText: 'Last Name',
-                                labelStyle: TextStyle(color: Colors.blueGrey[300]),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)
-                                )
-                            ),
-                          ),//LAST NAME
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          TextFormField(
-                            controller: _cusPassword,
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            validator: (data){
-                              if(data.isEmpty){
-                                return 'Plese check Password';
-                              }else{
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                                labelText: 'Password',
-                                labelStyle: TextStyle(color: Colors.blueGrey[300]),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)
-                                )
-                            ),
-                          ),//PASSWORD
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          TextFormField(
-                            controller: _cusEmail,
-                            maxLines: 1,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (data){
-                              if(data.isEmpty){
-                                return 'Plese check Email';
-                              }else{
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                                labelText: 'Email',
-                                labelStyle: TextStyle(color: Colors.blueGrey[300]),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)
-                                )
-                            ),
-                          ),//Email
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          TextFormField(
-                            controller: _cusPhone,
-                            maxLength: 10,
-                            maxLines: 1,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                            validator: (data){
-                              if(data.isEmpty){
-                                return 'Plese check Phone Number';
-                              }else{
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                                labelText: 'Phone Number',
-                                labelStyle: TextStyle(color: Colors.blueGrey[300]),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)
-                                )
-                            ),
-                          ),//PHONE
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 40,
-                            child: RaisedButton(
-                              onPressed: (){},
-                              child: Text('Save',style: TextStyle(color: Colors.white,fontSize: 20),),
-                              color: Colors.blueGrey[300],
-                              elevation: 1.1,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ]),
           ),
-        ),
+        ],
       ),
     );
   }

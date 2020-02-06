@@ -1,7 +1,9 @@
 import 'package:assem_deal/customer/categoryCustomer/clothing.dart';
+import 'package:assem_deal/customer/categoryCustomer/electronic.dart';
 import 'package:assem_deal/customer/categoryCustomer/gadget.dart';
 import 'package:assem_deal/customer/categoryCustomer/new_customer.dart';
 import 'package:assem_deal/customer/categoryCustomer/shoes.dart';
+import 'package:assem_deal/customer/categoryCustomer/sport.dart';
 import 'package:assem_deal/customer/categoryCustomer/warning_time.dart';
 import 'package:assem_deal/customer/controlPageCustomer/main_event.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +139,11 @@ class _HomeCustomerState extends State<HomeCustomer> {
                                         ),
                                       ),
                                       RawMaterialButton(
-                                        onPressed: (){},
+                                        onPressed: (){
+                                          Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)=>Sport())
+                                          );
+                                        },
                                         child: Image.asset(
                                           'assets/images/sport.png',
                                           color: Colors.blueGrey,
@@ -151,7 +157,11 @@ class _HomeCustomerState extends State<HomeCustomer> {
                                         ),
                                       ),
                                       RawMaterialButton(
-                                        onPressed: (){},
+                                        onPressed: (){
+                                          Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)=>Electronic())
+                                          );
+                                        },
                                         child: Image.asset(
                                           'assets/images/eletronic.png',
                                           color: Colors.blueGrey,

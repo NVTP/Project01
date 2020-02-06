@@ -30,7 +30,17 @@ class _ElectronicSelectState extends State<ElectronicSelect> {
                     MaterialPageRoute(builder: (context)=>OnlyColor())
                     );
                   },
-                  title: Text('555550000'),
+                  title: Text('The Kitchen'),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                ListTile(
+                  onTap: (){},
+                  title: Text('IT/Computer'),
                   trailing: Icon(
                     Icons.arrow_forward_ios
                   ),

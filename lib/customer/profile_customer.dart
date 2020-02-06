@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/choice/customer_status.dart';
 import 'package:assem_deal/customer/choice/update_profile_customer.dart';
 import 'package:assem_deal/customer/choice/upload_image_profile.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,11 @@ class _ProfileCustomerState extends State<ProfileCustomer> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        onTap: (){},
+                        onTap: (){
+                          Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>CustomerStatus())
+                          );
+                        },
                         leading: Icon(
                           Icons.person,
                         ),
