@@ -1,12 +1,13 @@
 import 'package:assem_deal/customer/createEvent/finish_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class ColorSize extends StatefulWidget {
+class SizeShoes extends StatefulWidget {
   @override
-  _ColorSizeState createState() => _ColorSizeState();
+  _SizeShoesState createState() => _SizeShoesState();
 }
 
-class _ColorSizeState extends State<ColorSize> {
+class _SizeShoesState extends State<SizeShoes> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _color;
   TextEditingController _size;
@@ -22,13 +23,12 @@ class _ColorSizeState extends State<ColorSize> {
     _color = TextEditingController();
     _size = TextEditingController();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text('Create Event Step : 3'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -111,7 +111,7 @@ class _ColorSizeState extends State<ColorSize> {
                       ),
                     ],
                   ),
-                  showDialogColor == true ?
+                  showDialog == true ?
                   AlertDialog(
                     title: Text('Choose Color for Event'),
                     content: Form(
@@ -226,7 +226,7 @@ class _ColorSizeState extends State<ColorSize> {
                         ),
                       ),
                       ListTile(
-                        title: Text('M'),
+                        title: Text('38'),
                         trailing: IconButton(
                           icon: Icon(
                               Icons.clear
@@ -239,7 +239,7 @@ class _ColorSizeState extends State<ColorSize> {
                         color: Colors.grey,
                       ),
                       ListTile(
-                        title: Text('L'),
+                        title: Text('40'),
                         trailing: IconButton(
                           icon: Icon(
                               Icons.clear
@@ -267,6 +267,7 @@ class _ColorSizeState extends State<ColorSize> {
                           }
                         },
                         controller: _size,
+                        keyboardType: TextInputType.numberWithOptions(decimal: false),
                         decoration: InputDecoration.collapsed(hintText: 'Size'),
                         maxLines: 1,
                         autofocus: true,

@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/createEvent/selectVariations/only_color.dart';
 import 'package:flutter/material.dart';
 
 class ElectronicSelect extends StatefulWidget {
@@ -9,10 +10,34 @@ class _ElectronicSelectState extends State<ElectronicSelect> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigoAccent,
       body: SafeArea(
-        child: SingleChildScrollView(
-            child: Text('This Electronic')
+        child: CustomScrollView(
+          shrinkWrap: true,
+          slivers: <Widget>[
+            SliverAppBar(
+              title: Text('Create Event Step : 2'),
+              floating: true,
+              centerTitle: true,
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate([
+                SizedBox(
+                  height: 5.0,
+                ),
+                ListTile(
+                  onTap: (){
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>OnlyColor())
+                    );
+                  },
+                  title: Text('555550000'),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios
+                  ),
+                ),
+              ]),
+            ),
+          ],
         ),
       ),
     );

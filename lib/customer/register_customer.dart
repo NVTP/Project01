@@ -2,6 +2,9 @@ import 'package:assem_deal/customer/choice/upload_image_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'dart:io';
+import 'dart:async';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterCustomer extends StatefulWidget {
   @override
@@ -19,6 +22,60 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
   TextEditingController _cusPassword ;
   TextEditingController _cusEmail ;
   TextEditingController _cusPhone ;
+  File imageProfile;
+
+  Future getImageCamera() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      imageProfile = image;
+    });
+  }
+  Future getImageGallery() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      imageProfile = image;
+    });
+  }
+
+  Widget showImage(){
+    return Center(
+      child: imageProfile == null
+          ? Container(
+        height: 200,
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            width: 1.0,
+            color: Colors.grey
+          )
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.image,
+              size: 80,
+              color: Colors.grey,
+            ),
+            Text(
+              'Add Image',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      )
+          : CircleAvatar(
+        backgroundColor: Colors.transparent,
+        backgroundImage: FileImage(imageProfile),
+        radius: 120,
+      ),
+    );
+  }
 
   _handleRadioValueChange(String value){
     setState(() {
@@ -66,6 +123,41 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Column(
                       children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        showImage(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            RaisedButton(
+                              color: Colors.blueGrey[300],
+                              child: Text('Take Photo',style: TextStyle(color: Colors.white),),
+                              onPressed: (){
+                                getImageCamera();
+                              },
+                            ),
+                            RaisedButton(
+                              color: Colors.blueGrey[300],
+                              child: Text('Add Picture',style: TextStyle(color: Colors.white),),
+                              onPressed: (){
+                                getImageGallery();
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[

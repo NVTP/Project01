@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/createEvent/selectVariations/size_shoes.dart';
 import 'package:flutter/material.dart';
 
 class ShoesSelect extends StatefulWidget {
@@ -9,10 +10,48 @@ class _ShoesSelectState extends State<ShoesSelect> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
       body: SafeArea(
-        child: SingleChildScrollView(
-            child: Text('This Shoes')
+        child: CustomScrollView(
+          shrinkWrap: true,
+          slivers: <Widget>[
+            SliverAppBar(
+              title: Text('Create Event Step : 2'),
+              centerTitle: true,
+              floating: true,
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate([
+                SizedBox(
+                  height: 5.0,
+                ),
+                ListTile(
+                  onTap: (){
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>SizeShoes())
+                    );
+                  },
+                  title: Text('Men\'s Shoes'),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                ListTile(
+                  onTap: (){
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>SizeShoes())
+                    );
+                  },
+                  title: Text('Women\'s Shoes'),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios
+                  ),
+                ),
+              ]),
+            ),
+          ],
         ),
       ),
     );

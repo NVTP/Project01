@@ -37,7 +37,11 @@ class _GadgetSelectState extends State<GadgetSelect> {
                 height: 5.0,
               ),
               ListTile(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>OnlyColor())
+                  );
+                },
                 title: Text('Power Bank'),
                 trailing: Icon(
                     Icons.arrow_forward_ios
@@ -47,7 +51,11 @@ class _GadgetSelectState extends State<GadgetSelect> {
                 height: 5.0,
               ),
               ListTile(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>OnlyColor())
+                  );
+                },
                 title: Text('Adapter'),
                 trailing: Icon(
                     Icons.arrow_forward_ios
