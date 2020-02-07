@@ -58,25 +58,11 @@ class _CommentCustomerState extends State<CommentCustomer> {
                     height: 20,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Column(
                         children: <Widget>[
                           Text('Reviews'),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text('1'),
-                        ],
-                      ),
-                      Container(
-                        width: 1,
-                        height: 50,
-                        color: Colors.grey,
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Text('Follower'),
                           SizedBox(
                             height: 5.0,
                           ),
