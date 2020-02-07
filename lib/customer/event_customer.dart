@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/choice/customer_comment.dart';
 import 'package:flutter/material.dart';
 
 class EventCustomer extends StatefulWidget {
@@ -289,6 +290,11 @@ class _EventCustomerState extends State<EventCustomer> {
                   ),
                 ),
                 ListTile(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context)=>CommentCustomer())
+                    );
+                  },
                   leading: CircleAvatar(
                     maxRadius: 35.0,
                     backgroundImage: AssetImage('assets/images/sony.jpeg'),
