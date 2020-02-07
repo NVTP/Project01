@@ -1,8 +1,10 @@
 import 'package:assem_deal/search.dart';
 import 'package:assem_deal/shop/categoryShop/clothing_shop.dart';
+import 'package:assem_deal/shop/categoryShop/electronic_shop.dart';
 import 'package:assem_deal/shop/categoryShop/gadget_shop.dart';
 import 'package:assem_deal/shop/categoryShop/new_shop.dart';
 import 'package:assem_deal/shop/categoryShop/shoes_shop.dart';
+import 'package:assem_deal/shop/categoryShop/sport_shop.dart';
 import 'package:assem_deal/shop/categoryShop/warring_time_shop.dart';
 import 'package:assem_deal/shop/controlPageShop/main_event_shop.dart';
 import 'package:flutter/material.dart';
@@ -148,7 +150,35 @@ class _HomeShopState extends State<HomeShop> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       RawMaterialButton(
-                                        onPressed: (){},
+                                        onPressed: (){
+                                          Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)=>SportShop())
+                                          );
+                                        },
+                                        child: Image.asset(
+                                          'assets/images/sport.png',
+                                          fit: BoxFit.cover,
+                                          height: 50,
+                                          alignment: Alignment.center,
+                                          color: Colors.blueGrey,
+                                        ),
+                                        elevation: 1.1,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20)
+                                        ),
+                                      ),
+                                    ],
+                                  ),//SPORT
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      RawMaterialButton(
+                                        onPressed: (){
+                                          Navigator.push(context,
+                                          MaterialPageRoute(builder: (context)=>ElectronicShop())
+                                          );
+                                        },
                                         child: Image.asset(
                                           'assets/images/eletronic.png',
                                           fit: BoxFit.cover,
