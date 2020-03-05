@@ -61,34 +61,29 @@ class _RegisterShopState extends State<RegisterShop> {
       child: imageProfile == null
           ? Container(
         height: 200,
-        width: MediaQuery.of(context).size.width,
+        width: 200,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
                 color: Colors.grey,
                 width: 1.0
-            )
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.image,
-              size: 80,
-              color: Colors.grey,
             ),
-            Text(
-              'Add Image',
-              style: TextStyle(color: Colors.grey),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(
+              'https://firebasestorage.googleapis.com/v0/b/login-ce9de.appspot.com/o/user%2Fimages.png?alt=media&token=bbc9397d-f425-4834-82f1-5e6855b4a171'
             ),
-          ],
+          ),
         ),
       )
           : CircleAvatar(
         backgroundColor: Colors.transparent,
-        backgroundImage: FileImage(imageProfile),
+        backgroundImage: FileImage(imageProfile) == null
+            ? Center(
+          child: Text('loading....'),
+        )
+            : FileImage(imageProfile),
         radius: 120,
       ),
     );
