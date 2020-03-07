@@ -45,7 +45,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
     });
   }
 
-  Future uploagImage(BuildContext context) async {
+  Future uploadImage(BuildContext context) async {
     String fileName = basename(imageProfile.path);
     final StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
@@ -54,7 +54,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
     StorageTaskSnapshot snapshotTask = await task.onComplete;
     String downloadUrl = await snapshotTask.ref.getDownloadURL();
     if (downloadUrl != null) {
-      updateInfo.updateProfilePic(downloadUrl.toString()).then((val) {
+      updateInfo.updateProfilePic(downloadUrl.toString(),context).then((val) {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => MainCustomer()),
@@ -65,67 +65,55 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
     }
   }
 
-  signUp() {
-    _auth
-        .createUserWithEmailAndPassword(
-            email: _cusEmail.text.trim(), password: _cusPassword.text.trim())
-        .then((signInUser) async {
-      print('sign in success');
-//      register.firstName = _cusFName.text.trim();
-//      register.photoUrl = imageProfile.toString();
-//      register.lastName = _cusLName.text.trim();
-//      register.phone = _cusPhone.text.trim();
-//      register.gender = gender.toString().trim();
-//      register.age = _age.toString().trim();
-//      var update = new Update();
-//      await update.registerProject(register);
-//      var userUpdateInfo = new UserUpdateInfo();
-//      userUpdateInfo.displayName = _cusFName.text.trim();
-//      userUpdateInfo.photoUrl = imageProfile.toString();
-//      await signInUser.user.updateProfile(userUpdateInfo);
-//      await signInUser.user.reload();
-      FirebaseUser updateUser = await FirebaseAuth.instance.currentUser();
-      print('Sign Up OK ${updateUser.email} OK');
-    }).then((user) {
-      FirebaseAuth.instance.currentUser().then((user) {
-        print('user okayy');
-        NewUpdateInfo().newUser(user, context);
-      }).catchError((e){
-        print('user ok error ${e}');
-      });
-    }).catchError((e) {
-      print('Sign up error ${e}');
-    });
-
+  signUp(BuildContext context) {
+    _auth.createUserWithEmailAndPassword(
+        email: _cusEmail.text.trim(),
+        password: _cusPassword.text.trim())
+        .then((currentUser) =>
+        Firestore.instance.collection('users')
+            .document(currentUser.user.uid)
+            .setData({
+          'FirstName': _cusFName.text.trim(),
+          'LastName': _cusLName.text.trim(),
+          'age': _age.toString().trim(),
+          'gender': gender.toString().trim(),
+          'email': _cusEmail.text.trim(),
+          'uid': currentUser.user.uid,
+        }).then((user){
+          print('user ok ${currentUser}');
+          uploadImage(context);
+        }).catchError((e){
+          print('profile ${e}');
+        })
+    );
   }
 
   Widget showImage(BuildContext context) {
     return Center(
       child: imageProfile == null
           ? Container(
-              height: 200,
-              width: 200,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(width: 1.0, color: Colors.grey),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                    'https://firebasestorage.googleapis.com/v0/b/login-ce9de.appspot.com/o/user%2Fimages.png?alt=media&token=bbc9397d-f425-4834-82f1-5e6855b4a171'
-                  ),
-                ),
-              ),
-            )
+        height: 200,
+        width: 200,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(width: 1.0, color: Colors.grey),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(
+                'https://firebasestorage.googleapis.com/v0/b/login-ce9de.appspot.com/o/user%2Fimages.png?alt=media&token=bbc9397d-f425-4834-82f1-5e6855b4a171'),
+          ),
+        ),
+      )
           : CircleAvatar(
-              backgroundColor: Colors.transparent,
-              backgroundImage: FileImage(imageProfile) == null
-                  ? Center(
-                      child: Text('loading....'),
-                    )
-                  : FileImage(imageProfile),
-              radius: 120,
-            ),
+        backgroundColor: Colors.transparent,
+        backgroundImage: FileImage(imageProfile) == null
+            ? Center(
+          child: Text('loading....'),
+        )
+            : FileImage(imageProfile),
+        radius: 120,
+      ),
     );
   }
 
@@ -134,6 +122,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
       gender = value;
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -144,7 +133,6 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
     _cusEmail = TextEditingController();
     _cusPhone = TextEditingController();
     super.initState();
-
   }
 
   @override
@@ -234,8 +222,8 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                                   fontSize: 20.0),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 30.0, right: 10.0),
+                              padding: const EdgeInsets.only(
+                                  left: 30.0, right: 10.0),
                               child: Radio(
                                 groupValue: gender,
                                 value: 'Girl',
@@ -326,10 +314,11 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                                 minTime: DateTime(1950, 1, 1),
                                 maxTime: DateTime(2021, 12, 31),
                                 onConfirm: (date) {
-                              print('Confirm $date');
-                              _age = '${date.year} - ${date.month} - ${date.day}';
-                              setState(() {});
-                            },
+                                  print('Confirm $date');
+                                  _age =
+                                  '${date.year} - ${date.month} - ${date.day}';
+                                  setState(() {});
+                                },
                                 currentTime: DateTime.now(),
                                 locale: LocaleType.en);
                           },
@@ -348,7 +337,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(left: 10.0),
+                                        const EdgeInsets.only(left: 10.0),
                                         child: Text(
                                           '$_age',
                                           style: TextStyle(
@@ -363,6 +352,35 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                             ),
                           ),
                         ), //BIRTH DAY
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          maxLines: 1,
+                          keyboardType: TextInputType.emailAddress,
+                          controller: _cusEmail,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Plese check Email';
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Colors.blueGrey[200],
+                            ),
+                            hintText: 'Email',
+                            focusColor: Colors.black,
+                            labelText: 'Email',
+                            labelStyle: TextStyle(color: Colors.blueGrey[200]),
+                            hintStyle: TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ), //
                         SizedBox(
                           height: 10.0,
                         ),
@@ -400,43 +418,16 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                                 });
                               },
                               icon: Icon(
-                                showPW ? Icons.visibility_off : Icons.visibility,
+                                showPW
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
                               ),
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                        ), //Password
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
-                          maxLines: 1,
-                          keyboardType: TextInputType.emailAddress,
-                          controller: _cusEmail,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Plese check Email';
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Colors.blueGrey[200],
-                            ),
-                            hintText: 'Email',
-                            focusColor: Colors.black,
-                            labelText: 'Email',
-                            labelStyle: TextStyle(color: Colors.blueGrey[200]),
-                            hintStyle: TextStyle(color: Colors.black),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                        ), //EMAIL
+                        ), //PasswordEMAIL
                         SizedBox(
                           height: 10.0,
                         ),
@@ -476,13 +467,15 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Container(
                             height: 50.0,
-                            width: MediaQuery.of(context).size.width,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
                             child: RaisedButton(
                               color: Colors.blueGrey[400],
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
-                                  signUp();
-                                  uploagImage(context);
+                                  signUp(context);
                                 }
                               },
                               elevation: 1.1,
