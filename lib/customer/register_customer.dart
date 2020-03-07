@@ -65,7 +65,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
     }
   }
 
-  signUp(BuildContext context) {
+  signUp(BuildContext context) async{
     _auth.createUserWithEmailAndPassword(
         email: _cusEmail.text.trim(),
         password: _cusPassword.text.trim())
@@ -82,6 +82,10 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
         }).then((user){
           print('user ok ${currentUser}');
           uploadImage(context);
+          updateInfo.addRole({
+            'email': _cusEmail.text.trim(),
+            'role': 'user'
+          });
         }).catchError((e){
           print('profile ${e}');
         })

@@ -12,7 +12,7 @@ class Login {
   singInAuth(BuildContext context) {
     _auth.currentUser().then((user) {
       Firestore.instance
-          .collection('test')
+          .collection('role')
           .where('email', isEqualTo: user.email)
           .getDocuments()
           .then((doc) {
