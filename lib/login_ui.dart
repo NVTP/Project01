@@ -1,6 +1,6 @@
 import 'package:assem_deal/customer/controlPageCustomer/main_customer.dart';
 import 'package:assem_deal/customer/register_customer.dart';
-import 'package:assem_deal/services/signin.dart';
+import 'package:assem_deal/services/login_services.dart';
 import 'package:assem_deal/shop/controlPageShop/main_shop.dart';
 import 'package:assem_deal/shop/register_shop.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -1,3 +1,5 @@
+import 'package:assem_deal/login_ui.dart';
+import 'package:assem_deal/services/login_services.dart';
 import 'package:assem_deal/shop/profileShop/information_shop.dart';
 import 'package:assem_deal/shop/profileShop/update_shop.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ class ProfileShop extends StatefulWidget {
 }
 
 class _ProfileShopState extends State<ProfileShop> {
+  final loginServices = new Login();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +99,11 @@ class _ProfileShopState extends State<ProfileShop> {
                   ),
                   ListTile(
                     onTap: (){
-                      SystemNavigator.pop();
+                      loginServices.singOut(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context)=>LoginUI()),
+                          ModalRoute.withName('/'));
                     },
                     leading: Icon(
                       Icons.power_settings_new,

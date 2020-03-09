@@ -1,6 +1,7 @@
 import 'package:assem_deal/customer/choice/customer_status.dart';
 import 'package:assem_deal/customer/choice/update_profile_customer.dart';
 import 'package:assem_deal/customer/choice/upload_image_profile.dart';
+import 'package:assem_deal/services/login_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +11,7 @@ class ProfileCustomer extends StatefulWidget {
 }
 
 class _ProfileCustomerState extends State<ProfileCustomer> {
+  final loginServices = new Login();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +99,7 @@ class _ProfileCustomerState extends State<ProfileCustomer> {
                       ),
                       ListTile(
                         onTap: (){
-                          SystemNavigator.pop();
+                          loginServices.singOut(context);
                         },
                         leading: Icon(
                           Icons.power_settings_new,
