@@ -28,6 +28,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
   TextEditingController _cusPhone;
   NewUpdateInfo updateInfo = new NewUpdateInfo();
   File imageProfile;
+  var proFile = 'https://firebasestorage.googleapis.com/v0/b/login-ce9de.appspot.com/o/user%2Fimages.png?alt=media&token=bbc9397d-f425-4834-82f1-5e6855b4a171';
 
   Future getImageCamera() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -54,7 +55,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
     StorageTaskSnapshot snapshotTask = await task.onComplete;
     String downloadUrl = await snapshotTask.ref.getDownloadURL();
     if (downloadUrl != null) {
-      updateInfo.updateProfilePic(downloadUrl.toString(),context).then((val) {
+      updateInfo.updateProfilePic(downloadUrl.toString(), context).then((val) {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => MainCustomer()),
@@ -65,7 +66,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
     }
   }
 
-  signUp(BuildContext context) async{
+  signUp(BuildContext context) async {
     _auth.createUserWithEmailAndPassword(
         email: _cusEmail.text.trim(),
         password: _cusPassword.text.trim())
@@ -79,14 +80,15 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
           'gender': gender.toString().trim(),
           'email': _cusEmail.text.trim(),
           'uid': currentUser.user.uid,
-        }).then((user){
+          'role': 'user'
+        }).then((user) {
           print('user ok ${currentUser}');
           uploadImage(context);
-          updateInfo.addRole({
-            'email': _cusEmail.text.trim(),
-            'role': 'user'
-          });
-        }).catchError((e){
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context)=>MainCustomer()),
+              ModalRoute.withName('/'));
+        }).catchError((e) {
           print('profile ${e}');
         })
     );
@@ -105,7 +107,8 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: NetworkImage(
-                'https://firebasestorage.googleapis.com/v0/b/login-ce9de.appspot.com/o/user%2Fimages.png?alt=media&token=bbc9397d-f425-4834-82f1-5e6855b4a171'),
+                proFile
+            ),
           ),
         ),
       )

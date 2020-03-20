@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Login {
+class Login{
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Widget handleAuth() {}
@@ -21,17 +21,17 @@ class Login {
   singInAuth(BuildContext context) {
     _auth.currentUser().then((user) {
       Firestore.instance
-          .collection('role')
-          .where('email', isEqualTo: user.email)
+          .collection('users')
+          .where('uid', isEqualTo: user.uid)
           .getDocuments()
           .then((doc) {
         if (doc.documents[0].exists) {
           if (doc.documents[0].data['role'] == 'user') {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => MainCustomer()));
+                .pushReplacement(MaterialPageRoute(builder: (context) => MainCustomer()));
           } else {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => MainShop()));
+                .pushReplacement(MaterialPageRoute(builder: (context) => MainShop()));
           }
         }
       });

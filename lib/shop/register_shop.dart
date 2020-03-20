@@ -91,7 +91,7 @@ class _RegisterShopState extends State<RegisterShop> {
           password: _shopPassword.text.trim(),
         )
         .then((signUpShop) => Firestore.instance
-                .collection('shops')
+                .collection('users')
                 .document(signUpShop.user.uid)
                 .setData({
               'ShopName': _shopName.text.trim(),
@@ -99,12 +99,15 @@ class _RegisterShopState extends State<RegisterShop> {
               'ShopPhone': _shopPhone.text.trim(),
               'Tax': _shopTax.text.trim(),
               'ShopAddress': _shopAddress.text.trim(),
-              'ShopEmail': _shopEmail.text.trim(),
+              'email': _shopEmail.text.trim(),
+              'role': 'shop'
             }).then((user) {
               print('shop ok ${signUpShop}');
               uploadImageShop(context);
-              updateInfo
-                  .addRole({'email': _shopEmail.text.trim(), 'role': 'shop'});
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context)=>MainShop()),
+                  ModalRoute.withName('/'));
             }).catchError((e) {
               print('shop er ${e}');
             }));

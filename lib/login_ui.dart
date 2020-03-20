@@ -3,6 +3,7 @@ import 'package:assem_deal/customer/register_customer.dart';
 import 'package:assem_deal/services/login_services.dart';
 import 'package:assem_deal/shop/controlPageShop/main_shop.dart';
 import 'package:assem_deal/shop/register_shop.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,9 +23,15 @@ class _LoginUIState extends State<LoginUI> {
   TextEditingController _password = TextEditingController();
 
 
+  @override
+  void initState(){
+    super.initState();
+  }
+
+
   bool showPW = true;
 
-  signIn(){
+   signIn(){
     _auth.signInWithEmailAndPassword(
         email: _email.text.trim(),
         password: _password.text.trim(),
