@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class InformationShop extends StatefulWidget {
@@ -6,6 +7,23 @@ class InformationShop extends StatefulWidget {
 }
 
 class _InformationShopState extends State<InformationShop> {
+  var proFile;
+  var inStead = 'https://firebasestorage.googleapis.com/v0/b/login-ce9de.appspot.com/o/user%2Fimages.png?alt=media&token=bbc9397d-f425-4834-82f1-5e6855b4a171';
+  var email;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user){
+      setState(() {
+        email = user.email;
+        proFile = user.photoUrl;
+      });
+    }).catchError((e){
+      print('first Error $e');
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,15 +42,22 @@ class _InformationShopState extends State<InformationShop> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
-                    CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage(
-                        'assets/images/sony.jpeg',
-                      ),
-                      radius: 75,
-                    ),
+                   Container(
+                     width: 150,
+                     height: 150,
+                     decoration: BoxDecoration(
+                       color: Colors.white,
+                       shape: BoxShape.circle,
+                       image: DecorationImage(
+                         fit: BoxFit.cover,
+                         image: NetworkImage(
+                           proFile ?? inStead
+                         ),
+                       ),
+                     ),
+                   ),
                     SizedBox(
                       height: 20,
                     ),

@@ -2,6 +2,7 @@ import 'package:assem_deal/login_ui.dart';
 import 'package:assem_deal/services/login_services.dart';
 import 'package:assem_deal/shop/profileShop/information_shop.dart';
 import 'package:assem_deal/shop/profileShop/update_shop.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +13,23 @@ class ProfileShop extends StatefulWidget {
 
 class _ProfileShopState extends State<ProfileShop> {
   final loginServices = new Login();
+  var proFile;
+  var inStead = 'https://firebasestorage.googleapis.com/v0/b/login-ce9de.appspot.com/o/user%2Fimages.png?alt=media&token=bbc9397d-f425-4834-82f1-5e6855b4a171';
+  var email;
+
+
+  @override
+  void initState(){
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user){
+      setState(() {
+        proFile = user.photoUrl;
+        email = user.email;
+      });
+    }).catchError((e){
+      print('first Error $e');
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,25 +45,34 @@ class _ProfileShopState extends State<ProfileShop> {
                   height: 170,
                   color: Colors.blueGrey[600],
                 ),
-                InkWell(
-                  onTap: (){},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: ExactAssetImage(
-                            'assets/images/sony.jpeg',
-                          ),
-                          maxRadius: 60,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Text('Sony Thailand',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
-                    ],
-                  ),
+                        Container(
+                          width: 150,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                proFile ?? inStead
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      email ?? 'Email', style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -100,10 +127,6 @@ class _ProfileShopState extends State<ProfileShop> {
                   ListTile(
                     onTap: (){
                       loginServices.singOut(context);
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context)=>LoginUI()),
-                          ModalRoute.withName('/'));
                     },
                     leading: Icon(
                       Icons.power_settings_new,
