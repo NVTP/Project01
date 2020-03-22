@@ -14,7 +14,7 @@ class _ProfileCustomerState extends State<ProfileCustomer> {
   final loginServices = new Login();
   var proFile;
   var inStead = 'https://firebasestorage.googleapis.com/v0/b/login-ce9de.appspot.com/o/user%2Fimages.png?alt=media&token=bbc9397d-f425-4834-82f1-5e6855b4a171';
-
+  var email;
 
   @override
   void initState() {
@@ -23,6 +23,7 @@ class _ProfileCustomerState extends State<ProfileCustomer> {
     FirebaseAuth.instance.currentUser().then((user){
       setState(() {
        proFile = user.photoUrl;
+       email = user.email;
       });
     }).catchError((e){
       print(e);
@@ -34,27 +35,121 @@ class _ProfileCustomerState extends State<ProfileCustomer> {
     // TODO: implement build
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Center(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: 150,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          proFile == null ? inStead : proFile
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Center(
+                child: Column(
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 170,
+                          color: Colors.blueGrey[600],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(vertical: 20),
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                        proFile ?? inStead
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(email ?? 'Email',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            onTap: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>CustomerStatus())
+                              );
+                            },
+                            leading: Icon(
+                              Icons.person,
+                            ),
+                            title: Text(
+                              'Profile',
+                              style: TextStyle(
+                                  color: Colors.grey
+                              ),
+                            ),
+                            trailing: Icon(
+                                Icons.arrow_forward_ios
+                            ),
+                          ),
+                          Divider(
+                            height: 2.0,
+                          ),
+                          ListTile(
+                            onTap: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>UpdateProfile())
+                              );
+                            },
+                            leading: Icon(
+                              Icons.settings,
+                            ),
+                            title: Text(
+                              'Setting',
+                              style: TextStyle(
+                                  color: Colors.grey
+                              ),
+                            ),
+                            trailing: Icon(
+                                Icons.arrow_forward_ios
+                            ),
+                          ),
+                          Divider(
+                            height: 2.0,
+                          ),
+                          ListTile(
+                            onTap: (){
+                              loginServices.singOut(context);
+                            },
+                            leading: Icon(
+                              Icons.power_settings_new,
+                            ),
+                            title: Text(
+                              'Logout',
+                              style: TextStyle(
+                                  color: Colors.grey
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
