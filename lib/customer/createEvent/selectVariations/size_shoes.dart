@@ -167,7 +167,11 @@ class _SizeShoesState extends State<SizeShoes> {
                           icon: Icon(
                             Icons.clear,
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            setState(() {
+                              colorList.removeAt(Index);
+                            });
+                          },
                         ),
                       );
                     },
@@ -226,27 +230,21 @@ class _SizeShoesState extends State<SizeShoes> {
                         ),
                       ),
                       ListTile(
-                        title: Text('38'),
-                        trailing: IconButton(
-                          icon: Icon(
-                              Icons.clear
-                          ),
-                          onPressed: (){},
-                        ),
+                        title: Center(child: Text('Ex. 38 , 40')),
                       ),
                       Divider(
                         height: 0.0,
                         color: Colors.grey,
                       ),
-                      ListTile(
-                        title: Text('40'),
-                        trailing: IconButton(
-                          icon: Icon(
-                              Icons.clear
-                          ),
-                          onPressed: (){},
-                        ),
-                      ),
+//                      ListTile(
+//                        title: Text('40'),
+//                        trailing: IconButton(
+//                          icon: Icon(
+//                              Icons.clear
+//                          ),
+//                          onPressed: (){},
+//                        ),
+//                      ),
                       Divider(
                         height: 0.0,
                         color: Colors.grey,
@@ -310,7 +308,11 @@ class _SizeShoesState extends State<SizeShoes> {
                           icon: Icon(
                             Icons.clear,
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            setState(() {
+                              sizeList.removeAt(Index);
+                            });
+                          },
                         ),
                       );
                     },
@@ -320,6 +322,7 @@ class _SizeShoesState extends State<SizeShoes> {
             ),
             RaisedButton(
               onPressed: (){
+                //TODO
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context)=>FinishEvent())
                 );

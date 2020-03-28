@@ -75,27 +75,27 @@ class _OnlyColorState extends State<OnlyColor> {
                           ),
                         ),
                         ListTile(
-                          title: Text('White'),
-                          trailing: IconButton(
-                            icon: Icon(
-                              Icons.clear
-                            ),
-                            onPressed: (){},
-                          ),
+                          title: Center(child: Text('Ex. White , Black')),
+//                          trailing: IconButton(
+//                            icon: Icon(
+//                              Icons.clear
+//                            ),
+//                            onPressed: (){},
+//                          ),
                         ),
                         Divider(
                           height: 0.0,
                           color: Colors.grey,
                         ),
-                        ListTile(
-                          title: Text('Black'),
-                          trailing: IconButton(
-                            icon: Icon(
-                              Icons.clear
-                            ),
-                            onPressed: (){},
-                          ),
-                        ),
+//                        ListTile(
+//                          title: Text('Black'),
+//                          trailing: IconButton(
+//                            icon: Icon(
+//                              Icons.clear
+//                            ),
+//                            onPressed: (){},
+//                          ),
+//                        ),
                         Divider(
                           height: 0.0,
                           color: Colors.grey,
@@ -158,7 +158,11 @@ class _OnlyColorState extends State<OnlyColor> {
                               icon: Icon(
                                 Icons.clear,
                               ),
-                              onPressed: (){},
+                              onPressed: (){
+                                setState(() {
+                                  textList.removeAt(Index);
+                                });
+                              },
                             ),
                           );
                       },
@@ -168,6 +172,7 @@ class _OnlyColorState extends State<OnlyColor> {
               ),
               RaisedButton(
                 onPressed: (){
+                  //TODO
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context)=>FinishEvent())
                   );

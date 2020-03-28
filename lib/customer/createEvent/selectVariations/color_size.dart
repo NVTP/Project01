@@ -84,27 +84,21 @@ class _ColorSizeState extends State<ColorSize> {
                         ),
                       ),
                       ListTile(
-                        title: Text('White'),
-                        trailing: IconButton(
-                          icon: Icon(
-                              Icons.clear
-                          ),
-                          onPressed: (){},
-                        ),
+                        title: Center(child: Text('Ex. White , Black')),
                       ),
                       Divider(
                         height: 0.0,
                         color: Colors.grey,
                       ),
-                      ListTile(
-                        title: Text('Black'),
-                        trailing: IconButton(
-                          icon: Icon(
-                              Icons.clear
-                          ),
-                          onPressed: (){},
-                        ),
-                      ),
+//                      ListTile(
+//                        title: Text('Black'),
+//                        trailing: IconButton(
+//                          icon: Icon(
+//                              Icons.clear
+//                          ),
+//                          onPressed: (){},
+//                        ),
+//                      ),
                       Divider(
                         height: 0.0,
                         color: Colors.grey,
@@ -167,7 +161,11 @@ class _ColorSizeState extends State<ColorSize> {
                           icon: Icon(
                             Icons.clear,
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            setState(() {
+                              colorList.removeAt(Index);
+                            });
+                          },
                         ),
                       );
                     },
@@ -226,27 +224,21 @@ class _ColorSizeState extends State<ColorSize> {
                         ),
                       ),
                       ListTile(
-                        title: Text('M'),
-                        trailing: IconButton(
-                          icon: Icon(
-                              Icons.clear
-                          ),
-                          onPressed: (){},
-                        ),
+                        title: Center(child: Text('Ex. M , L')),
                       ),
                       Divider(
                         height: 0.0,
                         color: Colors.grey,
                       ),
-                      ListTile(
-                        title: Text('L'),
-                        trailing: IconButton(
-                          icon: Icon(
-                              Icons.clear
-                          ),
-                          onPressed: (){},
-                        ),
-                      ),
+//                      ListTile(
+//                        title: Text('L'),
+//                        trailing: IconButton(
+//                          icon: Icon(
+//                              Icons.clear
+//                          ),
+//                          onPressed: (){},
+//                        ),
+//                      ),
                       Divider(
                         height: 0.0,
                         color: Colors.grey,
@@ -309,7 +301,11 @@ class _ColorSizeState extends State<ColorSize> {
                           icon: Icon(
                             Icons.clear,
                           ),
-                          onPressed: (){},
+                          onPressed: (){
+                            setState(() {
+                              sizeList.removeAt(Index);
+                            });
+                          },
                         ),
                       );
                     },
@@ -319,6 +315,7 @@ class _ColorSizeState extends State<ColorSize> {
             ),
             RaisedButton(
               onPressed: (){
+                //TODO
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context)=>FinishEvent())
                 );
