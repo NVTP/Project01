@@ -18,6 +18,7 @@ class _LoginUIState extends State<LoginUI> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   Login login = new Login();
+  bool load = false;
 
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
@@ -26,12 +27,16 @@ class _LoginUIState extends State<LoginUI> {
   @override
   void initState(){
     super.initState();
+    login.singInAuth(context);
   }
 
 
   bool showPW = true;
 
    signIn(){
+     setState(() {
+       load = true;
+     });
     _auth.signInWithEmailAndPassword(
         email: _email.text.trim(),
         password: _password.text.trim(),
@@ -322,6 +327,15 @@ class _LoginUIState extends State<LoginUI> {
                     ),
                     SizedBox(
                       height: 100.0,
+                    ),
+                    Center(
+                      child: Visibility(
+                        visible: load,
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 50),
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
                     ),
                   ],
                 ),
