@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/createEvent/finish_event.dart';
 import 'package:assem_deal/customer/createEvent/selectVariations/color_size.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,7 @@ class _ClothingSelectState extends State<ClothingSelect> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>ColorSize())
+                    MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Clothing',))
                     );
                   },
                   title: Text('Women\'s Clothing'),
@@ -40,7 +41,7 @@ class _ClothingSelectState extends State<ClothingSelect> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>ColorSize())
+                    MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Clothing',))
                     );
                   },
                   title: Text('Men\'s Clothing'),

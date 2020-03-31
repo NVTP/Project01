@@ -1,67 +1,165 @@
-import 'package:assem_deal/customer/choice/upload_image_profile.dart';
+import 'dart:io';
+import 'package:assem_deal/controllers/event_controller.dart';
 import 'package:assem_deal/customer/controlPageCustomer/main_event.dart';
+import 'package:assem_deal/model/event.dart';
+import 'package:assem_deal/services/notifier/event_notifier.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class FinishEvent extends StatefulWidget {
+  final String category;
+
+  const FinishEvent({this.category});
+
   @override
   _FinishEventState createState() => _FinishEventState();
 }
 
 class _FinishEventState extends State<FinishEvent> {
-  Map<String, bool>values={
-    'Black':true,
-    'White':true,
-  };
-
-  var tmpArray=[];
-
-  getCheckboxItems(){
-    values.forEach((key, value){
-      if(value == true){
-        tmpArray.add(key);
-      }
-    });
-    tmpArray.clear();
-  }
   final _formKey = GlobalKey<FormState>();
-  int _count;
-  TextEditingController _productDetail;
-  TextEditingController _productMediumPrice;
-  TextEditingController _productName;
+  List colorEvent = [];
+  bool valColor;
+
+  File imageEvent;
+  var avatar =
+      'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg';
+  Events _currentEvent;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _count = 1;
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
     _productDetail = TextEditingController();
     _productName = TextEditingController();
     _productMediumPrice = TextEditingController();
+    _colorController = TextEditingController();
+    _amount = TextEditingController();
+    valColor = true;
+    _currentEvent = Events();
+    colorEvent.addAll(_currentEvent.variations);
   }
 
-  void add(){
+  TextEditingController _productDetail;
+  TextEditingController _productMediumPrice;
+  TextEditingController _amount;
+  TextEditingController _productName;
+  TextEditingController _colorController;
+
+  _getImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
-      _count++;
+      imageEvent = image;
     });
   }
-  void minus(){
-    setState(() {
-      if(_count != 1){
-        _count--;
-      }
+
+  showImage() {
+    return Center(
+        child: imageEvent == null
+            ? Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: NetworkImage(avatar)),
+                ),
+              )
+            : Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.center,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Image.file(
+                  imageEvent,
+                  fit: BoxFit.fill,
+                  height: 250,
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ));
+  }
+
+  _onUploadEvent(Events events) {
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+    eventNotifier.addEvent(events);
+    Navigator.pop(context);
+  }
+
+  saveEvent() async {
+    print('called save event');
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    print('save form');
+
+    _currentEvent.variations = colorEvent;
+    _currentEvent.category = widget.category;
+    uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent);
+    print('category : ${_currentEvent.category}');
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    _currentEvent.userPic = user.photoUrl;
+    _currentEvent.userCreateId = user.uid;
+    _currentEvent.userEmail = user.email;
+
+    Firestore.instance
+        .collection('users')
+        .document(user.uid).collection('usersCreate').document().setData({
+      'eventId':_currentEvent.eventId,
+      'image':_currentEvent.image,
+      'productName':_currentEvent.productName,
+      'amount':_amount.text.trim(),
+      'shopId':_currentEvent.shopOwnId,
+      'shopPic':_currentEvent.shopPic,
+      'shopEmail':_currentEvent.shopEmail
+    }).then((ev){
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context)=>MainEvent()));
+    }).catchError((e){
+      print('can\'t sub $e');
     });
+  }
+
+  _buildColor() {
+    return SizedBox(
+      width: 200,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        controller: _colorController,
+        decoration: InputDecoration(
+            hintText: 'Ex. Color , Size',
+            hintStyle: TextStyle(color: Colors.grey[400])),
+      ),
+    );
+  }
+
+  _addColor(String text) {
+    if (text.isNotEmpty) {
+      setState(() {
+        colorEvent.add(text);
+      });
+      _colorController.clear();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        shrinkWrap: true,
         slivers: <Widget>[
           SliverAppBar(
             title: Text('Create Event Step : 4'),
             centerTitle: true,
-            floating: true,
+            floating: false,
           ),
           SliverList(
             delegate: SliverChildListDelegate([
@@ -74,7 +172,37 @@ class _FinishEventState extends State<FinishEvent> {
                       SizedBox(
                         height: 10,
                       ),
-                      UploadImage(),
+                      showImage(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      RaisedButton(
+                        onPressed: () => _getImage(),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        color: Colors.blueGrey[300],
+                        child: Text(
+                          'Add Image',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 48,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Text(
+                          'Category : ${widget.category}',
+                          style: TextStyle(
+                              fontSize: 25, color: Colors.blueGrey[300]),
+                        ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -82,6 +210,9 @@ class _FinishEventState extends State<FinishEvent> {
                         maxLines: 1,
                         keyboardType: TextInputType.text,
                         controller: _productName,
+                        onSaved: (String val) {
+                          _currentEvent.productName = val;
+                        },
                         decoration: InputDecoration(
                           prefixIcon: Icon(
                             Icons.event,
@@ -101,7 +232,8 @@ class _FinishEventState extends State<FinishEvent> {
                             return null;
                           }
                         },
-                      ), //PRODUCT NAME
+                      ),
+                      //PRODUCT NAME
                       SizedBox(
                         height: 10,
                       ),
@@ -110,6 +242,9 @@ class _FinishEventState extends State<FinishEvent> {
                         textAlign: TextAlign.justify,
                         keyboardType: TextInputType.multiline,
                         controller: _productDetail,
+                        onSaved: (String val) {
+                          _currentEvent.eventDetail = val;
+                        },
                         decoration: InputDecoration(
                           prefixIcon: Icon(
                             Icons.details,
@@ -136,7 +271,11 @@ class _FinishEventState extends State<FinishEvent> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('Medium Price',style: TextStyle(color: Colors.blueGrey,fontSize: 20),),
+                          Text(
+                            'Medium Price',
+                            style:
+                                TextStyle(color: Colors.blueGrey, fontSize: 20),
+                          ),
                           SizedBox(
                             width: 5.0,
                           ),
@@ -146,18 +285,66 @@ class _FinishEventState extends State<FinishEvent> {
                                 controller: _productMediumPrice,
                                 maxLines: 1,
                                 keyboardType: TextInputType.number,
-                                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                                onSaved: (String val) {
+                                  _currentEvent.mediumPrice = val;
+                                },
+                                inputFormatters: [
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
                                 decoration: InputDecoration(
                                   hintText: '0 Bath',
                                   hintStyle: TextStyle(fontSize: 18),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10)
-                                  ),
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
-                                validator: (data){
-                                  if(data.isEmpty){
+                                validator: (data) {
+                                  if (data.isEmpty) {
                                     return 'Fill Price';
-                                  }else{
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Amount You',
+                            style:
+                            TextStyle(color: Colors.blueGrey, fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Flexible(
+                            child: Container(
+                              child: TextFormField(
+                                controller: _amount,
+                                maxLines: 1,
+                                keyboardType: TextInputType.number,
+                                onSaved: (String val) {
+                                  _currentEvent.currentAmount = val;
+                                },
+                                inputFormatters: [
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  hintText: '0 Piece',
+                                  hintStyle: TextStyle(fontSize: 18),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                                validator: (data) {
+                                  if (data.isEmpty) {
+                                    return 'Fill Amount';
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -172,74 +359,72 @@ class _FinishEventState extends State<FinishEvent> {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
-                          children: <Widget>[
-
-                          ],
+                          children: <Widget>[],
                         ),
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.grey[200]
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            RawMaterialButton(
-                              onPressed: minus,
-                              child: Icon(
-                                Icons.remove,
-                                color: Colors.blueGrey[300],
-                              ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          _buildColor(),
+                          RaisedButton(
+                            onPressed: () => _addColor(_colorController.text),
+                            color: Colors.blueGrey[600],
+                            elevation: 1.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Text(
+                              'Add',
+                              style: TextStyle(color: Colors.white),
                             ),
-                            Text(
-                              '$_count',
-                              style: TextStyle(color: Colors.blueGrey[300],fontSize: 18),
-                            ),
-                            RawMaterialButton(
-                              onPressed: add,
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.blueGrey[300],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),//ADD
+                          ),
+                        ],
+                      ),
                       SizedBox(
                         height: 20,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.grey
-                            ),
-                            borderRadius: BorderRadius.circular(20)
-                          ),
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: values.keys.map((String key){
-                              return CheckboxListTile(
-                                title: Text(key),
-                                value: values[key],
-                                activeColor: Colors.red,
-                                checkColor: Colors.white,
-                                onChanged: (bool value){
-                                  setState(() {
-                                    values[key] = value;
-                                  });
-                                },
-                              );
-                            }).toList(),
-                          ),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.grey, width: 1)),
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: colorEvent.length,
+                              itemBuilder: (BuildContext context, int Index) {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Checkbox(
+                                      value: valColor,
+                                      checkColor: Colors.white,
+                                      activeColor: Colors.red,
+                                      onChanged: (bool val) {
+                                        setState(() {
+                                          //todo
+                                          valColor = val;
+                                        });
+                                      },
+                                    ),
+                                    Text(colorEvent[Index]),
+                                    IconButton(
+                                      icon: Icon(Icons.clear),
+                                      onPressed: () {
+                                        setState(() {
+                                          colorEvent.removeAt(Index);
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }),
                         ),
                       ),
                       SizedBox(
@@ -253,34 +438,34 @@ class _FinishEventState extends State<FinishEvent> {
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               child: RaisedButton(
-                                onPressed: (){},
+                                onPressed: () {},
                                 elevation: 1.1,
-                                child: Text('Cancel',style: TextStyle(color: Colors.black),),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(color: Colors.black),
                                 ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
                               ),
                             ),
                           ),
-                          SizedBox(
-                              width: 5.0
-                          ),
+                          SizedBox(width: 5.0),
                           Expanded(
                             flex: 1,
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               child: RaisedButton(
-                                onPressed: (){
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context)=>MainEvent())
-                                  );
+                                onPressed: () {
+                                  saveEvent();
                                 },
                                 elevation: 1.1,
-                                child: Text('OK',style: TextStyle(color: Colors.white),),
+                                child: Text(
+                                  'OK',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                                 color: Colors.blueGrey,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
+                                    borderRadius: BorderRadius.circular(10)),
                               ),
                             ),
                           ),

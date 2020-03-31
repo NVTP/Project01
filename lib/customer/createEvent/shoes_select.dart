@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/createEvent/finish_event.dart';
 import 'package:assem_deal/customer/createEvent/selectVariations/size_shoes.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class _ShoesSelectState extends State<ShoesSelect> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>SizeShoes())
+                    MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Shoes',))
                     );
                   },
                   title: Text('Men\'s Shoes'),
@@ -41,7 +42,7 @@ class _ShoesSelectState extends State<ShoesSelect> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>SizeShoes())
+                    MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Shoes',))
                     );
                   },
                   title: Text('Women\'s Shoes'),

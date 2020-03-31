@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/createEvent/finish_event.dart';
 import 'package:assem_deal/customer/createEvent/selectVariations/only_color.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class _ElectronicSelectState extends State<ElectronicSelect> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>OnlyColor())
+                    MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Electronic',))
                     );
                   },
                   title: Text('The Kitchen'),
@@ -39,7 +40,9 @@ class _ElectronicSelectState extends State<ElectronicSelect> {
                   height: 5.0,
                 ),
                 ListTile(
-                  onTap: (){},
+                  onTap: ()=>Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Eletronic',))
+                  ),
                   title: Text('IT/Computer'),
                   trailing: Icon(
                     Icons.arrow_forward_ios

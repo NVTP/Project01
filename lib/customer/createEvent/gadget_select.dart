@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/createEvent/finish_event.dart';
 import 'package:assem_deal/customer/createEvent/selectVariations/only_color.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class _GadgetSelectState extends State<GadgetSelect> {
               ListTile(
                 onTap: (){
                   Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=>OnlyColor())
+                  MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Gadget',))
                   );
                 },
                 title: Text('Small Talk/Bluetooth'),
@@ -39,7 +40,7 @@ class _GadgetSelectState extends State<GadgetSelect> {
               ListTile(
                 onTap: (){
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=>OnlyColor())
+                      MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Gadget',))
                   );
                 },
                 title: Text('Power Bank'),
@@ -53,7 +54,7 @@ class _GadgetSelectState extends State<GadgetSelect> {
               ListTile(
                 onTap: (){
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=>OnlyColor())
+                      MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Gadget',))
                   );
                 },
                 title: Text('Adapter'),

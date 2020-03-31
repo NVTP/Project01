@@ -1,3 +1,4 @@
+import 'package:assem_deal/customer/createEvent/finish_event.dart';
 import 'package:assem_deal/customer/createEvent/selectVariations/color_size.dart';
 import 'package:assem_deal/customer/createEvent/selectVariations/only_color.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _SportSelectState extends State<SportSelect> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>OnlyColor())
+                    MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Sport',))
                     );
                   },
                   title: Text('Gadget fot Sport'),
@@ -42,7 +43,7 @@ class _SportSelectState extends State<SportSelect> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>ColorSize())
+                        MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Sport',))
                     );
                   },
                   title: Text('Men\'s'),
@@ -56,7 +57,7 @@ class _SportSelectState extends State<SportSelect> {
                 ListTile(
                   onTap: (){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>ColorSize())
+                        MaterialPageRoute(builder: (context)=>FinishEvent(category: 'Sport',))
                     );
                   },
                   title: Text('Women\'s'),
