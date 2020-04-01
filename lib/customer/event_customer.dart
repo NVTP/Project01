@@ -1,5 +1,8 @@
 import 'package:assem_deal/customer/choice/customer_comment.dart';
+import 'package:assem_deal/model/event.dart';
+import 'package:assem_deal/services/notifier/event_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EventCustomer extends StatefulWidget {
   @override
@@ -11,18 +14,10 @@ class _EventCustomerState extends State<EventCustomer> {
     'Black': false,
     'White': false,
   };
-
+  var avatar = 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg';
+  Events _currentEvent;
   var tmpArray=[];
-
-  getCheckboxItems(){
-    values.forEach((key, value){
-      if(value == true){
-        tmpArray.add(key);
-      }
-    });
-
-    tmpArray.clear();
-  }
+  var _imageUrl;
   int _count;
 
   @override
@@ -30,6 +25,30 @@ class _EventCustomerState extends State<EventCustomer> {
     // TODO: implement initState
     super.initState();
     _count = 1;
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+
+    if (eventNotifier.currentEvent != null) {
+      _currentEvent = eventNotifier.currentEvent;
+    }  else{
+      _currentEvent = Events();
+    }
+    _imageUrl = _currentEvent.image;
+  }
+
+  _showImage(){
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
+      return Container(
+        height: 200,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+              _imageUrl
+            )
+          )
+        ),
+      );
   }
 
   void add(){
@@ -47,6 +66,7 @@ class _EventCustomerState extends State<EventCustomer> {
 
   @override
   Widget build(BuildContext context) {
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -55,13 +75,12 @@ class _EventCustomerState extends State<EventCustomer> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  height: 150.0,
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset('assets/prototype/sony.jpg',
-                    fit: BoxFit.cover,
-                  ),
+                SizedBox(
+                  height: 10,
+                ),
+                _showImage(),
+                SizedBox(
+                  height: 10,
                 ),
                 Text('Product : Sony wf-1000xm3',style: TextStyle(fontSize: 15),),
                 Padding(

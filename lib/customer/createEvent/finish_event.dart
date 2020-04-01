@@ -102,24 +102,23 @@ class _FinishEventState extends State<FinishEvent> {
 
     _currentEvent.variations = colorEvent;
     _currentEvent.category = widget.category;
-    uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent);
     print('category : ${_currentEvent.category}');
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     _currentEvent.userPic = user.photoUrl;
     _currentEvent.userCreateId = user.uid;
     _currentEvent.userEmail = user.email;
 
-    Firestore.instance
-        .collection('users')
-        .document(user.uid).collection('usersCreate').document().setData({
-      'eventId':_currentEvent.eventId,
-      'image':_currentEvent.image,
+    CollectionReference subCollection = Firestore.instance.collection('users').document(user.uid).collection('userCreate');
+
+    DocumentReference docRef = await subCollection.add({
       'productName':_currentEvent.productName,
-      'amount':_amount.text.trim(),
+      'amount':_currentEvent.currentAmount,
       'shopId':_currentEvent.shopOwnId,
       'shopPic':_currentEvent.shopPic,
-      'shopEmail':_currentEvent.shopEmail
+      'shopEmail':_currentEvent.shopEmail,
+      'variation':_currentEvent.variations
     }).then((ev){
+      uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent,subID: ev.documentID);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context)=>MainEvent()));
