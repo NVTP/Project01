@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:assem_deal/controllers/event_controller.dart';
+import 'package:assem_deal/customer/controlPageCustomer/main_customer.dart';
 import 'package:assem_deal/customer/controlPageCustomer/main_event.dart';
 import 'package:assem_deal/model/event.dart';
 import 'package:assem_deal/services/notifier/event_notifier.dart';
@@ -121,7 +122,7 @@ class _FinishEventState extends State<FinishEvent> {
       uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent,subID: ev.documentID);
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context)=>MainEvent()));
+          MaterialPageRoute(builder: (context)=>MainCustomer()));
     }).catchError((e){
       print('can\'t sub $e');
     });

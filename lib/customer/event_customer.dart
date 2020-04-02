@@ -1,6 +1,7 @@
 import 'package:assem_deal/customer/choice/customer_comment.dart';
 import 'package:assem_deal/model/event.dart';
 import 'package:assem_deal/services/notifier/event_notifier.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -80,11 +81,17 @@ class _EventCustomerState extends State<EventCustomer> {
                 ),
                 _showImage(),
                 SizedBox(
-                  height: 10,
+                  height: 12,
                 ),
-                Text('Product : Sony wf-1000xm3',style: TextStyle(fontSize: 15),),
+                Text('Product : ${eventNotifier.currentEvent.productName}',style: TextStyle(fontSize: 15),),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'Category : ${eventNotifier.currentEvent.category}',style: TextStyle(fontSize: 15),
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   child: Card(
                     color: Colors.grey[200],
                     elevation: 1.1,
@@ -95,11 +102,10 @@ class _EventCustomerState extends State<EventCustomer> {
                       width: MediaQuery.of(context).size.width,
                       height: 100.0,
                       padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: ListView(
-                        children: <Widget>[
-                          Text('WF-1000XM3 เป็นหูฟังไร้สายแบบ True Wireless แบบ in ear '),
-                          Text('หูฟัง Sony WF-1000XM3 นั้นใช้ไดร์เวอร์ชนิดไดนามิคขนาด 6 มม. ซึ่งออกแบบมาให้สามารถตอบสนองความถี่ได้ครบทุกย่านครับ โดยมาพร้อมชิป Sony QN1e ที่ทำหน้าที่ประมวลผลการตัดเสียงรบกวน และทำให้ที่เป็น DAC และ Sound Processing ในหนึ่งเดียว'),
-                        ],
+                      child: Center(
+                        child: Text(
+                          eventNotifier.currentEvent.eventDetail
+                        ),
                       ),
                     ),
                   ),
@@ -110,8 +116,8 @@ class _EventCustomerState extends State<EventCustomer> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Text('Quantity : 99'),
-                    Text('Shop Require : 120'),
+                    Text('Quantity : ${eventNotifier.currentEvent.currentAmount}'),
+                    Text('Shop Require : ${eventNotifier.currentEvent.shopAmount}'),
                   ],
                 ),
                 SizedBox(
@@ -122,11 +128,11 @@ class _EventCustomerState extends State<EventCustomer> {
                 ),
                 Column(
                   children: <Widget>[
-                    Text('Resposible by Shop : Sony Thailand'),
+                    Text('Resposible by Shop : ${eventNotifier.currentEvent.shopEmail}'),
                     SizedBox(
                       height: 10.0,
                     ),
-                    Text('Price per piece : 1500.00'),
+                    Text('Price per piece : ${eventNotifier.currentEvent.mediumPrice}'),
                   ],
                 ),
                 SizedBox(
@@ -200,11 +206,11 @@ class _EventCustomerState extends State<EventCustomer> {
                 SizedBox(
                   height: 20.0,
                 ),
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text('Data Start : 01/20/2020'),
-                    Text('Date End : 03/20/2020'),
+                    Text('Data Start : ${eventNotifier.currentEvent.createAt.toDate().toString()}'),
+                    Text('Date End : ${eventNotifier.currentEvent.endAt.toString()}' ?? 'Not'),
                   ],
                 ),//DATE
                 SizedBox(
@@ -274,23 +280,41 @@ class _EventCustomerState extends State<EventCustomer> {
                       child: Text(' The Creator ',style: TextStyle(color: Colors.white,fontSize: 20),)
                   ),
                 ),
-                ListTile(
-                  leading: CircleAvatar(
-                    maxRadius: 35.0,
-                    backgroundImage: AssetImage('assets/prototype/virgil.jpg'),
-                  ),
-                  title: Text('Virgil van Dijk'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('Your Quantity : 2'),
-                      Text('Color : Black')
-                    ],
-                  ),
-                  trailing: InkWell(
-                    onTap: (){},
-                    child: Text('Cancel',style: TextStyle(color: Colors.red),),
-                  ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Container(
+                      width: 75,
+                      height: 75,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            eventNotifier.currentEvent.userPic
+                          )
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                            eventNotifier.currentEvent.userEmail
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Quantity : ${eventNotifier.currentEvent.currentAmount}'
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 10.0,
@@ -308,22 +332,44 @@ class _EventCustomerState extends State<EventCustomer> {
                       child: Text(' Shop ',style: TextStyle(color: Colors.white,fontSize: 20),)
                   ),
                 ),
-                ListTile(
-                  onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>CommentCustomer())
-                    );
-                  },
-                  leading: CircleAvatar(
-                    maxRadius: 35.0,
-                    backgroundImage: AssetImage('assets/images/sony.jpeg'),
-                  ),
-                  title: Text('Sony Thailand'),
-                  subtitle: Text('Quantity : 120'),
-                  trailing: InkWell(
-                    onTap: (){},
-                    child: Text('Cancel',style: TextStyle(color: Colors.red),),
-                  ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Container(
+                      width: 75,
+                      height: 75,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            eventNotifier.currentEvent.shopPic ?? avatar
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          eventNotifier.currentEvent.shopEmail ?? 'No Shop offer'
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          eventNotifier.currentEvent.shopAmount ?? 'Quantity : 0'
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             ),

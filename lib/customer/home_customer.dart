@@ -65,25 +65,67 @@ class _HomeCustomerState extends State<HomeCustomer> {
         ],
       ),
         body: RefreshIndicator(
-          child: ListView.builder(
-            itemCount: eventNotifier.eventList.length,
-            itemBuilder: (BuildContext context,int index){
-              return ListTile(
-                leading: Image.network(
-                  eventNotifier.eventList[index].image,
-                  width: 120,
-                ),
-                title: Text(eventNotifier.eventList[index].productName),
-                onTap: (){
-                  eventNotifier.currentEvent = eventNotifier.eventList[index];
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context)=>MainEvent())
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 20,
+              ),
+              ListView.separated(
+                separatorBuilder: (context, index){
+                  return SizedBox(
+                    height: 22,
+                    child: Divider(
+                      height: 0,
+                      color: Colors.grey,
+                    ),
                   );
                 },
-              );
-            },
-            shrinkWrap: true,
+                itemCount: eventNotifier.eventList.length,
+                itemBuilder: (BuildContext context,int index){
+                  return InkWell(
+                    highlightColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    onTap: (){
+                      eventNotifier.currentEvent = eventNotifier.eventList[index];
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context)=>MainEvent())
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.grey[300]),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                eventNotifier.eventList[index].image,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          eventNotifier.eventList[index].productName,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                shrinkWrap: true,
+              ),
+            ],
           ),
           onRefresh: _refreshList,
         ),
