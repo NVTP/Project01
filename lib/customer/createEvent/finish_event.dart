@@ -117,7 +117,8 @@ class _FinishEventState extends State<FinishEvent> {
       'shopId':_currentEvent.shopOwnId,
       'shopPic':_currentEvent.shopPic,
       'shopEmail':_currentEvent.shopEmail,
-      'variation':_currentEvent.variations
+      'variation':_currentEvent.variations,
+      'userAmount':_currentEvent.userAmount
     }).then((ev){
       uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent,subID: ev.documentID);
       Navigator.pushReplacement(
@@ -154,6 +155,7 @@ class _FinishEventState extends State<FinishEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        scrollDirection: Axis.vertical,
         shrinkWrap: true,
         slivers: <Widget>[
           SliverAppBar(
@@ -331,6 +333,7 @@ class _FinishEventState extends State<FinishEvent> {
                                 keyboardType: TextInputType.number,
                                 onSaved: (String val) {
                                   _currentEvent.currentAmount = val;
+                                  _currentEvent.userAmount = val;
                                 },
                                 inputFormatters: [
                                   WhitelistingTextInputFormatter.digitsOnly

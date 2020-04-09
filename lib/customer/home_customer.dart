@@ -65,24 +65,24 @@ class _HomeCustomerState extends State<HomeCustomer> {
         ],
       ),
         body: RefreshIndicator(
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 20,
-              ),
-              ListView.separated(
-                separatorBuilder: (context, index){
-                  return SizedBox(
-                    height: 22,
-                    child: Divider(
-                      height: 0,
-                      color: Colors.grey,
-                    ),
-                  );
-                },
-                itemCount: eventNotifier.eventList.length,
-                itemBuilder: (BuildContext context,int index){
-                  return InkWell(
+          child: ListView.separated(
+            separatorBuilder: (context, index){
+              return SizedBox(
+                height: 22,
+                child: Divider(
+                  height: 0,
+                  color: Colors.grey,
+                ),
+              );
+            },
+            itemCount: eventNotifier.eventList.length,
+            itemBuilder: (BuildContext context,int index){
+              return Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 8,
+                  ),
+                  InkWell(
                     highlightColor: Colors.transparent,
                     focusColor: Colors.transparent,
                     splashColor: Colors.transparent,
@@ -121,11 +121,14 @@ class _HomeCustomerState extends State<HomeCustomer> {
                         ),
                       ],
                     ),
-                  );
-                },
-                shrinkWrap: true,
-              ),
-            ],
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                ],
+              );
+            },
+            shrinkWrap: true,
           ),
           onRefresh: _refreshList,
         ),
