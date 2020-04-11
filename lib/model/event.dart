@@ -18,6 +18,7 @@ class Events{
   String userPic;
   String userEmail;
   String userAmount;
+  List userVariations = [];
   String shopOwnId;
   String shopPic;
   String shopEmail;
@@ -43,6 +44,7 @@ class Events{
     userPic = data['userPic'];
     userEmail = data['userEmail'];
     userAmount = data['userAmount'];
+    userVariations = data['userVariations'];
     shopOwnId = data['shopOwnId'];
     shopPic = data['shopPic'];
     shopEmail = data['shopEmail'];
@@ -68,6 +70,7 @@ class Events{
       'userPic':userPic,
       'userEmail':userEmail,
       'userAmount':userAmount,
+      'userVariations':userVariations,
       'shopOwnId':shopOwnId,
       'shopPic':shopPic,
       'shopEmail':shopEmail,

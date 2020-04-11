@@ -11,6 +11,7 @@ class UserCreate{
   String shopPic;
   String userAmount;
   List variation = [];
+  List userVariations =[];
 
   UserCreate();
 
@@ -25,6 +26,7 @@ class UserCreate{
     shopPic = data['shopPic'];
     userAmount = data['userAmount'];
     variation = data['variation'];
+    userVariations = data['userVariations'];
   }
 
   Map<String, dynamic>toMap(){
@@ -38,7 +40,8 @@ class UserCreate{
       'shopId':shopPic,
       'shopPic':shopPic,
       'userAmount':userAmount,
-      'variation':variation
+      'variation':variation,
+      'userVariations':userVariations
     };
   }
 }

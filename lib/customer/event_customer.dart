@@ -1,6 +1,7 @@
 import 'package:assem_deal/customer/choice/customer_comment.dart';
 import 'package:assem_deal/model/event.dart';
 import 'package:assem_deal/services/notifier/event_notifier.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,61 +13,68 @@ class EventCustomer extends StatefulWidget {
 
 class _EventCustomerState extends State<EventCustomer> {
   bool valueVariation;
-  var avatar = 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg';
+  var avatar =
+      'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg';
   Events _currentEvent;
   var _imageUrl;
   int _count;
+  List forUser = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _count = 1;
-    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
-    Future<void> _refreshEvent()async{
+    EventNotifier eventNotifier =
+        Provider.of<EventNotifier>(context, listen: false);
+    Future<void> _refreshEvent() async {
       eventNotifier.currentEvent;
     }
+
     if (eventNotifier.currentEvent != null) {
       _currentEvent = eventNotifier.currentEvent;
-    }  else{
+    } else {
       _currentEvent = Events();
     }
     _imageUrl = _currentEvent.image;
     valueVariation = true;
   }
 
-  _showImage(){
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Container(
-          height: 250,
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
+  _showImage() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Container(
+        height: 250,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              width: 1,
-              color: Colors.grey
-            ),
+            border: Border.all(width: 1, color: Colors.grey),
             image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                _imageUrl
-              )
-            )
-          ),
-        ),
-      );
+                fit: BoxFit.cover, image: NetworkImage(_imageUrl))),
+      ),
+    );
   }
 
-  void add(){
+  _forUser(String text){
+    if (text.isEmpty) {
+      return null;
+    }  else{
+      setState(() {
+        forUser.add(text);
+      });
+    }
+  }
+
+  void add() {
     setState(() {
       _count++;
     });
   }
-  void minus(){
+
+  void minus() {
     setState(() {
-      if(_count != 1){
+      if (_count != 1) {
         _count--;
       }
     });
@@ -75,9 +83,10 @@ class _EventCustomerState extends State<EventCustomer> {
   @override
   Widget build(BuildContext context) {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
-    Future<void> _refreshEvent()async{
+    Future<void> _refreshEvent() async {
       eventNotifier.currentEvent;
     }
+
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: _refreshEvent,
@@ -95,15 +104,20 @@ class _EventCustomerState extends State<EventCustomer> {
                   SizedBox(
                     height: 12,
                   ),
-                  Text('Product : ${eventNotifier.currentEvent.productName}',style: TextStyle(fontSize: 15),),
+                  Text(
+                    'Product : ${eventNotifier.currentEvent.productName}',
+                    style: TextStyle(fontSize: 15),
+                  ),
                   SizedBox(
                     height: 12,
                   ),
                   Text(
-                    'Category : ${eventNotifier.currentEvent.category}',style: TextStyle(fontSize: 15),
+                    'Category : ${eventNotifier.currentEvent.category}',
+                    style: TextStyle(fontSize: 15),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 12),
                     child: Card(
                       color: Colors.grey[200],
                       elevation: 1.1,
@@ -115,21 +129,21 @@ class _EventCustomerState extends State<EventCustomer> {
                         height: 100.0,
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
                         child: Center(
-                          child: Text(
-                            eventNotifier.currentEvent.eventDetail
-                          ),
+                          child: Text(eventNotifier.currentEvent.eventDetail),
                         ),
                       ),
                     ),
-                  ),//DETAIL PRODUCT
+                  ), //DETAIL PRODUCT
                   SizedBox(
                     height: 10.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      Text('Quantity : ${eventNotifier.currentEvent.currentAmount}'),
-                      Text('Shop Require : ${eventNotifier.currentEvent.shopAmount}'),
+                      Text(
+                          'Quantity : ${eventNotifier.currentEvent.currentAmount}'),
+                      Text(
+                          'Shop Require : ${eventNotifier.currentEvent.shopAmount}'),
                     ],
                   ),
                   SizedBox(
@@ -140,11 +154,13 @@ class _EventCustomerState extends State<EventCustomer> {
                   ),
                   Column(
                     children: <Widget>[
-                      Text('Resposible by Shop : ${eventNotifier.currentEvent.shopEmail}'),
+                      Text(
+                          'Resposible by Shop : ${eventNotifier.currentEvent.shopEmail}'),
                       SizedBox(
                         height: 10.0,
                       ),
-                      Text('Price per piece : ${eventNotifier.currentEvent.mediumPrice}'),
+                      Text(
+                          'Price per piece : ${eventNotifier.currentEvent.mediumPrice}'),
                     ],
                   ),
                   SizedBox(
@@ -154,48 +170,45 @@ class _EventCustomerState extends State<EventCustomer> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey,width: 1),
-                        borderRadius: BorderRadius.circular(12)
-                      ),
+                          border: Border.all(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.circular(12)),
                       child: Column(
                         children: <Widget>[
                           SizedBox(
                             height: 12,
                           ),
                           Center(
-                            child: Text(
-                              'Choice',style: TextStyle(color: Colors.red,fontSize: 22),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Choice',
+                                  style: TextStyle(color: Colors.red, fontSize: 22),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  '** tap for choose',style: TextStyle(color: Colors.red),
+                                ),
+                              ],
                             ),
                           ),
                           ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: eventNotifier.currentEvent.variations.length,
-                            itemBuilder: (BuildContext context, int index){
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-//                            Checkbox(
-//                                value: valueVariation,
-//                                activeColor: Colors.red,
-//                                checkColor: Colors.white,
-//                                onChanged: (bool val){
-//                                  setState(() {
-//                                    valueVariation = val;
-//                                  });
-//                                }),
-                                  Text(eventNotifier.currentEvent.variations[index]),
-                                  IconButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        eventNotifier.currentEvent.variations.removeAt(index);
-                                      });
-                                    },
-                                    icon: Icon(
-                                      Icons.clear
-                                    ),
-                                  ),
-                                ],
+                            itemCount:
+                                eventNotifier.currentEvent.variations.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListTile(
+                                onTap: (){
+                                  //todo
+                                  _forUser(eventNotifier.currentEvent.variations[index].toString());
+                                },
+                                title: Center(
+                                  child: Text(eventNotifier
+                                      .currentEvent.variations[index]
+                                      .toString()),
+                                ),
                               );
                             },
                           ),
@@ -207,14 +220,38 @@ class _EventCustomerState extends State<EventCustomer> {
                     height: 20,
                   ),
                   Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: forUser.length,
+                      itemBuilder: (context,index){
+                        return ListTile(
+                          title: Text(forUser[index]),
+                          trailing: IconButton(
+                            icon: Icon(
+                              Icons.clear
+                            ),
+                            onPressed: (){
+                              setState(() {
+                                forUser.removeAt(index);
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.grey[200]
-                      ),
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey[200]),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -227,7 +264,8 @@ class _EventCustomerState extends State<EventCustomer> {
                           ),
                           Text(
                             '$_count',
-                            style: TextStyle(color: Colors.blueGrey[300],fontSize: 18),
+                            style: TextStyle(
+                                color: Colors.blueGrey[300], fontSize: 18),
                           ),
                           RawMaterialButton(
                             onPressed: add,
@@ -246,10 +284,13 @@ class _EventCustomerState extends State<EventCustomer> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text('Data Start : ${eventNotifier.currentEvent.createAt.toDate().toString()}'),
-                      Text('Date End : ${eventNotifier.currentEvent.endAt.toString()}' ?? 'Not'),
+                      Text(
+                          'Data Start : ${eventNotifier.currentEvent.createAt.toDate().toString()}'),
+                      Text(
+                          'Date End : ${eventNotifier.currentEvent.endAt.toString()}' ??
+                              'Not'),
                     ],
-                  ),//DATE
+                  ), //DATE
                   SizedBox(
                     height: 10.0,
                   ),
@@ -264,12 +305,15 @@ class _EventCustomerState extends State<EventCustomer> {
                             width: MediaQuery.of(context).size.width,
                             child: RaisedButton(
                               color: Colors.blueGrey[200],
-                              onPressed: (){},
+                              onPressed: () {},
                               elevation: 1.1,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                'JOIN',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
-                              child: Text('JOIN',style: TextStyle(color: Colors.white,fontSize: 18),),
                             ),
                           ),
                         ),
@@ -282,22 +326,28 @@ class _EventCustomerState extends State<EventCustomer> {
                             width: MediaQuery.of(context).size.width,
                             child: RaisedButton(
                               color: Colors.blueGrey[200],
-                              onPressed: (){},
+                              onPressed: () {},
                               elevation: 1.1,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
-                              child: Text('Cancel',style: TextStyle(color: Colors.white,fontSize: 18),),
                             ),
                           ),
                         ),
                         IconButton(
-                          onPressed: (){},
-                          icon: Icon(Icons.share,color: Color(0xFF3B5998),),
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.share,
+                            color: Color(0xFF3B5998),
+                          ),
                         ),
                       ],
                     ),
-                  ),//Button JOIN
+                  ), //Button JOIN
                   SizedBox(
                     height: 20.0,
                   ),
@@ -310,12 +360,13 @@ class _EventCustomerState extends State<EventCustomer> {
                   ),
                   Center(
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey[300],
-                        borderRadius: BorderRadius.circular(5)
-                      ),
-                        child: Text(' The Creator ',style: TextStyle(color: Colors.white,fontSize: 20),)
-                    ),
+                        decoration: BoxDecoration(
+                            color: Colors.blueGrey[300],
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Text(
+                          ' The Creator ',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
                   ),
                   Row(
                     children: <Widget>[
@@ -328,11 +379,9 @@ class _EventCustomerState extends State<EventCustomer> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              eventNotifier.currentEvent.userPic
-                            )
-                          ),
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  eventNotifier.currentEvent.userPic)),
                         ),
                       ),
                       SizedBox(
@@ -340,15 +389,12 @@ class _EventCustomerState extends State<EventCustomer> {
                       ),
                       Column(
                         children: <Widget>[
-                          Text(
-                              eventNotifier.currentEvent.userEmail
-                          ),
+                          Text(eventNotifier.currentEvent.userEmail),
                           SizedBox(
                             height: 5,
                           ),
                           Text(
-                            'Quantity : ${eventNotifier.currentEvent.userAmount}'
-                          ),
+                              'Quantity : ${eventNotifier.currentEvent.userAmount}'),
                         ],
                       ),
                     ],
@@ -364,10 +410,11 @@ class _EventCustomerState extends State<EventCustomer> {
                     child: Container(
                         decoration: BoxDecoration(
                             color: Colors.blueGrey[300],
-                            borderRadius: BorderRadius.circular(5)
-                        ),
-                        child: Text(' Shop ',style: TextStyle(color: Colors.white,fontSize: 20),)
-                    ),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Text(
+                          ' Shop ',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
                   ),
                   Row(
                     children: <Widget>[
@@ -382,8 +429,7 @@ class _EventCustomerState extends State<EventCustomer> {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                              eventNotifier.currentEvent.shopPic ?? avatar
-                            ),
+                                eventNotifier.currentEvent.shopPic ?? avatar),
                           ),
                         ),
                       ),
@@ -392,15 +438,13 @@ class _EventCustomerState extends State<EventCustomer> {
                       ),
                       Column(
                         children: <Widget>[
-                          Text(
-                            eventNotifier.currentEvent.shopEmail ?? 'No Shop offer'
-                          ),
+                          Text(eventNotifier.currentEvent.shopEmail ??
+                              'No Shop offer'),
                           SizedBox(
                             height: 5,
                           ),
-                          Text(
-                            eventNotifier.currentEvent.shopAmount ?? 'Quantity : 0'
-                          ),
+                          Text(eventNotifier.currentEvent.shopAmount ??
+                              'Quantity : 0'),
                         ],
                       ),
                     ],

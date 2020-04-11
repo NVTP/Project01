@@ -24,6 +24,7 @@ class FinishEvent extends StatefulWidget {
 class _FinishEventState extends State<FinishEvent> {
   final _formKey = GlobalKey<FormState>();
   List colorEvent = [];
+  List userVariation = [];
   bool valColor;
 
   File imageEvent;
@@ -40,10 +41,12 @@ class _FinishEventState extends State<FinishEvent> {
     _productName = TextEditingController();
     _productMediumPrice = TextEditingController();
     _colorController = TextEditingController();
+    _userVariationController = TextEditingController();
     _amount = TextEditingController();
     valColor = true;
     _currentEvent = Events();
     colorEvent.addAll(_currentEvent.variations);
+    userVariation.addAll(_currentEvent.userVariations);
   }
 
   TextEditingController _productDetail;
@@ -51,6 +54,7 @@ class _FinishEventState extends State<FinishEvent> {
   TextEditingController _amount;
   TextEditingController _productName;
   TextEditingController _colorController;
+  TextEditingController _userVariationController;
 
   _getImage() async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -108,6 +112,7 @@ class _FinishEventState extends State<FinishEvent> {
     _currentEvent.userPic = user.photoUrl;
     _currentEvent.userCreateId = user.uid;
     _currentEvent.userEmail = user.email;
+    _currentEvent.userVariations = userVariation;
 
     CollectionReference subCollection = Firestore.instance.collection('users').document(user.uid).collection('userCreate');
 
@@ -118,7 +123,8 @@ class _FinishEventState extends State<FinishEvent> {
       'shopPic':_currentEvent.shopPic,
       'shopEmail':_currentEvent.shopEmail,
       'variation':_currentEvent.variations,
-      'userAmount':_currentEvent.userAmount
+      'userAmount':_currentEvent.userAmount,
+      'userVariations':_currentEvent.userVariations
     }).then((ev){
       uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent,subID: ev.documentID);
       Navigator.pushReplacement(
@@ -141,13 +147,32 @@ class _FinishEventState extends State<FinishEvent> {
       ),
     );
   }
-
   _addColor(String text) {
     if (text.isNotEmpty) {
       setState(() {
         colorEvent.add(text);
       });
       _colorController.clear();
+    }
+  }
+  _buildForUser(){
+    return SizedBox(
+      width: 200,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        controller: _userVariationController,
+        decoration: InputDecoration(
+            hintText: 'Ex. Color , Size  \'For you\'',
+            hintStyle: TextStyle(color: Colors.grey[400])),
+      ),
+    );
+  }
+  _addUserVariation(String text){
+    if(text.isNotEmpty){
+      setState(() {
+        userVariation.add(text);
+      });
+    _userVariationController.clear();
     }
   }
 
@@ -359,12 +384,6 @@ class _FinishEventState extends State<FinishEvent> {
                       SizedBox(
                         height: 10,
                       ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: <Widget>[],
-                        ),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -379,7 +398,7 @@ class _FinishEventState extends State<FinishEvent> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
                             child: Text(
-                              'Add',
+                              'Add For Event',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -432,6 +451,71 @@ class _FinishEventState extends State<FinishEvent> {
                       ),
                       SizedBox(
                         height: 20,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          _buildForUser(),
+                          RaisedButton(
+                            onPressed: ()=>_addUserVariation(_userVariationController.text),
+                            color: Colors.redAccent[700],
+                            elevation: 1.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)
+                            ),
+                            child: Text('Add For You',style: TextStyle(color: Colors.white),),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.grey, width: 1)),
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: userVariation.length,
+                              itemBuilder: (BuildContext context, int Index) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Checkbox(
+                                      value: valColor,
+                                      checkColor: Colors.white,
+                                      activeColor: Colors.red,
+                                      onChanged: (bool val) {
+                                        setState(() {
+                                          //todo
+                                          valColor = val;
+                                        });
+                                      },
+                                    ),
+                                    Text(userVariation[Index]),
+                                    IconButton(
+                                      icon: Icon(Icons.clear),
+                                      onPressed: () {
+                                        setState(() {
+                                          userVariation.removeAt(Index);
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
