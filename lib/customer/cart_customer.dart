@@ -98,7 +98,7 @@ class _CartCustomerState extends State<CartCustomer> {
                   SizedBox(
                     height: 4,
                   ),
-                  Text(eventNotifier.eventList[index].userAmount),
+                  Text(eventNotifier.eventList[index].userAmount.toString()),
                   SizedBox(
                     height: 8,
                   ),

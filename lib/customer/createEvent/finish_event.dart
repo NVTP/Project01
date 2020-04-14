@@ -142,7 +142,7 @@ class _FinishEventState extends State<FinishEvent> {
         keyboardType: TextInputType.text,
         controller: _colorController,
         decoration: InputDecoration(
-            hintText: 'Ex. Color , Size',
+            hintText: 'Ex. Color , Size  \'For Event\'',
             hintStyle: TextStyle(color: Colors.grey[400])),
       ),
     );
@@ -419,32 +419,43 @@ class _FinishEventState extends State<FinishEvent> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount: colorEvent.length,
-                              itemBuilder: (BuildContext context, int Index) {
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Checkbox(
-                                      value: valColor,
-                                      checkColor: Colors.white,
-                                      activeColor: Colors.red,
-                                      onChanged: (bool val) {
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 22,vertical: 8),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 22),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.deepOrange[300],width: 2),
+                                        color: Colors.blueGrey[300],
+                                        borderRadius: BorderRadius.circular(12)
+                                    ),
+                                    child: InkWell(
+                                      onTap: (){
                                         setState(() {
-                                          //todo
-                                          valColor = val;
+                                          colorEvent.removeAt(index);
                                         });
                                       },
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text(
+                                            colorEvent[index],style: TextStyle(color: Colors.white),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                                Icons.clear
+                                            ),
+                                            color: Colors.white,
+                                            onPressed: (){
+                                              setState(() {
+                                                colorEvent.removeAt(index);
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Text(colorEvent[Index]),
-                                    IconButton(
-                                      icon: Icon(Icons.clear),
-                                      onPressed: () {
-                                        setState(() {
-                                          colorEvent.removeAt(Index);
-                                        });
-                                      },
-                                    ),
-                                  ],
+                                  ),
                                 );
                               }),
                         ),
@@ -485,31 +496,43 @@ class _FinishEventState extends State<FinishEvent> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount: userVariation.length,
-                              itemBuilder: (BuildContext context, int Index) {
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Checkbox(
-                                      value: valColor,
-                                      checkColor: Colors.white,
-                                      activeColor: Colors.red,
-                                      onChanged: (bool val) {
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 22,vertical: 8),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 22),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.deepOrange[300],width: 2),
+                                        color: Colors.blueGrey[300],
+                                        borderRadius: BorderRadius.circular(12)
+                                    ),
+                                    child: InkWell(
+                                      onTap: (){
                                         setState(() {
-                                          //todo
-                                          valColor = val;
+                                          userVariation.removeAt(index);
                                         });
                                       },
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text(
+                                            userVariation[index],style: TextStyle(color: Colors.white),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                                Icons.clear
+                                            ),
+                                            color: Colors.white,
+                                            onPressed: (){
+                                              setState(() {
+                                                userVariation.removeAt(index);
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Text(userVariation[Index]),
-                                    IconButton(
-                                      icon: Icon(Icons.clear),
-                                      onPressed: () {
-                                        setState(() {
-                                          userVariation.removeAt(Index);
-                                        });
-                                      },
-                                    ),
-                                  ],
+                                  ),
                                 );
                               }),
                         ),

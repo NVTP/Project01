@@ -1,5 +1,6 @@
 import 'package:assem_deal/customer/choice/customer_comment.dart';
 import 'package:assem_deal/model/event.dart';
+import 'package:assem_deal/model/user_join.dart';
 import 'package:assem_deal/services/notifier/event_notifier.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,14 +20,24 @@ class _EventCustomerState extends State<EventCustomer> {
   var _imageUrl;
   int _count;
   List forUser = [];
+  TextEditingController address;
+  TextEditingController province;
+  TextEditingController phone;
+  TextEditingController name;
+  UserJoin _userJoin;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _userJoin = UserJoin();
     _count = 1;
-    EventNotifier eventNotifier =
-        Provider.of<EventNotifier>(context, listen: false);
+    address = TextEditingController();
+    province = TextEditingController();
+    phone = TextEditingController();
+    name = TextEditingController();
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
     Future<void> _refreshEvent() async {
       eventNotifier.currentEvent;
     }
@@ -66,18 +77,304 @@ class _EventCustomerState extends State<EventCustomer> {
     }
   }
 
+  showForUser(){
+    if (forUser.length <= 1) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: forUser.length,
+          itemBuilder: (context,index){
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 62),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 22),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.deepOrange[300],width: 2),
+                  color: Colors.blueGrey[300],
+                  borderRadius: BorderRadius.circular(12)
+                ),
+                child: InkWell(
+                  onTap: (){
+                    setState(() {
+                      forUser.removeAt(index);
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        forUser[index],style: TextStyle(color: Colors.white),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.clear
+                        ),
+                        color: Colors.white,
+                        onPressed: (){
+                          setState(() {
+                            forUser.removeAt(index);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }else{
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: forUser.length = 0,
+          itemBuilder: (context,index){
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 62),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 22),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.deepOrange[300],width: 2),
+                    color: Colors.blueGrey[300],
+                    borderRadius: BorderRadius.circular(12)
+                ),
+                child: InkWell(
+                  onTap: (){
+                    setState(() {
+                      forUser.removeAt(index);
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        forUser[index],style: TextStyle(color: Colors.white),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                            Icons.clear
+                        ),
+                        color: Colors.white,
+                        onPressed: (){
+                          setState(() {
+                            forUser.removeAt(index);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }
+  }
+
   void add() {
     setState(() {
-      _count++;
+       _count++;
     });
   }
 
   void minus() {
     setState(() {
       if (_count != 1) {
-        _count--;
+       _count--;
       }
     });
+  }
+
+  _showDialog(){
+    if (forUser.isEmpty) {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            elevation: 1.0,
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(22),bottomLeft: Radius.circular(22))
+            ),
+            content: Center(
+              child: Text('Please select Choice',style: TextStyle(color: Colors.red,fontSize: 25),),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                  setState(() {
+                    address.clear();
+                  });
+                },
+                child: Text('fuck ok'),
+              ),
+            ],
+          );
+        }
+      );
+    }else{
+      return showDialog(
+          context: context,
+          builder: (BuildContext context){
+            return AlertDialog(
+              elevation: 1.0,
+              title: Text('fuck'),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(22),bottomRight: Radius.circular(22))
+              ),
+              content: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Full Name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(22.0)
+                          ),
+                          prefixIcon: Icon(Icons.person),
+                        ),
+                        keyboardType: TextInputType.text,
+                        maxLines: 1,
+                        controller: name,
+                        validator: (val){
+                          if (val.isEmpty) {
+                            return 'Please fill Full Name';
+                          }else{
+                            return null;
+                          }
+                        },
+                        onSaved: (val){
+                          _userJoin.userName = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'phone',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(22.0)
+                          ),
+                          prefixIcon: Icon(Icons.phone),
+                        ),
+                        keyboardType: TextInputType.number,
+                        maxLines: 1,
+                        maxLength: 10,
+                        controller: phone,
+                        validator: (val){
+                          if (val.isEmpty || val.length != 10) {
+                            return 'Phone number must be 10';
+                          }else{
+                            return null;
+                          }
+                        },
+                        onSaved: (val){
+                          _userJoin.userPhone = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Province',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(22.0)
+                          ),
+                          prefixIcon: Icon(Icons.account_balance),
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        textAlign: TextAlign.justify,
+                        maxLines: null,
+                        controller: province,
+                        validator: (val){
+                          if (val.isEmpty) {
+                            return 'Province can\'t empty';
+                          }else{
+                            return null;
+                          }
+                        },
+                        onSaved: (val){
+                          _userJoin.userProvince = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Address',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(22.0)
+                          ),
+                          prefixIcon: Icon(Icons.home),
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        textAlign: TextAlign.justify,
+                        maxLines: null,
+                        controller: address,
+                        validator: (val){
+                          if (val.isEmpty) {
+                            return 'Address can\'t be empty';
+                          }else{
+                            return null;
+                          }
+                        },
+                        onSaved: (val){
+                          _userJoin.userAddress = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                Row(
+                  children: <Widget>[
+                    FlatButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                        setState(() {
+                          address.clear();
+                          province.clear();
+                          phone.clear();
+                          name.clear();
+                        });
+                      },
+                      child: Text('fuck Cancel'),
+                    ),
+                    FlatButton(
+                      onPressed: (){
+                        print('fuck you too');
+                        if (_formKey.currentState.validate()) {
+                          _onSubmit();
+                        }
+                      },
+                      child: Text('ok'),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
+      );
+    }
+  }
+  _onSubmit(){
+
   }
 
   @override
@@ -190,27 +487,41 @@ class _EventCustomerState extends State<EventCustomer> {
                                 Text(
                                   '** tap for choose',style: TextStyle(color: Colors.red),
                                 ),
+                                SizedBox(
+                                  height: 8,
+                                ),
                               ],
                             ),
                           ),
-                          ListView.builder(
+                          GridView.builder(
                             shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount:
-                                eventNotifier.currentEvent.variations.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                onTap: (){
-                                  //todo
-                                  _forUser(eventNotifier.currentEvent.variations[index].toString());
-                                },
-                                title: Center(
-                                  child: Text(eventNotifier
-                                      .currentEvent.variations[index]
-                                      .toString()),
+                            padding: EdgeInsets.symmetric(horizontal: 42),
+                            itemCount: eventNotifier.currentEvent.variations.length,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 4,crossAxisSpacing: 4),
+                            itemBuilder: (context,index){
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 22,vertical: 22),
+                                child: InkWell(
+                                  onTap: ()=>_forUser(eventNotifier.currentEvent.variations[index].toString()),
+                                  splashColor: Colors.red,
+                                  focusColor: Colors.red,
+                                  highlightColor: Colors.red,
+                                  child: Container(
+                                    child: Center(child: Text(eventNotifier.currentEvent.variations[index].toString(),
+                                      style: TextStyle(color: Colors.white),)
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blueGrey[300],
+                                      border: Border.all(color: Colors.deepOrange[300],width: 2),
+                                      shape: BoxShape.circle
+                                    ),
+                                  ),
                                 ),
                               );
                             },
+                          ),
+                          SizedBox(
+                            height: 8,
                           ),
                         ],
                       ),
@@ -219,30 +530,19 @@ class _EventCustomerState extends State<EventCustomer> {
                   SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: forUser.length,
-                      itemBuilder: (context,index){
-                        return ListTile(
-                          title: Text(forUser[index]),
-                          trailing: IconButton(
-                            icon: Icon(
-                              Icons.clear
-                            ),
-                            onPressed: (){
-                              setState(() {
-                                forUser.removeAt(index);
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  showForUser(),
                   SizedBox(
                     height: 20,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 6),
+                        child: Text(
+                          'Quantity',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -305,7 +605,10 @@ class _EventCustomerState extends State<EventCustomer> {
                             width: MediaQuery.of(context).size.width,
                             child: RaisedButton(
                               color: Colors.blueGrey[200],
-                              onPressed: () {},
+                              onPressed: () {
+                                print('fuckkkkk');
+                                  _showDialog();
+                              },
                               elevation: 1.1,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
@@ -394,7 +697,7 @@ class _EventCustomerState extends State<EventCustomer> {
                             height: 5,
                           ),
                           Text(
-                              'Quantity : ${eventNotifier.currentEvent.userAmount}'),
+                              'Quantity : ${eventNotifier.currentEvent.userAmount.toString()}'),
                         ],
                       ),
                     ],
