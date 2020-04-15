@@ -1,10 +1,14 @@
 import 'package:assem_deal/customer/choice/customer_comment.dart';
+import 'package:assem_deal/customer/controlPageCustomer/main_customer.dart';
+import 'package:assem_deal/customer/controlPageCustomer/main_event.dart';
 import 'package:assem_deal/model/event.dart';
 import 'package:assem_deal/model/user_join.dart';
 import 'package:assem_deal/services/notifier/event_notifier.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class EventCustomer extends StatefulWidget {
@@ -37,7 +41,8 @@ class _EventCustomerState extends State<EventCustomer> {
     province = TextEditingController();
     phone = TextEditingController();
     name = TextEditingController();
-    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+    EventNotifier eventNotifier =
+        Provider.of<EventNotifier>(context, listen: false);
     Future<void> _refreshEvent() async {
       eventNotifier.currentEvent;
     }
@@ -67,35 +72,34 @@ class _EventCustomerState extends State<EventCustomer> {
     );
   }
 
-  _forUser(String text){
+  _forUser(String text) {
     if (text.isEmpty) {
       return null;
-    }  else{
+    } else {
       setState(() {
         forUser.add(text);
       });
     }
   }
 
-  showForUser(){
+  showForUser() {
     if (forUser.length <= 1) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: forUser.length,
-          itemBuilder: (context,index){
+          itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 62),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 22),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.deepOrange[300],width: 2),
-                  color: Colors.blueGrey[300],
-                  borderRadius: BorderRadius.circular(12)
-                ),
+                    border: Border.all(color: Colors.deepOrange[300], width: 2),
+                    color: Colors.blueGrey[300],
+                    borderRadius: BorderRadius.circular(12)),
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       forUser.removeAt(index);
                     });
@@ -104,14 +108,13 @@ class _EventCustomerState extends State<EventCustomer> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        forUser[index],style: TextStyle(color: Colors.white),
+                        forUser[index],
+                        style: TextStyle(color: Colors.white),
                       ),
                       IconButton(
-                        icon: Icon(
-                          Icons.clear
-                        ),
+                        icon: Icon(Icons.clear),
                         color: Colors.white,
-                        onPressed: (){
+                        onPressed: () {
                           setState(() {
                             forUser.removeAt(index);
                           });
@@ -125,24 +128,23 @@ class _EventCustomerState extends State<EventCustomer> {
           },
         ),
       );
-    }else{
+    } else {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: forUser.length = 0,
-          itemBuilder: (context,index){
+          itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 62),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 22),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.deepOrange[300],width: 2),
+                    border: Border.all(color: Colors.deepOrange[300], width: 2),
                     color: Colors.blueGrey[300],
-                    borderRadius: BorderRadius.circular(12)
-                ),
+                    borderRadius: BorderRadius.circular(12)),
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       forUser.removeAt(index);
                     });
@@ -151,14 +153,13 @@ class _EventCustomerState extends State<EventCustomer> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        forUser[index],style: TextStyle(color: Colors.white),
+                        forUser[index],
+                        style: TextStyle(color: Colors.white),
                       ),
                       IconButton(
-                        icon: Icon(
-                            Icons.clear
-                        ),
+                        icon: Icon(Icons.clear),
                         color: Colors.white,
-                        onPressed: (){
+                        onPressed: () {
                           setState(() {
                             forUser.removeAt(index);
                           });
@@ -177,57 +178,61 @@ class _EventCustomerState extends State<EventCustomer> {
 
   void add() {
     setState(() {
-       _count++;
+      _count++;
     });
   }
 
   void minus() {
     setState(() {
       if (_count != 1) {
-       _count--;
+        _count--;
       }
     });
   }
 
-  _showDialog(){
+  _showDialog() {
     if (forUser.isEmpty) {
       return showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
-            elevation: 1.0,
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(topRight: Radius.circular(22),bottomLeft: Radius.circular(22))
-            ),
-            content: Center(
-              child: Text('Please select Choice',style: TextStyle(color: Colors.red,fontSize: 25),),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                  setState(() {
-                    address.clear();
-                  });
-                },
-                child: Text('fuck ok'),
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              elevation: 1.0,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(22),
+                      bottomLeft: Radius.circular(22))),
+              content: Center(
+                child: Text(
+                  'Please select Choice',
+                  style: TextStyle(color: Colors.red, fontSize: 25),
+                ),
               ),
-            ],
-          );
-        }
-      );
-    }else{
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    setState(() {
+                      address.clear();
+                    });
+                  },
+                  child: Text('fuck ok'),
+                ),
+              ],
+            );
+          });
+    } else {
       return showDialog(
           context: context,
-          builder: (BuildContext context){
+          builder: (BuildContext context) {
             return AlertDialog(
               elevation: 1.0,
               title: Text('fuck'),
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(22),bottomRight: Radius.circular(22))
-              ),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(22),
+                      bottomRight: Radius.circular(22))),
               content: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Form(
@@ -238,21 +243,20 @@ class _EventCustomerState extends State<EventCustomer> {
                         decoration: InputDecoration(
                           hintText: 'Full Name',
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(22.0)
-                          ),
+                              borderRadius: BorderRadius.circular(22.0)),
                           prefixIcon: Icon(Icons.person),
                         ),
                         keyboardType: TextInputType.text,
                         maxLines: 1,
                         controller: name,
-                        validator: (val){
+                        validator: (val) {
                           if (val.isEmpty) {
                             return 'Please fill Full Name';
-                          }else{
+                          } else {
                             return null;
                           }
                         },
-                        onSaved: (val){
+                        onSaved: (val) {
                           _userJoin.userName = val;
                         },
                       ),
@@ -263,22 +267,24 @@ class _EventCustomerState extends State<EventCustomer> {
                         decoration: InputDecoration(
                           hintText: 'phone',
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(22.0)
-                          ),
+                              borderRadius: BorderRadius.circular(22.0)),
                           prefixIcon: Icon(Icons.phone),
                         ),
                         keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          WhitelistingTextInputFormatter.digitsOnly
+                        ],
                         maxLines: 1,
                         maxLength: 10,
                         controller: phone,
-                        validator: (val){
+                        validator: (val) {
                           if (val.isEmpty || val.length != 10) {
                             return 'Phone number must be 10';
-                          }else{
+                          } else {
                             return null;
                           }
                         },
-                        onSaved: (val){
+                        onSaved: (val) {
                           _userJoin.userPhone = val;
                         },
                       ),
@@ -289,22 +295,21 @@ class _EventCustomerState extends State<EventCustomer> {
                         decoration: InputDecoration(
                           hintText: 'Province',
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(22.0)
-                          ),
+                              borderRadius: BorderRadius.circular(22.0)),
                           prefixIcon: Icon(Icons.account_balance),
                         ),
                         keyboardType: TextInputType.multiline,
                         textAlign: TextAlign.justify,
                         maxLines: null,
                         controller: province,
-                        validator: (val){
+                        validator: (val) {
                           if (val.isEmpty) {
                             return 'Province can\'t empty';
-                          }else{
+                          } else {
                             return null;
                           }
                         },
-                        onSaved: (val){
+                        onSaved: (val) {
                           _userJoin.userProvince = val;
                         },
                       ),
@@ -315,22 +320,21 @@ class _EventCustomerState extends State<EventCustomer> {
                         decoration: InputDecoration(
                           hintText: 'Address',
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(22.0)
-                          ),
+                              borderRadius: BorderRadius.circular(22.0)),
                           prefixIcon: Icon(Icons.home),
                         ),
                         keyboardType: TextInputType.multiline,
                         textAlign: TextAlign.justify,
                         maxLines: null,
                         controller: address,
-                        validator: (val){
+                        validator: (val) {
                           if (val.isEmpty) {
                             return 'Address can\'t be empty';
-                          }else{
+                          } else {
                             return null;
                           }
                         },
-                        onSaved: (val){
+                        onSaved: (val) {
                           _userJoin.userAddress = val;
                         },
                       ),
@@ -345,7 +349,7 @@ class _EventCustomerState extends State<EventCustomer> {
                 Row(
                   children: <Widget>[
                     FlatButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pop(context);
                         setState(() {
                           address.clear();
@@ -357,7 +361,7 @@ class _EventCustomerState extends State<EventCustomer> {
                       child: Text('fuck Cancel'),
                     ),
                     FlatButton(
-                      onPressed: (){
+                      onPressed: () {
                         print('fuck you too');
                         if (_formKey.currentState.validate()) {
                           _onSubmit();
@@ -369,12 +373,90 @@ class _EventCustomerState extends State<EventCustomer> {
                 ),
               ],
             );
-          }
-      );
+          });
     }
   }
-  _onSubmit(){
 
+  _onSubmit() async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    var evID = _currentEvent.eventId;
+    print(evID);
+    print(_userJoin.userAddress);
+    var currentAmount = _currentEvent.currentAmount;
+    var result = _count + int.parse(currentAmount);
+    print(result.toString());
+    var db = Firestore.instance;
+    _userJoin.userVariations = forUser;
+    var evRef = db.collection('events').document(evID);
+    evRef.updateData({'currentAmount': result.toString()});
+    evRef.collection('userJoin').document(user.uid).setData({
+      'eventId': evID,
+      'eventName': _currentEvent.eventName,
+      'productName': _currentEvent.productName,
+      'category': _currentEvent.category,
+      'image': _currentEvent.image,
+      'userId': user.uid,
+      'userName': _userJoin.userName,
+      'userProvince': _userJoin.userProvince,
+      'userPhone': _userJoin.userPhone,
+      'userAddress': _userJoin.userAddress,
+      'userEmail': user.email,
+      'userPic': user.photoUrl,
+      'userAmount' : _userJoin.userAmount,
+      'userVariation': _userJoin.userVariations,
+      'joinAt': DateTime.now().year.toString() +
+          '/' +
+          DateTime.now().month.toString() +
+          '/' +
+          DateTime.now().day.toString() +
+          ' , ' +
+          DateTime.now().hour.toString() +
+          ':' +
+          DateTime.now().minute.toString()
+    }).catchError((e) {
+      print('fuck to join $e');
+    });
+    db.collection('users')
+        .document(user.uid)
+        .collection('userJoin')
+        .document(evID)
+        .setData({
+      'eventId': evID,
+      'eventName': _currentEvent.eventName,
+      'productName': _currentEvent.productName,
+      'category': _currentEvent.category,
+      'image': _currentEvent.image,
+      'userId': user.uid,
+      'userName': _userJoin.userName,
+      'userProvince': _userJoin.userProvince,
+      'userPhone': _userJoin.userPhone,
+      'userAddress': _userJoin.userAddress,
+      'userEmail': user.email,
+      'userPic': user.photoUrl,
+      'userAmount' : _userJoin.userAmount,
+      'userVariation': _userJoin.userVariations,
+      'joinAt': DateTime.now().year.toString() +
+          '/' +
+          DateTime.now().month.toString() +
+          '/' +
+          DateTime.now().day.toString() +
+          ' , ' +
+          DateTime.now().hour.toString() +
+          ':' +
+          DateTime.now().minute.toString()
+    }).then((user){
+      Navigator.pop(context);
+      setState(() {
+        _count = 1;
+        forUser.clear();
+      });
+    }).catchError((e){
+      print('user Fuck join $e');
+    });
   }
 
   @override
@@ -479,13 +561,15 @@ class _EventCustomerState extends State<EventCustomer> {
                               children: <Widget>[
                                 Text(
                                   'Choice',
-                                  style: TextStyle(color: Colors.red, fontSize: 22),
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 22),
                                 ),
                                 SizedBox(
                                   height: 8,
                                 ),
                                 Text(
-                                  '** tap for choose',style: TextStyle(color: Colors.red),
+                                  '** tap for choose',
+                                  style: TextStyle(color: Colors.red),
                                 ),
                                 SizedBox(
                                   height: 8,
@@ -496,25 +580,38 @@ class _EventCustomerState extends State<EventCustomer> {
                           GridView.builder(
                             shrinkWrap: true,
                             padding: EdgeInsets.symmetric(horizontal: 42),
-                            itemCount: eventNotifier.currentEvent.variations.length,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 4,crossAxisSpacing: 4),
-                            itemBuilder: (context,index){
+                            itemCount:
+                                eventNotifier.currentEvent.variations.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 4,
+                                    crossAxisSpacing: 4),
+                            itemBuilder: (context, index) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 22,vertical: 22),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 22, vertical: 22),
                                 child: InkWell(
-                                  onTap: ()=>_forUser(eventNotifier.currentEvent.variations[index].toString()),
+                                  onTap: () => _forUser(eventNotifier
+                                      .currentEvent.variations[index]
+                                      .toString()),
                                   splashColor: Colors.red,
                                   focusColor: Colors.red,
                                   highlightColor: Colors.red,
                                   child: Container(
-                                    child: Center(child: Text(eventNotifier.currentEvent.variations[index].toString(),
-                                      style: TextStyle(color: Colors.white),)
-                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      eventNotifier
+                                          .currentEvent.variations[index]
+                                          .toString(),
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                                     decoration: BoxDecoration(
-                                      color: Colors.blueGrey[300],
-                                      border: Border.all(color: Colors.deepOrange[300],width: 2),
-                                      shape: BoxShape.circle
-                                    ),
+                                        color: Colors.blueGrey[300],
+                                        border: Border.all(
+                                            color: Colors.deepOrange[300],
+                                            width: 2),
+                                        shape: BoxShape.circle),
                                   ),
                                 ),
                               );
@@ -537,9 +634,12 @@ class _EventCustomerState extends State<EventCustomer> {
                   Row(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 6),
                         child: Text(
-                          'Quantity',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),
+                          'Quantity',
+                          style: TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -607,7 +707,7 @@ class _EventCustomerState extends State<EventCustomer> {
                               color: Colors.blueGrey[200],
                               onPressed: () {
                                 print('fuckkkkk');
-                                  _showDialog();
+                                _showDialog();
                               },
                               elevation: 1.1,
                               shape: RoundedRectangleBorder(
