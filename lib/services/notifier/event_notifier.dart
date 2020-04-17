@@ -1,11 +1,20 @@
 import 'dart:collection';
 
 import 'package:assem_deal/model/event.dart';
+import 'package:assem_deal/model/user_join.dart';
 import 'package:flutter/material.dart';
 
 class EventNotifier with ChangeNotifier{
   List<Events> _eventList = [];
   Events _currentEvent;
+  List<UserJoin> _userJoinList = [];
+
+  UnmodifiableListView<UserJoin> get userJoinList => UnmodifiableListView(_userJoinList);
+
+  set userJoinList(List<UserJoin> userJoinList){
+    _userJoinList = userJoinList;
+    notifyListeners();
+  }
 
   UnmodifiableListView<Events> get eventList => UnmodifiableListView(_eventList);
 

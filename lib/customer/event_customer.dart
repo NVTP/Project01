@@ -397,6 +397,7 @@ class _EventCustomerState extends State<EventCustomer> {
       'eventId': evID,
       'eventName': _currentEvent.eventName,
       'productName': _currentEvent.productName,
+      'currentAmount':currentAmount,
       'category': _currentEvent.category,
       'image': _currentEvent.image,
       'userId': user.uid,
@@ -406,28 +407,20 @@ class _EventCustomerState extends State<EventCustomer> {
       'userAddress': _userJoin.userAddress,
       'userEmail': user.email,
       'userPic': user.photoUrl,
-      'userAmount' : _userJoin.userAmount,
+      'userAmount' : _count,
       'userVariation': _userJoin.userVariations,
-      'joinAt': DateTime.now().year.toString() +
-          '/' +
-          DateTime.now().month.toString() +
-          '/' +
-          DateTime.now().day.toString() +
-          ' , ' +
-          DateTime.now().hour.toString() +
-          ':' +
-          DateTime.now().minute.toString()
+      'joinAt': Timestamp.now(),
     }).catchError((e) {
       print('fuck to join $e');
     });
     db.collection('users')
         .document(user.uid)
         .collection('userJoin')
-        .document(evID)
-        .setData({
+        .add({
       'eventId': evID,
       'eventName': _currentEvent.eventName,
       'productName': _currentEvent.productName,
+      'currentAmount':currentAmount,
       'category': _currentEvent.category,
       'image': _currentEvent.image,
       'userId': user.uid,
@@ -437,17 +430,9 @@ class _EventCustomerState extends State<EventCustomer> {
       'userAddress': _userJoin.userAddress,
       'userEmail': user.email,
       'userPic': user.photoUrl,
-      'userAmount' : _userJoin.userAmount,
+      'userAmount' : _count,
       'userVariation': _userJoin.userVariations,
-      'joinAt': DateTime.now().year.toString() +
-          '/' +
-          DateTime.now().month.toString() +
-          '/' +
-          DateTime.now().day.toString() +
-          ' , ' +
-          DateTime.now().hour.toString() +
-          ':' +
-          DateTime.now().minute.toString()
+      'joinAt': Timestamp.now()
     }).then((user){
       Navigator.pop(context);
       setState(() {

@@ -4,6 +4,7 @@ class UserJoin{
   String eventId;
   String eventName;
   String productName;
+  String currentAmount;
   String category;
   String image;
   String userId;
@@ -24,6 +25,7 @@ class UserJoin{
     eventId = data['eventId'];
     eventName = data['eventName'];
     productName = data['productName'];
+    currentAmount = data['currentAmount'];
     category = data['category'];
     image = data['image'];
     userId = data['userId'];
@@ -43,6 +45,7 @@ class UserJoin{
         'eventId':eventId,
         'eventName':eventName,
         'productName':productName,
+        'currentAmount':currentAmount,
         'category':category,
         'image':image,
         'userId':userId,

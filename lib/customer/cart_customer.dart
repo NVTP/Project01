@@ -16,8 +16,7 @@ class CartCustomer extends StatefulWidget {
 class _CartCustomerState extends State<CartCustomer> {
   //todo query user create event by eventID
   //todo in userCreate have eventID
-  var avatar =
-      'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg';
+  var avatar = 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg';
 
   another(EventNotifier eventNotifier) async {
     var uidAA;
@@ -51,14 +50,21 @@ class _CartCustomerState extends State<CartCustomer> {
     Future<void> _refresh()async{
       another(eventNotifier);
     }
+    if (eventNotifier.eventList.isEmpty) {
+      return Container(
+        child: Center(
+          child: Text('Sorry you don\'t have',style: TextStyle(color: Colors.red, fontSize: 40),),
+        ),
+      );
+    }
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: _refresh,
         child: ListView.separated(
           separatorBuilder: (context,index){
             return Divider(
-              height: 1,
-              color: Colors.red,
+              height: 10,
+              color: Colors.white,
             );
           },
           itemCount: eventNotifier.eventList.length,
@@ -69,40 +75,42 @@ class _CartCustomerState extends State<CartCustomer> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => MainEvent()));
               },
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    height: 250,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.grey[400],
-                        width: 1
-                      ),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        alignment: Alignment.center,
-                        image: NetworkImage(eventNotifier.eventList[index].image ?? avatar)
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.grey[200]
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      height: 250,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                            color: Colors.grey[400],
+                            width: 1
+                        ),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            alignment: Alignment.center,
+                            image: NetworkImage(eventNotifier.eventList[index].image ?? avatar)
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(eventNotifier.eventList[index].productName),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text(eventNotifier.eventList[index].userAmount.toString()),
-                  SizedBox(
-                    height: 8,
-                  ),
-                ],
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text('Product Name : ' + eventNotifier.eventList[index].productName),
+                    Text('Amount : ' + eventNotifier.eventList[index].userAmount),
+                    SizedBox(
+                      height: 8,
+                    ),
+                  ],
+                ),
               ),
             );
           },
