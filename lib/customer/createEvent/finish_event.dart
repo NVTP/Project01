@@ -116,23 +116,69 @@ class _FinishEventState extends State<FinishEvent> {
 
     CollectionReference subCollection = Firestore.instance.collection('users').document(user.uid).collection('userCreate');
 
-    DocumentReference docRef = await subCollection.add({
-      'productName':_currentEvent.productName,
-      'amount':_currentEvent.currentAmount,
-      'shopId':_currentEvent.shopOwnId,
-      'shopPic':_currentEvent.shopPic,
-      'shopEmail':_currentEvent.shopEmail,
-      'variation':_currentEvent.variations,
-      'userAmount':_currentEvent.userAmount,
-      'userVariations':_currentEvent.userVariations
-    }).then((ev){
-      uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent,subID: ev.documentID);
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context)=>MainCustomer()));
-    }).catchError((e){
-      print('can\'t sub $e');
-    });
+    if (imageEvent == null) {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            elevation: 1.1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            title: Text('Warning !!!',style: TextStyle(color: Colors.red),),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: ()=>Navigator.pop(context),
+                child: Text('OK'),
+              )
+            ],
+            content: Center(
+              child: Text('Image can\'t empty',style: TextStyle(color: Colors.red,fontSize: 32),),
+            ),
+          );
+        }
+      );
+    }else if(colorEvent.isEmpty || userVariation.isEmpty){
+      return showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            title: Text('Warning !!!',style: TextStyle(color: Colors.red),),
+            elevation: 1.1,
+            content: Center(
+              child: Text('Please check Colors or Size is can\'t empty '),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: ()=>Navigator.pop(context),
+                child: Text('OK'),
+              )
+            ],
+          );
+        }
+      );
+    }else{
+      DocumentReference docRef = await subCollection.add({
+        'productName':_currentEvent.productName,
+        'amount':_currentEvent.currentAmount,
+        'shopId':_currentEvent.shopOwnId,
+        'shopPic':_currentEvent.shopPic,
+        'shopEmail':_currentEvent.shopEmail,
+        'variation':_currentEvent.variations,
+        'userAmount':_currentEvent.userAmount,
+        'userVariations':_currentEvent.userVariations
+      }).then((ev){
+        uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent,subID: ev.documentID);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context)=>MainCustomer()));
+      }).catchError((e){
+        print('can\'t sub $e');
+      });
+    }
   }
 
   _buildColor() {

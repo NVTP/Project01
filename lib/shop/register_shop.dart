@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
@@ -256,7 +257,8 @@ class _RegisterShopState extends State<RegisterShop> {
                           maxLength: 13,
                           maxLines: 1,
                           keyboardType:
-                              TextInputType.numberWithOptions(decimal: false),
+                              TextInputType.number,
+                          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                           controller: _shopTax,
                           validator: (data) {
                             if (data.isEmpty) {
@@ -361,7 +363,8 @@ class _RegisterShopState extends State<RegisterShop> {
                         ),
                         TextFormField(
                           keyboardType:
-                              TextInputType.phone,
+                              TextInputType.number,
+                          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                           maxLength: 10,
                           maxLines: 1,
                           controller: _shopPhone,
@@ -396,9 +399,7 @@ class _RegisterShopState extends State<RegisterShop> {
                           controller: _shopAddress,
                           validator: (data) {
                             if (data.isEmpty) {
-                              return 'Please check Phone Number';
-                            } else if (data.length != 10) {
-                              return 'Please count Phone Number';
+                              return 'Please check Address';
                             } else {
                               return null;
                             }
