@@ -51,21 +51,26 @@ _uploadEvent(Events events, Function eventUploaded,
   DocumentReference docRef = await eventRef.add(events.toMap());
   events.eventId = docRef.documentID;
   await docRef.setData(events.toMap(), merge: true);
+  DocumentReference ref = Firestore.instance.collection('events').document(events.eventId);
 
-  FirebaseAuth.instance.currentUser().then((val) {
-    Firestore.instance
-        .collection('users')
-        .document(val.uid)
-        .collection('userCreate')
-        .document(subID)
-        .setData({
-      'createAt': Timestamp.now(),
-      'image': imageUrl,
-      'eventId': docRef.documentID
-    }, merge: true);
-  }).catchError((e) {
-    print('in controller $e');
-  });
+  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  DocumentReference useRef = Firestore.instance.collection('users').document(user.uid).collection('activity').document('create');
+  DocumentSnapshot snapshot = await useRef.get();
+  List create = snapshot.data['create'];
+  if (create.contains(events.eventId)==true) {
+    useRef.updateData({
+      'create' : FieldValue.arrayUnion([ref])
+    }).catchError((e){
+      print('first e $e');
+    });
+  }else{
+    useRef.updateData({
+      'create' : FieldValue.arrayRemove([ref])
+    }).catchError((e){
+      print('two e $e');
+    });
+  }
+
   eventUploaded(events);
 }
 

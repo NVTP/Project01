@@ -392,6 +392,7 @@ class _EventCustomerState extends State<EventCustomer> {
     var db = Firestore.instance;
     _userJoin.userVariations = forUser;
     var evRef = db.collection('events').document(evID);
+    DocumentReference docRef = db.collection('events').document(evID);
     evRef.updateData({'currentAmount': result.toString()});
     evRef.collection('userJoin').document(user.uid).setData({
       'eventId': evID,
@@ -413,35 +414,36 @@ class _EventCustomerState extends State<EventCustomer> {
     }).catchError((e) {
       print('fuck to join $e');
     });
-    db.collection('users')
-        .document(user.uid)
-        .collection('userJoin')
-        .add({
-      'eventId': evID,
-      'eventName': _currentEvent.eventName,
-      'productName': _currentEvent.productName,
-      'currentAmount':currentAmount,
-      'category': _currentEvent.category,
-      'image': _currentEvent.image,
-      'userId': user.uid,
-      'userName': _userJoin.userName,
-      'userProvince': _userJoin.userProvince,
-      'userPhone': _userJoin.userPhone,
-      'userAddress': _userJoin.userAddress,
-      'userEmail': user.email,
-      'userPic': user.photoUrl,
-      'userAmount' : _count,
-      'userVariation': _userJoin.userVariations,
-      'joinAt': Timestamp.now()
-    }).then((user){
-      Navigator.pop(context);
-      setState(() {
-        _count = 1;
-        forUser.clear();
-      });
-    }).catchError((e){
-      print('user Fuck join $e');
-    });
+    DocumentReference useRef = Firestore.instance.collection('users').document(user.uid).collection('activity').document('userJoin');
+    DocumentSnapshot snapshot = await docRef.get();
+    List join = snapshot.data['join'];
+      if (join.contains(evID)==true) {
+        useRef.setData({
+          'join':FieldValue.arrayRemove([evRef])
+        },merge: true).then((val){
+          Navigator.pop(context);
+          setState(() {
+            Navigator.pop(context);
+            _count = 1;
+            forUser.clear();
+          });
+        }).catchError((e){
+          print('qqqq $e');
+        });
+      }else{
+        useRef.updateData({
+          'join':FieldValue.arrayUnion([evRef])
+        }).then((val){
+          Navigator.pop(context);
+          setState(() {
+            Navigator.pop(context);
+            _count = 1;
+            forUser.clear();
+          });
+        }).catchError((e){
+          print('asdc $e');
+        });
+      }
   }
 
   @override

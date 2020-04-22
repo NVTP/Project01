@@ -16,6 +16,7 @@ class LoginUI extends StatefulWidget {
 
 class _LoginUIState extends State<LoginUI> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
   Login login = new Login();
   bool load = false;
@@ -41,11 +42,21 @@ class _LoginUIState extends State<LoginUI> {
         email: _email.text.trim(),
         password: _password.text.trim(),
     ).then((user){
+      scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('Login Successfully',style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.grey,
+        elevation: 1.1,
+      ));
       login.singInAuth(context);
       print('ok');
     }).catchError((e){
       print('fuck');
       print(e);
+      scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(e.message,style: TextStyle(color: Colors.white),),
+        elevation: 1.1,
+        backgroundColor: Colors.grey,
+      ));
     });
   }
 
@@ -53,6 +64,7 @@ class _LoginUIState extends State<LoginUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[

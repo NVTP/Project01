@@ -161,23 +161,10 @@ class _FinishEventState extends State<FinishEvent> {
         }
       );
     }else{
-      DocumentReference docRef = await subCollection.add({
-        'productName':_currentEvent.productName,
-        'amount':_currentEvent.currentAmount,
-        'shopId':_currentEvent.shopOwnId,
-        'shopPic':_currentEvent.shopPic,
-        'shopEmail':_currentEvent.shopEmail,
-        'variation':_currentEvent.variations,
-        'userAmount':_currentEvent.userAmount,
-        'userVariations':_currentEvent.userVariations
-      }).then((ev){
-        uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent,subID: ev.documentID);
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context)=>MainCustomer()));
-      }).catchError((e){
-        print('can\'t sub $e');
-      });
+      uploadEventsAndImage(_currentEvent, imageEvent, _onUploadEvent);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context)=>MainCustomer()));
     }
   }
 
