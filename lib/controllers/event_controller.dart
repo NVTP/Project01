@@ -20,11 +20,9 @@ getEvent(EventNotifier eventNotifier) async {
   eventNotifier.eventList = _eventList;
 }
 
-uploadEventsAndImage(Events event, File localFile, Function eventUploaded,
-    {String subID}) async {
+uploadEventsAndImage(Events event, File localFile, Function eventUploaded,{String subID}) async {
   String fileName = basename(localFile.path);
-  final StorageReference firebaseStorageRef =
-  FirebaseStorage.instance.ref().child('EventPic/${fileName.toString()}');
+  final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('EventPic/${fileName.toString()}');
 
   await firebaseStorageRef
       .putFile(localFile)
@@ -35,9 +33,9 @@ uploadEventsAndImage(Events event, File localFile, Function eventUploaded,
     print('someThing $e');
   });
   String url = await firebaseStorageRef.getDownloadURL();
-  String forSub = subID;
+  var forSub = subID;
   print('image event $url');
-  _uploadEvent(event, eventUploaded, imageUrl: url, subID: forSub);
+  _uploadEvent(event, eventUploaded, imageUrl: url,subID: forSub);
   print('method upload ok');
 }
 
@@ -52,24 +50,36 @@ _uploadEvent(Events events, Function eventUploaded,
   events.eventId = docRef.documentID;
   await docRef.setData(events.toMap(), merge: true);
   DocumentReference ref = Firestore.instance.collection('events').document(events.eventId);
+  print(ref.toString());
 
-  FirebaseUser user = await FirebaseAuth.instance.currentUser();
-  DocumentReference useRef = Firestore.instance.collection('users').document(user.uid).collection('activity').document('create');
-  DocumentSnapshot snapshot = await useRef.get();
-  List create = snapshot.data['create'];
-  if (create.contains(events.eventId)==true) {
-    useRef.updateData({
+  FirebaseAuth.instance.currentUser().then((val) {
+    Firestore.instance
+        .collection('users')
+        .document(val.uid)
+        .collection('userCreate')
+        .document(subID)
+        .setData({
+      'createAt': Timestamp.now(),
+      'image': imageUrl,
+      'eventId': docRef.documentID
+    }, merge: true);
+  }).catchError((e) {
+    print('in controller $e');
+  });
+
+  FirebaseAuth.instance.currentUser().then((user){
+    Firestore.instance.collection('users')
+        .document(user.uid)
+        .collection('activity')
+        .document('create')
+        .setData({
       'create' : FieldValue.arrayUnion([ref])
-    }).catchError((e){
-      print('first e $e');
+    },merge: true).catchError((e){
+      print('in in $e');
     });
-  }else{
-    useRef.updateData({
-      'create' : FieldValue.arrayRemove([ref])
-    }).catchError((e){
-      print('two e $e');
-    });
-  }
+  }).catchError((e){
+    print('in create $e');
+  });
 
   eventUploaded(events);
 }
