@@ -28,6 +28,7 @@ dependencies:
   firebase_auth_platform_interface: ^1.1.7
   provider: ^4.0.4
   get_it: ^4.0.1
+  intl: ^0.16.1
 
   flutter:
     sdk: flutter

@@ -45,6 +45,10 @@ _uploadEvent(Events events, Function eventUploaded,
   if (imageUrl != null) {
     events.image = imageUrl;
   }
+  var start = DateTime.now();
+  var end = start.add(Duration(days: 60));
+  Timestamp timestamp = Timestamp.fromDate(end);
+  events.endAt = timestamp;
   events.createAt = Timestamp.now();
   DocumentReference docRef = await eventRef.add(events.toMap());
   events.eventId = docRef.documentID;
@@ -73,7 +77,7 @@ _uploadEvent(Events events, Function eventUploaded,
         .collection('activity')
         .document('create')
         .setData({
-      'create' : FieldValue.arrayUnion([ref])
+      'create' : FieldValue.arrayUnion([ref]),
     },merge: true).catchError((e){
       print('in in $e');
     });
