@@ -21,40 +21,40 @@ class _CartShopState extends State<CartShop> {
               SizedBox(
                 height: 5.0,
               ),
-              InkWell(
-                onTap: (){
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=>MainEventShop())
-                  );
-                },
-                child: Card(
-                  elevation: 1.1,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Image.asset(
-                          'assets/prototype/sony.jpg',
-                          fit: BoxFit.cover,
-                          height: 150,
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text('Product : Sony WF-1000xm3'),
-                        Text('Quantity : 95'),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+//              InkWell(
+//                onTap: (){
+//                  Navigator.push(context,
+//                  MaterialPageRoute(builder: (context)=>MainEventShop())
+//                  );
+//                },
+//                child: Card(
+//                  elevation: 1.1,
+//                  child: Container(
+//                    width: MediaQuery.of(context).size.width,
+//                    child: Column(
+//                      crossAxisAlignment: CrossAxisAlignment.center,
+//                      children: <Widget>[
+//                        SizedBox(
+//                          height: 5.0,
+//                        ),
+//                        Image.asset(
+//                          'assets/prototype/sony.jpg',
+//                          fit: BoxFit.cover,
+//                          height: 150,
+//                        ),
+//                        SizedBox(
+//                          height: 5.0,
+//                        ),
+//                        Text('Product : Sony WF-1000xm3'),
+//                        Text('Quantity : 95'),
+//                        SizedBox(
+//                          height: 5.0,
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//              ),
               InkWell(
                 onTap: (){},
                 child: Card(

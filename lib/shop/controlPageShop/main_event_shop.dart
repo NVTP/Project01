@@ -3,6 +3,8 @@ import 'package:assem_deal/shop/shop_event_shop.dart';
 import 'package:flutter/material.dart';
 
 class MainEventShop extends StatefulWidget {
+  final String evID;
+  MainEventShop(this.evID);
   @override
   _MainEventShopState createState() => _MainEventShopState();
 }
@@ -38,7 +40,7 @@ class _MainEventShopState extends State<MainEventShop> with SingleTickerProvider
       body: TabBarView(
         controller: tabController,
         children: <Widget>[
-          ShopEvent(),
+          ShopEvent(widget.evID),
           ShopEventShop(),
         ],
       ),

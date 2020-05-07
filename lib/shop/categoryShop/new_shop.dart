@@ -62,29 +62,29 @@ class _NewShopState extends State<NewShop> {
                 Container(
                   height: 250,
                   width: 250,
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=>MainEventShop())
-                      );
-                    },
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/prototype/sony.jpg',
-                          fit: BoxFit.fill,
-                        ),
-                        Container(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            color: Colors.grey,
-                              child: Text('Sony WF-1000xm3',style: TextStyle(color: Colors.black,fontSize: 18),)
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+//                  child: InkWell(
+//                    onTap: (){
+//                      Navigator.push(context,
+//                      MaterialPageRoute(builder: (context)=>MainEventShop())
+//                      );
+//                    },
+//                    child: Stack(
+//                      fit: StackFit.expand,
+//                      children: <Widget>[
+//                        Image.asset(
+//                          'assets/prototype/sony.jpg',
+//                          fit: BoxFit.fill,
+//                        ),
+//                        Container(
+//                          alignment: Alignment.bottomCenter,
+//                          child: Container(
+//                            color: Colors.grey,
+//                              child: Text('Sony WF-1000xm3',style: TextStyle(color: Colors.black,fontSize: 18),)
+//                          ),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
                 ),
                 Container(
                   width: 250,
